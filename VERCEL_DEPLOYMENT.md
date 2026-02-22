@@ -6,45 +6,76 @@ Ovo je NPM workspaces monorepo sa sledećom strukturom:
 
 ```
 /shared-prisma       - Deljeni Prisma schema i migracije
-/prodavnica-admin    - Admin dashboard aplikacija
-/prodavnica-client   - Customer-facing aplikacija
+/prodavnica-admin    - Admin dashboard aplikacija (port 4000)
+/prodavnica-client   - Customer-facing aplikacija (port 3000)
 /root package.json   - Workspace definicija
 ```
 
-## Vercel Deployment
+## Vercel Deployment - VAŽNO!
 
-### Konfiguracija
+Za monorepo na Vercel-u, potrebno je kreirati **DVA ODVOJENA PROJEKTA**:
 
-Vercel automatski detektuje NPM workspaces iz root `package.json` fajla. To znači da će Vercel:
+### 1. PRODAVNICA-ADMIN Projekat
 
-1. Instalirati sve zavisnosti iz root `package.json`
-2. Protegnuti workspaces linkove
-3. Pokrenuti `npm run build -w prodavnica-admin/client` za build svake aplikacije
+Na Vercel-u, kreiraj novi projekat sa:
 
-### Kako to radi
+- **Project Name**: `prodavnica-admin` (ili kako god želiš)
+- **Framework Preset**: Next.js
+- **Root Directory**: `prodavnica-admin` ⚠️ **OVO JE KLJUČNO!**
+- **Build Command**: `cd .. && npm install && npm run build:admin`
+- **Install Command**: `npm install` (u root-u)
+- **Output Directory**: `.next` (default)
 
-- **Root package.json**: Definiše workspaces u `"workspaces": ["shared-prisma", "prodavnica-admin", "prodavnica-client"]`
-- **Prisma Config**: Svaka aplikacija ima `prisma.config.ts` koji pokazuje na `../shared-prisma/schema.prisma`
-- **Build Scripts**: Svaka aplikacija ima `"build": "npx prisma generate && next build"` što generiše Prisma client iz deljene šeme
+**Environment Variables** (u Vercel projektu):
+```
+DATABASE_URL=postgresql://...
+NEXTAUTH_SECRET=...
+NEXTAUTH_URL=https://your-admin-domain.vercel.app
+NEXT_PUBLIC_BASE_URL=https://your-admin-domain.vercel.app
+CLOUDINARY_CLOUD_NAME=...
+CLOUDINARY_API_KEY=...
+CLOUDINARY_API_SECRET=...
+```
 
-### Deployment Koraci
+### 2. PRODAVNICA-CLIENT Projekat
 
-1. Vercel instališe sve iz root `package.json` - to će instalirati sve workspaces
-2. Vercel generiše Prisma client u shared-prisma (`npm run generate -w @prodavnica/prisma`)
-3. Vercel build-a svaku aplikaciju sa njom specificira build command
+Na Vercel-u, kreiraj DRUGI projekat sa:
 
-### Environment Variables
+- **Project Name**: `prodavnica-client` (ili kako god želiš)
+- **Framework Preset**: Next.js
+- **Root Directory**: `prodavnica-client` ⚠️ **OVO JE KLJUČNO!**
+- **Build Command**: `cd .. && npm install && npm run build:client`
+- **Install Command**: `npm install` (u root-u)
+- **Output Directory**: `.next` (default)
 
-Vercel će trebati sledeće environment variables:
-- `DATABASE_URL` - PostgreSQL konekcioni string (za Neon)
+**Environment Variables** (u Vercel projektu):
+```
+DATABASE_URL=postgresql://...
+NEXTAUTH_SECRET=...
+NEXTAUTH_URL=https://your-client-domain.vercel.app
+NEXT_PUBLIC_BASE_URL=https://your-client-domain.vercel.app
+CLOUDINARY_CLOUD_NAME=...
+CLOUDINARY_API_KEY=...
+CLOUDINARY_API_SECRET=...
+```
 
-Te varijable će biti dostupne svim aplikacijama jer Vercel vodi .env iz sistema za sve procesare u monorepo.
+## Koraci za Deploy na Vercel
 
-### Monorepo Build Tips
+1. **Idi na Vercel Dashboard**: https://vercel.com
+2. **Import Git Repository**: Konektuj GitHub repo
+3. **Konfiguriši Prvi Projekat (Admin)**:
+   - Klikni "Configure Project"
+   - Postavi "Root Directory" na `prodavnica-admin`
+   - Postavi "Build Command" na `cd .. && npm install && npm run build:admin`
+   - Dodaj sve Environment Variables
+   - Deploy!
 
-- Ako Vercel ne detektuje workspaces, eksplicitno kopiraj shared-prisma u build folder
-- Ako Prisma ne može priti schema-u, pretvori ji putanju relativno od apps
-- Ako build kažu da Prisma client nije generiše, dodaj `postinstall` script u apps (što je već urađeno)
+4. **Kreiraj Drugi Projekat (Client)**:
+   - Opet import-uj isti GitHub repo
+   - Ovaj put postavi "Root Directory" na `prodavnica-client`
+   - Postavi "Build Command" na `cd .. && npm install && npm run build:client`  
+   - Dodaj sve Environment Variables (sa drugim URL-ovima!)
+   - Deploy!
 
 ## Lokalni Development
 
@@ -52,33 +83,52 @@ Te varijable će biti dostupne svim aplikacijama jer Vercel vodi .env iz sistema
 
 ```bash
 npm install          # Instaliraj sve workspace zavisnosti
-npm run dev         # Pokreni sve dev servere (ako je konfiguro u root)
+npm run dev          # Pokreni oba dev servera (admin:4000, client:3000)
 ```
 
 ### Build
 
 ```bash
-npm run build        # Build-a sve apps
+npm run build:admin   # Build-a samo admin
+npm run build:client  # Build-a samo client
 ```
 
 ### Prisma Commands
 
 ```bash
-npm run prisma:migrate:dev -w @prodavnica/prisma    # Kreiraj migraciju
-npm run prisma:migrate:deploy -w @prodavnica/prisma  # Primeni migracije
-npm run prisma:studio -w @prodavnica/prisma          # Otvori Prisma Studio
+npm run prisma:migrate:dev     # Kreiraj migraciju
+npm run prisma:migrate:deploy  # Primeni migracije (production)
+npm run prisma:studio          # Otvori Prisma Studio
 ```
+
+## Kako radi Deployment
+
+1. **Vercel detektuje monorepo** - vidi `workspaces` u root `package.json`
+2. **Root Directory setting** - kaže Vercel-u koji workspace da deploy-uje
+3. **Build Command** - `cd ..` ide u root, instalira sve, pa build-a specifičan workspace
+4. **Prisma** - svaki `postinstall` script automatski generiše Prisma client iz shared-prisma
 
 ## Troubleshooting
 
 ### "Cannot find module '@prisma/client'"
-- Pokreni `npm install` u root direktorijumu
-- Pokreni `npx prisma generate` u svakoj aplikaciji
+- Proveri da svaki workspace ima `"postinstall": "npx prisma generate"` u package.json
+- Proveri da `prisma.config.ts` pokazuje na `../shared-prisma/schema.prisma`
 
-### "Prisma schema not found"
-- Pretvori da prisma.config.ts u svaku aplikaciju pokazuje na `../shared-prisma/schema.prisma`
-- Pokreni `npx prisma generate` sa pravilnom konfigom
+### "Prisma schema not found" 
+- Proveri da `shared-prisma/schema.prisma` postoji
+- Proveri putanju u `prisma.config.ts`
 
-### Vercel Build Error: Cannot find shared-prisma
-- Vercel automatski trebao da copy-a sve iz root direktorijuma
-- Ako ne, onda je potrebno da dodasp .vercelignore ili da koristiš file: dependencies u package.json apps
+### Build Command fails
+- Proveri da Build Command počinje sa `cd ..` da bi bio u root-u
+- Proveri da koristiš `npm run build:admin` ili `npm run build:client` (ne `build`)
+
+### Environment Variables not working
+- Environment variables moraju biti konfigurisane POSEBNO u svakom Vercel projektu
+- NEXTAUTH_URL i NEXT_PUBLIC_BASE_URL moraju biti različiti za admin i client
+
+## Zašto DVA projekta?
+
+- **Različiti domeni**: Admin i client će imati različite URL-ove
+- **Nezavisni deployment**: Možeš deploy-ovati jedan bez drugog
+- **Različite environment variables**: Svaki ima svoje URL-ove i moguće različite API ključeve
+- **Bolja organizacija**: Jasno je šta je šta
