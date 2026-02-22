@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Prodavnica monorepo - admin dashboard i customer-facing aplikacija",
   "private": true,
+  "packageManager": "npm@11.6.3",
   "workspaces": [
     "shared-prisma",
     "prodavnica-admin",
