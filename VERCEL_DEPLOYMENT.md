@@ -38,7 +38,7 @@ CLOUDINARY_API_SECRET=...
 ```
 
 ### 2. PRODAVNICA-CLIENT Projekat
-
+s
 Na Vercel-u, kreiraj DRUGI projekat sa:
 
 - **Project Name**: `prodavnica-client` (ili kako god želiš)
