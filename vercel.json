@@ -13,11 +13,11 @@
   "routes": [
     {
       "src": "/admin(.*)",
-      "destination": "prodavnica-admin$1"
+      "dest": "prodavnica-admin$1"
     },
     {
       "src": "/(.*)",
-      "destination": "prodavnica-client$1"
+      "dest": "prodavnica-client$1"
     }
   ]
 }
