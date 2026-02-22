@@ -1,0 +1,59 @@
+<svg width="1440" height="900" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f9fafb"/>
+      <stop offset="50%" stop-color="#eef2ff"/>
+      <stop offset="100%" stop-color="#e0f2fe"/>
+    </linearGradient>
+
+    <radialGradient id="blob1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+      gradientTransform="translate(200 150) rotate(45) scale(350)">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="blob2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+      gradientTransform="translate(1200 650) rotate(-30) scale(400)">
+      <stop offset="0%" stop-color="#f97316" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+    </radialGradient>
+
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#cbd5f5" opacity="0.7"/>
+    </pattern>
+  </defs>
+
+  <!-- glavni gradient background -->
+  <rect width="1440" height="900" fill="url(#bgGradient)"/>
+
+  <!-- gornji levi "blob" -->
+  <circle cx="150" cy="100" r="350" fill="url(#blob1)"/>
+
+  <!-- donji desni "blob" -->
+  <circle cx="1250" cy="700" r="400" fill="url(#blob2)"/>
+
+  <!-- diskretan pattern u sredini (iza kartica/proizvoda) -->
+  <rect x="200" y="150" width="1040" height="600" fill="url(#dots)" opacity="0.6"/>
+
+  <!-- svetla “kartica” u centru koja može da sugeriše layout shopa -->
+  <rect x="260" y="190" width="920" height="520" rx="32" fill="#ffffff" opacity="0.75"/>
+
+  <!-- gornji bar (kao header kartice) -->
+  <rect x="260" y="190" width="920" height="70" rx="32" fill="#ffffff" opacity="0.95"/>
+
+  <!-- tri “badge-a” kao da su kategorije -->
+  <circle cx="300" cy="225" r="8" fill="#22c55e" opacity="0.9"/>
+  <circle cx="330" cy="225" r="8" fill="#eab308" opacity="0.9"/>
+  <circle cx="360" cy="225" r="8" fill="#ef4444" opacity="0.9"/>
+
+  <!-- placeholderi za proizvode (možeš da ih ukloniš ako samo hoćeš background) -->
+  <rect x="300" y="290" width="180" height="180" rx="24" fill="#eef2ff" opacity="0.9"/>
+  <rect x="480" y="290" width="180" height="180" rx="24" fill="#eef2ff" opacity="0.9"/>
+  <rect x="660" y="290" width="180" height="180" rx="24" fill="#eef2ff" opacity="0.9"/>
+  <rect x="840" y="290" width="180" height="180" rx="24" fill="#eef2ff" opacity="0.9"/>
+
+  <rect x="300" y="500" width="180" height="60" rx="16" fill="#ffffff" opacity="0.9"/>
+  <rect x="480" y="500" width="180" height="60" rx="16" fill="#ffffff" opacity="0.9"/>
+  <rect x="660" y="500" width="180" height="60" rx="16" fill="#ffffff" opacity="0.9"/>
+  <rect x="840" y="500" width="180" height="60" rx="16" fill="#ffffff" opacity="0.9"/>
+</svg>

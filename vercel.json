@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "prodavnica-admin",
+      "use": "@vercel/next"
+    },
+    {
+      "src": "prodavnica-client",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/admin(.*)",
+      "destination": "prodavnica-admin$1"
+    },
+    {
+      "src": "/(.*)",
+      "destination": "prodavnica-client$1"
+    }
+  ]
+}

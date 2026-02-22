@@ -1,0 +1,15 @@
+{
+  "payment": "Plaćanje",
+  "pay_now": "Plati sada",
+  "success_payment": "Uspešno plaćanje",
+  "thank_you": "Hvala na kupovini!",
+  "payment_not_ready": "Plaćanje nije spremno. Pokušajte ponovo.",
+  "failed_create_payment": "Neuspelo kreiranje plaćanja",
+  "payment_error": "Greška pri plaćanju",
+  "payment_success": "Plaćanje uspešno",
+  "payment_not_confirmed": "Plaćanje nije potvrđeno.",
+  "processing_error": "Greška pri obradi plaćanja",
+  "card_payment": "Plaćanje karticom",
+  "processing": "Obrada...",
+  "pay_amount": "Plati"
+}

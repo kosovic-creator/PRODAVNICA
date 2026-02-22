@@ -1,0 +1,21 @@
+{
+  "name": "prodavnica",
+  "version": "1.0.0",
+  "description": "Prodavnica monorepo - admin dashboard i customer-facing aplikacija",
+  "private": true,
+  "workspaces": [
+    "shared-prisma",
+    "prodavnica-admin",
+    "prodavnica-client"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w prodavnica-admin\" \"npm run dev -w prodavnica-client\"",
+    "build": "npm run build -w prodavnica-admin && npm run build -w prodavnica-client",
+    "prisma:migrate:dev": "npm run migrate:dev -w shared-prisma",
+    "prisma:migrate:deploy": "npm run migrate:deploy -w shared-prisma",
+    "prisma:studio": "npm run studio -w shared-prisma"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

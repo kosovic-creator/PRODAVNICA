@@ -1,0 +1,9 @@
+{
+"adding": "Adding...",
+"addToCart": "Add to cart",
+"outOfStock": "Out of stock",
+"loginRequired": "You must be logged in to add items to the cart",
+"addError": "Error adding to cart",
+"addSuccess": "Item successfully added to cart",
+"addErrorGeneric": "An error occurred while adding the item to the cart"
+}
