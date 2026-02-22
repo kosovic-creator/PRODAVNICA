@@ -73,7 +73,7 @@ CLOUDINARY_API_SECRET=...
 4. **Kreiraj Drugi Projekat (Client)**:
    - Opet import-uj isti GitHub repo
    - Ovaj put postavi "Root Directory" na `prodavnica-client`
-   - Postavi "Build Command" na `cd .. && npm install && npm run build:client`  
+   - Postavi "Build Command" na `cd .. && npm install && npm run build:client`
    - Dodaj sve Environment Variables (sa drugim URL-ovima!)
    - Deploy!
 
@@ -114,7 +114,7 @@ npm run prisma:studio          # Otvori Prisma Studio
 - Proveri da svaki workspace ima `"postinstall": "npx prisma generate"` u package.json
 - Proveri da `prisma.config.ts` pokazuje na `../shared-prisma/schema.prisma`
 
-### "Prisma schema not found" 
+### "Prisma schema not found"
 - Proveri da `shared-prisma/schema.prisma` postoji
 - Proveri putanju u `prisma.config.ts`
 
