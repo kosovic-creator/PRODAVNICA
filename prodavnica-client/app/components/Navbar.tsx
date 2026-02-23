@@ -110,7 +110,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
                   <div className="relative" ref={dropdownRef}>
                     <Button variant="ghost"
                     onClick={() => setDropdownOpen(v => !v)}
-                      className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition cursor-pointer text-white"
+                      className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-700 transition cursor-pointer text-white"
                     aria-haspopup="true"
                     aria-expanded={dropdownOpen}
                   >
@@ -140,7 +140,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
                 {/* Odjava ikona direktno u navbaru */}
                   <Button variant="ghost"
                     onClick={() => signOut({ callbackUrl: "/" })}
-                    className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition cursor-pointer text-white"
+                    className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-700 transition cursor-pointer text-white"
                   title={t.logout}
                 >
                   <FaSignOutAlt />
