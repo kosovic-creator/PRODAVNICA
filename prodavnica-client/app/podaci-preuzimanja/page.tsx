@@ -10,8 +10,8 @@ import { revalidatePath } from 'next/cache';
 import { getServerSession as getSession } from 'next-auth';
 import { z } from 'zod';
 import { getLocaleMessages, getLanguageFromCookies } from '@/i18n/i18n';
-import { Button } from '@/components/ui/button';
-import { Input } from "@/components/ui/input"
+import { Button } from "@prodavnica/ui";
+import { Input } from "@prodavnica/ui"
 import { Metadata } from 'next';
 import PodaciPreuzimanjaSkeleeton from './components/PodaciPreuzimanjaSkeleeton';
 

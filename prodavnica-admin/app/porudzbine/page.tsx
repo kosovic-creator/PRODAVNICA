@@ -2,8 +2,8 @@ import { getPorudzbine, deletePorudzbinu } from '@/lib/actions/porudzbine';
 import PorudzbineSkeleton from './PorudzbineSkeleton';
 import { redirect } from 'next/navigation';
 import PorudzbineSuccess from './PorudzbineSuccess';
-import { Button } from "@/components/ui/button";
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
+import { Button } from "@prodavnica/ui";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@prodavnica/ui";
 import { StatusSelect } from '../components/StatusSelect';
 // Server action za brisanje porudžbine
 export async function handleDeleteAction(formData: FormData) {

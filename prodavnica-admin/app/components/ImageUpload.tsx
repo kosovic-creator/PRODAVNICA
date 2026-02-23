@@ -2,8 +2,8 @@
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { FaUpload, FaTrash, FaImage } from 'react-icons/fa';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@prodavnica/ui";
+import { Input } from "@prodavnica/ui";
 
 interface ImageUploadProps {
   currentImage?: string;

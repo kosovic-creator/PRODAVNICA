@@ -2,12 +2,12 @@
 'use client';
 
 import SuccessMessage from "@/app/components/SuccessMessage";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Button } from "@prodavnica/ui";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@prodavnica/ui";
+import { Input } from "@prodavnica/ui";
 import { korisnikSchemaStatic } from "@/zod";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@radix-ui/react-select";
-import { Label } from "@/components/ui/label";
+import { Label } from "@prodavnica/ui";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

@@ -2,7 +2,7 @@ import ProizvodiSkeleton from './components/ProizvodiSkeleton';
 import { Suspense } from 'react';
 import { getProizvodi } from './../../lib/actions/proizvodi';
 import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent } from "@prodavnica/ui";
 import { FaStar } from 'react-icons/fa';
 import { FaInfoCircle } from 'react-icons/fa';
 import ProductPrice from './components/product-price';
@@ -11,7 +11,7 @@ import { Proizvodi } from '@/types';
 import AddToCartButton from './components/AddToCartButton';
 import OmiljeniButton from './components/OmiljeniButton';
 import PaginationControls from './components/PaginationControls';
-import { Button } from '@/components/ui/button';
+import { Button } from "@prodavnica/ui";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

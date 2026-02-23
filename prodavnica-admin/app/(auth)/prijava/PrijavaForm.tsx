@@ -1,12 +1,12 @@
 'use client';
 import { signIn } from "next-auth/react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@prodavnica/ui";
+import { Input } from "@prodavnica/ui";
 import { prijavaSchema } from "@/zod";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FaSignInAlt, FaEnvelope, FaLock, FaSpinner, FaChevronDown, FaUser } from "react-icons/fa";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@prodavnica/ui";
 
 interface RecentLogin {
   email: string;

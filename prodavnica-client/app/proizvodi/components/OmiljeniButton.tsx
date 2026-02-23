@@ -4,7 +4,7 @@ import { Heart } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
 import { getOmiljeni, dodajUOmiljene, ukloniIzOmiljenih } from '../../../lib/actions/omiljeni';
-import { Button } from '@/components/ui/button';
+import { Button } from "@prodavnica/ui";
 import { useLanguage } from '@/app/components/LanguageContext';
 import { getNamespace } from '@/lib/translations';
 

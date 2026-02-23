@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import { Proizvodi } from '../../../types';
 import { dodajUKorpu } from './../../../lib/actions/korpa';
 import { useCart } from '../../components/KorpaContext';
-import { Button } from '@/components/ui/button';
+import { Button } from "@prodavnica/ui";
 import { useLanguage } from '@/app/components/LanguageContext';
 import { getNamespace } from '@/lib/translations';
 import SelectVarijanteModal from './SelectVarijanteModal';

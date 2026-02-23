@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { FaUserPlus, FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import { RegistracijaMessage } from './RegistracijaMessage';
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "@prodavnica/ui";
+import { Button } from "@prodavnica/ui";
 import Link from 'next/link';
 import { registracijaSchema } from '@/zod';
 import { z } from 'zod';

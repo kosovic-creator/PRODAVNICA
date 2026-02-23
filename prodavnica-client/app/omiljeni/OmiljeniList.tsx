@@ -6,7 +6,7 @@ import { FaEye } from 'react-icons/fa';
 import { FiX } from 'react-icons/fi';
 import { useState, useTransition } from 'react';
 import { ukloniIzOmiljenih } from '@/lib/actions/omiljeni';
-import { Button } from '@/components/ui/button';
+import { Button } from "@prodavnica/ui";
 import { useLanguage } from '@/app/components/LanguageContext';
 import { getNamespace } from '@/lib/translations';
 

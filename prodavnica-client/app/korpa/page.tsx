@@ -9,7 +9,7 @@ import KorpaActions from './components/KorpaActions';
 import StripeWrapper from '../components/StripeWrapper';
 import { getLocaleMessages, getLanguageFromCookies } from '@/i18n/i18n';
 import { Metadata } from 'next';
-import { Button } from '@/components/ui/button';
+import { Button } from "@prodavnica/ui";
 import { Suspense } from 'react';
 import KorpaSkeleton from './components/KorpaSkeleton';
 

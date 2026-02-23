@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@prodavnica/ui";
 import { azurirajStatusPorudzbine } from '@/lib/actions/porudzbine';
 import { toast } from 'sonner';
 

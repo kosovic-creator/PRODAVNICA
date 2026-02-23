@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { FaTrashAlt, FaPlus, FaMinus } from 'react-icons/fa';
 import { updateStavkuKorpe, ukloniStavkuKorpe } from '@/lib/actions';
 import { useCart } from '../../components/KorpaContext';
-import { Button } from '@/components/ui/button';
+import { Button } from "@prodavnica/ui";
 import { useLanguage } from '@/app/components/LanguageContext';
 import { getNamespace } from '@/lib/translations';
 

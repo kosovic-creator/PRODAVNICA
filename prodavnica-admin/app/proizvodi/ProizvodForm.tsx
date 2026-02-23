@@ -9,10 +9,10 @@ import ProizvodVarijanteForm from './ProizvodVarijanteForm';
 import { noviProizvodSchemaStatic } from '@/zod';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { Input } from "@prodavnica/ui";
+import { Textarea } from "@prodavnica/ui";
+import { Label } from "@prodavnica/ui";
+import { Button } from "@prodavnica/ui";
 import type { Proizvod } from '@/types';
 import type { VarijantaData } from '@/lib/actions/proizvodi';
 

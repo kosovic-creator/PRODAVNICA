@@ -9,8 +9,8 @@ import Image from 'next/image';
 import { FaShoppingCart, FaSignInAlt, FaSignOutAlt, FaBars, FaUserCircle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"
+import { Button } from "@prodavnica/ui";
+import { Input } from "@prodavnica/ui"
 
 export interface NavbarProps {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;

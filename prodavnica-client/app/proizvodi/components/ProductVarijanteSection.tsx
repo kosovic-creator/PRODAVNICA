@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Proizvodi } from '@/types';
 import AddToCartButton from './AddToCartButton';
-import { Button } from '@/components/ui/button';
+import { Button } from "@prodavnica/ui";
 
 type VarijantaSummary = {
   boja: string;

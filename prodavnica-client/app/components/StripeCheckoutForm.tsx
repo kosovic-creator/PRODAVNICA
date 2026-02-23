@@ -1,7 +1,7 @@
 "use client";
 
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { Button } from '@/components/ui/button';
+import { Button } from "@prodavnica/ui";
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '@/app/components/LanguageContext';

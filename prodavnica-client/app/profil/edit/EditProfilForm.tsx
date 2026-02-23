@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { FaSave, FaTimes } from 'react-icons/fa';
 import { z } from 'zod';
 import { korisnikSchema } from '@/lib/validators';
-import { Button } from '@/components/ui/button';
-import { Input } from "@/components/ui/input";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
+import { Button } from "@prodavnica/ui";
+import { Input } from "@prodavnica/ui";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@prodavnica/ui";
+import { Label } from "@prodavnica/ui";
 
 interface EditProfilFormProps {
   handleEditProfil: (formData: FormData) => Promise<void>;

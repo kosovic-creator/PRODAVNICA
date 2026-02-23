@@ -7,7 +7,7 @@ import { getNamespace } from '@/lib/translations';
 import { usePathname, useRouter } from 'next/navigation';
 import { FaBoxOpen, FaUser, FaTimes, FaShoppingBag, FaChartBar, FaCog, FaPhone, FaInfoCircle } from 'react-icons/fa';
 import { useSession } from 'next-auth/react';
-import { Button } from '@/components/ui/button';
+import { Button } from "@prodavnica/ui";
 
 
 interface SidebarProps {

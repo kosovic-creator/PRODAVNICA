@@ -4,7 +4,7 @@ import Link from 'next/link';
 import OmiljeniButton from '../proizvodi/components/OmiljeniButton';
 import AddToCartButton from '../proizvodi/components/AddToCartButton';
 import ProductPrice from '../proizvodi/components/product-price';
-import { Button } from '@/components/ui/button';
+import { Button } from "@prodavnica/ui";
 import { getLocaleMessages, getLanguageFromCookies } from '@/i18n/i18n';
 import { FaInfoCircle } from 'react-icons/fa';
 import { Suspense } from 'react';

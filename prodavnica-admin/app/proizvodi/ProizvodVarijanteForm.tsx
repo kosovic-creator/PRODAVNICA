@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
+import { Input } from "@prodavnica/ui";
+import { Button } from "@prodavnica/ui";
+import { Label } from "@prodavnica/ui";
 import type { VarijantaData } from '@/lib/actions/proizvodi';
 
 interface ProizvodVarijanteFormProps {

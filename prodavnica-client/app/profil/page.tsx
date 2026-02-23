@@ -9,7 +9,7 @@ import { revalidatePath } from 'next/cache';
 import DeleteProfilButton from './components/DeleteProfilButton';
 import ProfilSkeleton from './components/ProfilSkeleton';
 import { getLanguageFromCookies, getLocaleMessages } from '@/i18n/i18n';
-import { Button } from '@/components/ui/button';
+import { Button } from "@prodavnica/ui";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

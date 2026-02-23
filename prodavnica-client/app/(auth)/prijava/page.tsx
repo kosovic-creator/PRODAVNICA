@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from "@prodavnica/ui";
 import PrijavaForm from './PrijavaForm';
 
 export const metadata: Metadata = {

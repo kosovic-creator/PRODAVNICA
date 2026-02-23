@@ -5,10 +5,10 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { z } from 'zod';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from "@prodavnica/ui";
+import { Input } from "@prodavnica/ui";
+import { Label } from "@prodavnica/ui";
+import { Checkbox } from "@prodavnica/ui";
 import { prijavaSchema } from '@/lib/validators';
 
 interface PrijavaFormProps {

@@ -2,8 +2,8 @@
 import React from 'react';
 import { deleteKorisnik, deleteKorisnikAdmin } from '@/lib/actions/korisnici';
 import ConfirmModal from '@/app/components/ui/ConfirmModal';
-import { Button } from "@/components/ui/button";
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
+import { Button } from "@prodavnica/ui";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@prodavnica/ui";
 
 interface Korisnik {
   id: string;

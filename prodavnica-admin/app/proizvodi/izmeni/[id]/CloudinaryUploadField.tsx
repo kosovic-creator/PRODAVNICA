@@ -2,7 +2,7 @@
 import { useState } from "react";
 // Pretpostavljamo da postoji CloudinaryUpload komponenta u app/components/CloudinaryUpload.tsx
 import CloudinaryUpload from '../../../components/CloudinaryUpload';
-import { Button } from "@/components/ui/button";
+import { Button } from "@prodavnica/ui";
 
 export default function CloudinaryUploadField({ initialImages = [] }: { initialImages?: string[] }) {
   const [images, setImages] = useState<string[]>(initialImages);

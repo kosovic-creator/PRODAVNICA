@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { FaStar } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { Button } from "@/components/ui/button";
+import { Button } from "@prodavnica/ui";
 import { obrisiOcenuStavke, upsertOcenaStavke } from "@/lib/actions";
 
 interface RateStavkaProps {

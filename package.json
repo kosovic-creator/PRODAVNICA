@@ -11,8 +11,11 @@
   ],
   "scripts": {
     "dev": "concurrently \"npm run dev -w prodavnica-admin\" \"npm run dev -w prodavnica-client\"",
+    "build": "npm run build:admin && npm run build:client",
     "build:admin": "npm run build -w prodavnica-admin",
     "build:client": "npm run build -w prodavnica-client",
+    "start:admin": "npm start -w prodavnica-admin",
+    "start:client": "npm start -w prodavnica-client",
     "prisma:migrate:dev": "npm run migrate:dev -w shared-prisma",
     "prisma:migrate:deploy": "npm run migrate:deploy -w shared-prisma",
     "prisma:studio": "npm run studio -w shared-prisma"

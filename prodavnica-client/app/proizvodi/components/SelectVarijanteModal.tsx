@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { Proizvodi } from '@/types';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@prodavnica/ui";
+import { Button } from "@prodavnica/ui";
 
 type VarijantaSummary = {
   boja: string;
