@@ -29,9 +29,6 @@
       ],
       "@/styles/*": [
         "styles/*"
-      ],
-      "@/components/*": [
-        "components/*"
       ]
     }
   },
