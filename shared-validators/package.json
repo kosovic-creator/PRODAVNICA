@@ -1,0 +1,13 @@
+{
+  "name": "@prodavnica/validators",
+  "version": "1.0.0",
+  "description": "Shared Zod validation schemas for prodavnica-admin and prodavnica-client",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "echo \"shared-validators: no build step\""
+  },
+  "dependencies": {
+    "zod": "^4.1.11"
+  }
+}

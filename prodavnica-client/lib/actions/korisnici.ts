@@ -1,7 +1,7 @@
 'use server';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { randomUUID } from 'crypto';
 import type { UpdateKorisnikData } from '@/types';
 

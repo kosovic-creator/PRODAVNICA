@@ -6,6 +6,9 @@
   "packageManager": "npm@11.6.3",
   "workspaces": [
     "shared-prisma",
+    "shared-lib",
+    "shared-ui",
+    "shared-validators",
     "prodavnica-admin",
     "prodavnica-client"
   ],

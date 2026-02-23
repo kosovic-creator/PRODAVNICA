@@ -2,7 +2,7 @@
 'use server';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
