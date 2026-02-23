@@ -4,9 +4,7 @@ import Link from 'next/link';
 import OmiljeniButton from '../proizvodi/components/OmiljeniButton';
 import AddToCartButton from '../proizvodi/components/AddToCartButton';
 import ProductPrice from '../proizvodi/components/product-price';
-import { Button } from "@prodavnica/ui";
 import { getLocaleMessages, getLanguageFromCookies } from '@/i18n/i18n';
-import { FaInfoCircle } from 'react-icons/fa';
 import { Suspense } from 'react';
 import GridSkeleton from './components/GridSkeleton';
 
@@ -80,33 +78,37 @@ async function GridContent() {
               </div>
 
               {/* Slika */}
-              <div className="flex justify-center mb-4">
-                {imageUrl ? (
-                  <div className="relative w-32 h-32 group-hover:scale-105 transition-transform duration-300">
-                    <Image
-                      src={imageUrl}
-                      alt={naziv || 'Proizvod'}
-                      fill
-                      className="object-contain rounded-lg"
-                      sizes="(max-width: 768px) 100vw, 128px"
-                      quality={90}
-                    />
-                  </div>
-                ) : (
+              <Link href={`/proizvodi/${proizvod.id}`}>
+                <div className="flex justify-center mb-4 cursor-pointer">
+                  {imageUrl ? (
+                    <div className="relative w-32 h-32 group-hover:scale-105 transition-transform duration-300">
+                      <Image
+                        src={imageUrl}
+                        alt={naziv || 'Proizvod'}
+                        fill
+                        className="object-contain rounded-lg"
+                        sizes="(max-width: 768px) 100vw, 128px"
+                        quality={90}
+                      />
+                    </div>
+                  ) : (
                     <div className="w-32 h-32 bg-linear-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
                       <span className="text-5xl">
-                      {lang === 'en'
-                        ? (proizvod.kategorija_en === 'bike' ? '🚴' : proizvod.kategorija_en === 'shoes' ? '👟' : '📦')
-                        : (proizvod.kategorija_sr === 'bicikla' ? '🚴' : proizvod.kategorija_sr === 'patike' ? '👟' : '📦')}
-                    </span>
-                  </div>
-                )}
-              </div>
+                        {lang === 'en'
+                          ? (proizvod.kategorija_en === 'bike' ? '🚴' : proizvod.kategorija_en === 'shoes' ? '👟' : '📦')
+                          : (proizvod.kategorija_sr === 'bicikla' ? '🚴' : proizvod.kategorija_sr === 'patike' ? '👟' : '📦')}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </Link>
 
               {/* Naziv */}
-              <h3 className="text-xl font-bold text-center mb-2 text-gray-800 line-clamp-2 min-h-14">
-                {naziv}
-              </h3>
+              <Link href={`/proizvodi/${proizvod.id}`}>
+                <h3 className="text-xl font-bold text-center mb-2 text-gray-800 line-clamp-2 min-h-14 hover:text-gray-600 transition-colors cursor-pointer">
+                  {naziv}
+                </h3>
+              </Link>
 
               {/* Opis */}
               {opis && (
@@ -139,16 +141,8 @@ async function GridContent() {
               </div>
 
               {/* Akcije */}
-              <div className="flex gap-0 p-0">
-                <div className="flex-1">
-                  <AddToCartButton proizvod={proizvod} t={t} />
-                </div>
-                <Button asChild variant="secondary" className="flex-1 w-full rounded-none h-full flex items-center justify-center">
-                  <Link href={`/proizvodi/${proizvod.id}`}>
-                    <FaInfoCircle className="w-4 h-4" />
-                    {t.detalji}
-                  </Link>
-                </Button>
+              <div className="p-0">
+                <AddToCartButton proizvod={proizvod} t={t} />
               </div>
             </div>
           );

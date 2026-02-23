@@ -3,7 +3,8 @@
 import { useState, useTransition } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaTrashAlt, FaPlus, FaMinus } from 'react-icons/fa';
+import { FaPlus, FaMinus } from 'react-icons/fa';
+import { Trash2 } from 'lucide-react';
 import { updateStavkuKorpe, ukloniStavkuKorpe } from '@/lib/actions';
 import { useCart } from '../../components/KorpaContext';
 import { Button } from "@prodavnica/ui";
@@ -173,10 +174,10 @@ export default function KorpaItem({ stavka }: KorpaItemProps) {
           disabled={isPending}
           variant="destructive"
           size="icon"
-          className="h-9 w-9"
+          className="h-9 w-9 flex items-center justify-center"
           aria-label={t.izbrisi_artikal || "Izbriši artikal"}
         >
-          <FaTrashAlt className="w-4 h-4" />
+          <Trash2 className="w-4 h-4" />
         </Button>
       </div>
     </Link>

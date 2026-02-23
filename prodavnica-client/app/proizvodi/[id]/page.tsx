@@ -12,6 +12,7 @@ import { Metadata } from 'next';
 import ProductVarijanteSection from '../components/ProductVarijanteSection';
 import { Suspense } from 'react';
 import ProizvodDetailSkeleton from '../components/ProizvodDetailSkeleton';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'Proizvod',
@@ -49,8 +50,6 @@ export default async function ProizvodPage({ params }: { params: Promise<{ id: s
     ratingCount: result.data.ratingCount ?? 0,
   };
 
-  const naziv = lang === 'en' ? proizvod.naziv_en : proizvod.naziv_sr;
-
   return (
     <ClientLayout>
       <Suspense fallback={<ProizvodDetailSkeleton />}>
@@ -60,7 +59,7 @@ export default async function ProizvodPage({ params }: { params: Promise<{ id: s
   );
 }
 
-async function ProizvodDetailContent({ proizvod, lang, t }: { proizvod: Proizvodi; lang: string; t: any }) {
+async function ProizvodDetailContent({ proizvod, lang, t }: { proizvod: Proizvodi; lang: string; t: Record<string, string> }) {
   const naziv = lang === 'en' ? proizvod.naziv_en : proizvod.naziv_sr;
   const opis = lang === 'en' ? proizvod.opis_en : proizvod.opis_sr;
   const karakteristike = lang === 'en' ? proizvod.karakteristike_en : proizvod.karakteristike_sr;
@@ -68,6 +67,13 @@ async function ProizvodDetailContent({ proizvod, lang, t }: { proizvod: Proizvod
   const pol = lang === 'en' ? proizvod.pol_en : proizvod.pol;
   const uzrast = lang === 'en' ? proizvod.uzrast_en : proizvod.uzrast;
   const materijal = lang === 'en' ? proizvod.materijal_en : proizvod.materijal;
+
+  // Breadcrumbs items
+  const breadcrumbItems = [
+    ...(pol ? [{ label: pol.toUpperCase() }] : []),
+    ...(kategorija ? [{ label: kategorija.toUpperCase() }] : []),
+  ];
+
   const detalji = [
     { label: t['pol'] || 'Pol', value: pol },
     { label: t['uzrast'] || 'Uzrast', value: uzrast },
@@ -82,7 +88,10 @@ async function ProizvodDetailContent({ proizvod, lang, t }: { proizvod: Proizvod
   return (
     <>
       <div className="min-h-screen bg-gray-50 py-8">
-        <div className="max-w-4xl mx-auto p-4">
+        <div className="max-w-7xl mx-auto px-4">
+          {/* Breadcrumbs */}
+          <Breadcrumbs items={breadcrumbItems} />
+
           <Link
             href="/proizvodi"
             className="flex items-center gap-2 mb-6 text-gray-500 hover:text-gray-700 transition"

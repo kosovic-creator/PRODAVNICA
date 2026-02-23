@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Proizvodi } from '@/types';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@prodavnica/ui";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@prodavnica/ui";
 import { Button } from "@prodavnica/ui";
 
 type VarijantaSummary = {
@@ -95,6 +95,9 @@ export default function SelectVarijanteModal({
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{t['odaberi_varijantu'] || 'Odaberi varijantu'}</DialogTitle>
+          <DialogDescription>
+            {t['odaberi_boju_velicinu'] || 'Molimo odaberite boju i veličinu proizvoda'}
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6">

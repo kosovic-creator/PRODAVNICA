@@ -12,7 +12,6 @@ import { useCart } from '../../components/KorpaContext';
 import { Button } from "@prodavnica/ui";
 import { useLanguage } from '@/app/components/LanguageContext';
 import { getNamespace } from '@/lib/translations';
-import SelectVarijanteModal from './SelectVarijanteModal';
 
 declare module 'next-auth' {
   interface Session {
@@ -32,7 +31,7 @@ interface AddToCartButtonProps {
   t?: Record<string, string>;
 }
 
-export default function AddToCartButton({ proizvod, selectedBoja, selectedVelicina, t: tProizvodi }: AddToCartButtonProps) {
+export default function AddToCartButton({ proizvod, selectedBoja, selectedVelicina }: AddToCartButtonProps) {
   const { lang } = useLanguage();
   const t = getNamespace(lang, 'addToCartButton');
   const { data: session } = useSession();
@@ -40,23 +39,32 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
 
   const [isPending, startTransition] = useTransition();
   const [isAdding, setIsAdding] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [localSelectedBoja, setLocalSelectedBoja] = useState<string | null>(selectedBoja || null);
-  const [localSelectedVelicina, setLocalSelectedVelicina] = useState<string | null>(selectedVelicina || null);
   const { refreshKorpa } = useCart();
 
   const hasVarijante = proizvod.varijante && proizvod.varijante.length > 0;
 
-  const handleDodajUKorpu = async (boja?: string, velicina?: string) => {
+  const handleClick = () => {
     const korisnikId = session?.user?.id;
+
+    // Proveri da li je korisnik prijavljen
     if (!korisnikId) {
       toast.error(t.loginRequired, { duration: 4000 });
       router.push('/prijava');
       return;
     }
 
-    if (isAdding) return;
+    // Ako je odabrana veličina (boja je opciona), dodaj u korpu
+    if (selectedVelicina) {
+      handleDodajUKorpu();
+    } else {
+      // Ako veličina nije odabrana (grid prikaz), preusmeri na stranicu detalja
+      router.push(`/proizvodi/${proizvod.id}`);
+    }
+  };
+
+  const handleDodajUKorpu = async () => {
+    const korisnikId = session?.user?.id;
+    if (!korisnikId || isAdding) return;
 
     setIsAdding(true);
 
@@ -66,8 +74,8 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
           korisnikId,
           proizvodId: proizvod.id,
           kolicina: 1,
-          boja: boja || selectedBoja || undefined,
-          velicina: velicina || selectedVelicina || undefined
+          boja: selectedBoja || undefined,
+          velicina: selectedVelicina || undefined
         });
 
         if (!result.success) {
@@ -81,7 +89,6 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
         toast.success(t.addSuccess, { duration: 4000 });
       } catch (error) {
         console.error('Greška:', error);
-        setError(t.addErrorGeneric);
         toast.error(t.addErrorGeneric, { duration: 4000 });
       } finally {
         setIsAdding(false);
@@ -89,63 +96,24 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
     });
   };
 
-  const handleOpenModal = () => {
-    const korisnikId = session?.user?.id;
-    if (!korisnikId) {
-      toast.error(t.loginRequired, { duration: 4000 });
-      router.push('/prijava');
-      return;
-    }
-    setIsModalOpen(true);
-  };
-
-  const handleConfirmVarijanta = (boja: string, velicina: string) => {
-    setLocalSelectedBoja(boja);
-    setLocalSelectedVelicina(velicina);
-    setIsModalOpen(false);
-    handleDodajUKorpu(boja, velicina);
-  };
-
-  // Ako su već odabrane boja i veličina (npr. na stranici detaljnog proizvoda), direktno dodaj u korpu
-  const handleClick = () => {
-    if (selectedBoja && selectedVelicina) {
-      // Direktno dodaj u korpu bez otvaranja modala
-      handleDodajUKorpu(selectedBoja, selectedVelicina);
-    } else {
-      // Otvori modal za odabir varijante
-      handleOpenModal();
-    }
-  };
-
   return (
-    <>
-      <Button
-        variant="default"
-        className="flex items-center justify-center gap-2 rounded-none flex-1 w-full h-full"
-        onClick={handleClick}
-        disabled={!hasVarijante || isAdding || isPending}
-      >
-        {isAdding ? (
-          <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
-        ) : (
-          <FaCartPlus />
-        )}
-        {isAdding
-          ? t.adding
-          : !hasVarijante
+    <Button
+      variant="default"
+      className="w-full h-full text-sm font-medium rounded-none flex items-center justify-center gap-2"
+      onClick={handleClick}
+      disabled={!hasVarijante || isAdding || isPending}
+    >
+      {isAdding ? (
+        <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+      ) : (
+        <FaCartPlus className="w-4 h-4" />
+      )}
+      {isAdding
+        ? t.adding
+        : !hasVarijante
           ? t.outOfStock
           : t.addToCart
-        }
-      </Button>
-      <div>{error && <p className="text-sm text-red-600 mt-2">{error}</p>}</div>
-
-      <SelectVarijanteModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={handleConfirmVarijanta}
-        proizvod={proizvod}
-        t={tProizvodi || {}}
-      />
-    </>
+      }
+    </Button>
   );
 }

@@ -2,16 +2,15 @@ import ProizvodiSkeleton from './components/ProizvodiSkeleton';
 import { Suspense } from 'react';
 import { getProizvodi } from './../../lib/actions/proizvodi';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Card, CardContent } from "@prodavnica/ui";
 import { FaStar } from 'react-icons/fa';
-import { FaInfoCircle } from 'react-icons/fa';
 import ProductPrice from './components/product-price';
 import { getLocaleMessages, getLanguageFromCookies } from '@/i18n/i18n';
 import { Proizvodi } from '@/types';
 import AddToCartButton from './components/AddToCartButton';
 import OmiljeniButton from './components/OmiljeniButton';
 import PaginationControls from './components/PaginationControls';
-import { Button } from "@prodavnica/ui";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -74,19 +73,23 @@ export default async function ProizvodiPage({ searchParams }: { searchParams: Pr
                 return (
                   <Card key={proizvod.id} className="relative flex flex-col shadow-sm hover:shadow-md transition-shadow">
                     <CardContent className="p-4 pb-20">
-                      <div className="mb-3 flex justify-center">
-                        <Image
-                          src={glavnaSlika}
-                          alt={naziv || 'Slika proizvoda'}
-                          width={400}
-                          height={300}
-                          className="object-contain rounded-lg shadow-lg"
-                          unoptimized
-                          priority
-                        />
-                      </div>
+                      <Link href={`/proizvodi/${proizvod.id}`} className="block mb-3">
+                        <div className="flex justify-center cursor-pointer hover:opacity-90 transition-opacity">
+                          <Image
+                            src={glavnaSlika}
+                            alt={naziv || 'Slika proizvoda'}
+                            width={400}
+                            height={300}
+                            className="object-contain rounded-lg shadow-lg"
+                            unoptimized
+                            priority
+                          />
+                        </div>
+                      </Link>
                       <div className="flex-1 space-y-2">
-                        <h3 className="font-semibold text-lg text-gray-900 line-clamp-2">{naziv}</h3>
+                        <Link href={`/proizvodi/${proizvod.id}`}>
+                          <h3 className="font-semibold text-lg text-gray-900 line-clamp-2 hover:text-gray-700 transition-colors cursor-pointer">{naziv}</h3>
+                        </Link>
                         <p className="text-gray-600 text-sm line-clamp-2">{opis}</p>
                         <p className="text-gray-500 text-xs line-clamp-1">{karakteristike}</p>
                         <div className="flex items-center gap-2 text-sm">
@@ -122,17 +125,9 @@ export default async function ProizvodiPage({ searchParams }: { searchParams: Pr
                         <OmiljeniButton proizvodId={proizvod.id} />
                       </div>
                     </CardContent>
-                    {/* Button group at the bottom */}
-                    <div className="flex flex-col sm:flex-row gap-0 p-4 pt-0 absolute left-0 right-0 bottom-0">
-                      <Button asChild variant="secondary" className="flex-1 flex w-full items-center justify-center gap-2 text-sm font-medium rounded-none">
-                        <a href={`/proizvodi/${proizvod.id}`}>
-                          <FaInfoCircle className="w-4 h-4" />
-                          {t['detalji']}
-                        </a>
-                      </Button>
-                      <div className="flex-1">
-                        <AddToCartButton proizvod={proizvod} t={t} />
-                      </div>
+                    {/* Button at the bottom */}
+                    <div className="p-4 pt-0 absolute left-0 right-0 bottom-0">
+                      <AddToCartButton proizvod={proizvod} t={t} />
                     </div>
                   </Card>
                 );

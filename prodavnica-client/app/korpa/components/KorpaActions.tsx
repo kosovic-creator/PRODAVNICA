@@ -4,7 +4,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { FaTrashAlt, FaCreditCard, FaShoppingCart } from 'react-icons/fa';
+import { FaCreditCard, FaShoppingCart } from 'react-icons/fa';
+import { Trash2 } from 'lucide-react';
 import { ocistiKorpu } from '@/lib/actions/korpa';
 import { kreirajPorudzbinu } from '@/lib/actions/porudzbine';
 import { getPodaciPreuzimanja } from '@/lib/actions/podaci-preuzimanja';
@@ -322,14 +323,14 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
               onClick={handleZavrsiKupovinu}
               disabled={pendingKupovina || isPending}
               size="lg"
-              className="w-full h-12 text-base font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all"
+              className="w-full h-12 text-base font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
             >
               {pendingKupovina ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
               ) : (
-                  <FaShoppingCart className="mr-2 h-5 w-5" />
+                  <FaShoppingCart className="h-5 w-5" />
               )}
-              {t.zavrsi_kupovinu || 'Završi kupovinu'}
+              <span>{t.zavrsi_kupovinu || 'Završi kupovinu'}</span>
             </Button>
 
             {/* Montrypay */}
@@ -338,14 +339,14 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
               disabled={pendingMontrypay || isPending}
               size="lg"
               variant="outline"
-              className="w-full h-11 text-base font-medium border-2 border-green-600 text-green-600 hover:bg-green-50 hover:border-green-700 transition-all"
+              className="w-full h-11 text-base font-medium border-2 border-green-600 text-green-600 hover:bg-green-50 hover:border-green-700 transition-all flex items-center justify-center gap-2"
             >
               {pendingMontrypay ? (
                 <div className="w-5 h-5 border-2 border-green-600 border-t-transparent rounded-full animate-spin" />
               ) : (
-                <FaCreditCard className="mr-2 h-4 w-4" />
+                  <FaCreditCard className="h-4 w-4" />
               )}
-              {t.montrypay || 'Montrypay'}
+              <span>{t.montrypay || 'Montrypay'}</span>
             </Button>
 
             <Separator className="my-3" />
@@ -368,14 +369,14 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
               disabled={pendingKorpa || isPending}
               variant="ghost"
               size="sm"
-              className="w-full h-10 text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700 transition-all"
+              className="w-full h-10 text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700 transition-all flex items-center justify-center gap-2"
             >
               {pendingKorpa ? (
                 <div className="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
               ) : (
-                <FaTrashAlt className="mr-2 h-3 w-3" />
+                  <Trash2 className="h-3 w-3" />
               )}
-              {t.isprazni_korpu || 'Isprazni korpu'}
+              <span>{t.isprazni_korpu || 'Isprazni korpu'}</span>
             </Button>
           </div>
         </CardContent>
