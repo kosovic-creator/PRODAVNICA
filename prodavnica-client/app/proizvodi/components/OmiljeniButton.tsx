@@ -117,9 +117,9 @@ export default function OmiljeniButton({ proizvodId }: OmiljeniButtonProps) {
     <Button
       onClick={handleClick}
       disabled={loading || isPending}
-      variant={isProizvodOmiljeni ? "destructive" : "outline"}
+      variant="outline"
       size="icon"
-      className="rounded-full"
+      className={isProizvodOmiljeni ? "rounded-full text-red-600" : "rounded-full"}
       title={isProizvodOmiljeni ? (t.omiljeni_ukloniti || 'Ukloni iz omiljenih') : (t.omiljeni_dodati || 'Dodaj u omiljene')}
       aria-label={isProizvodOmiljeni ? (t.omiljeni_ukloniti || 'Ukloni iz omiljenih') : (t.omiljeni_dodati || 'Dodaj u omiljene')}
     >
