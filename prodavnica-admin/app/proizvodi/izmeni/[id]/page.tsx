@@ -2,6 +2,11 @@ import prisma from '@/lib/prisma';
 import ProizvodForm from '../../ProizvodForm';
 import { updateProizvod } from '@/lib/actions/proizvodi';
 import type { UpdateProizvodData } from '@/lib/actions/proizvodi';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Izmeni Proizvod",
+};
 
 async function handleUpdate(data: UpdateProizvodData) {
   'use server';

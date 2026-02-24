@@ -2,6 +2,11 @@
 import React from 'react';
 import prisma from '@/lib/prisma';
 import ClientProizvodiTable from './ClientProizvodiTable';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Proizvodi",
+};
 
 export default async function ProizvodiPage() {
   // SSR paginacija

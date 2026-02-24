@@ -3,7 +3,11 @@ import { FaUsers, FaBoxOpen, FaShoppingCart, FaChevronRight, FaEuroSign, FaClock
 import Link from 'next/link';
 import { getStats } from '@/lib/actions';
 import React from "react";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Dashboard",
+};
 
 export default async function AdminDashboard() {
   // Pretpostavljam da koristiš pathname za breadcrumbs, ali u server komponenti možeš koristiti cookies ili headers

@@ -1,5 +1,10 @@
 import ClientKorisnici from './ClientNotifications';
 import { createKorisnik } from '@/lib/actions/korisnici';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Dodaj Korisnika",
+};
 
 async function handleSubmit(formData: FormData) {
   'use server';

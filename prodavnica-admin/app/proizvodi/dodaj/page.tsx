@@ -1,6 +1,11 @@
 import ProizvodForm from '../ProizvodForm';
 import { createProizvod } from '@/lib/actions/proizvodi';
 import type { ProizvodData } from '@/lib/actions/proizvodi';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "Dodaj Proizvod",
+};
 
 async function handleCreate(data: ProizvodData) {
     'use server';

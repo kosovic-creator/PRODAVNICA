@@ -4,8 +4,11 @@ import KorisniciSuccess from './KorisniciSuccess';
 import KorisniciSkeleton from './KorisniciSkeleton';
 import ClientKorisniciTable from './ClientKorisniciTable';
 import Link from 'next/link';
+import { Metadata } from 'next';
 
-
+export const metadata: Metadata = {
+  title: "Korisnici",
+};
 
 export default async function AdminKorisniciPage({ searchParams }: { searchParams: Promise<{ success?: string; tab?: string }> }) {
 

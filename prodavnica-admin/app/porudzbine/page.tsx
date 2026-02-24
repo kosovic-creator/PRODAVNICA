@@ -5,6 +5,12 @@ import PorudzbineSuccess from './PorudzbineSuccess';
 import { Button } from "@prodavnica/ui";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@prodavnica/ui";
 import { StatusSelect } from '../components/StatusSelect';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Porudžbine",
+};
+
 // Server action za brisanje porudžbine
 export async function handleDeleteAction(formData: FormData) {
   'use server';
