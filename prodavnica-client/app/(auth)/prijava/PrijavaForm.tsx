@@ -10,21 +10,22 @@ import { Input } from "@prodavnica/ui";
 import { Label } from "@prodavnica/ui";
 import { Checkbox } from "@prodavnica/ui";
 import { prijavaSchema } from '@/lib/validators';
+import { useI18n } from '@/app/components/I18nProvider';
 
 interface PrijavaFormProps {
-    tAuth: any;
     savedEmail: string;
     errorMessage: string;
     onRememberMe: (email: string) => Promise<void>;
 }
 
-export default function PrijavaForm({ tAuth, savedEmail, errorMessage, onRememberMe }: PrijavaFormProps) {
+export default function PrijavaForm({ savedEmail, errorMessage, onRememberMe }: PrijavaFormProps) {
     const router = useRouter();
     const formRef = useRef<HTMLFormElement>(null);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [touched, setTouched] = useState<Record<string, boolean>>({});
+    const { t: i18nT } = useI18n();
 
-    const t = (key: string) => tAuth[key] || key;
+    const t = (key: string) => i18nT('auth', `login.${key}`);
 
     const validationSchema = prijavaSchema(t);
 
@@ -115,7 +116,7 @@ export default function PrijavaForm({ tAuth, savedEmail, errorMessage, onRemembe
                   id="email"
                   name="email"
                   type="email"
-                  placeholder={tAuth.emailPlaceholder || 'ime@primer.com'}
+                    placeholder={t('emailPlaceholder') || 'ime@primer.com'}
                   defaultValue={savedEmail}
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -129,12 +130,12 @@ export default function PrijavaForm({ tAuth, savedEmail, errorMessage, onRemembe
 
           {/* Password Input */}
           <div className="space-y-1">
-              <Label htmlFor="lozinka">{tAuth.password || 'Lozinka'}</Label>
+                <Label htmlFor="lozinka" suppressHydrationWarning>{t('password') || 'Lozinka'}</Label>
               <Input
                   id="lozinka"
                   name="lozinka"
                   type="password"
-                  placeholder={tAuth.passwordPlaceholder || '••••••••'}
+                    placeholder={t('passwordPlaceholder') || '••••••••'}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     className={errors.lozinka ? 'border-red-500' : ''}
@@ -152,8 +153,8 @@ export default function PrijavaForm({ tAuth, savedEmail, errorMessage, onRemembe
                   name="rememberMe"
                   defaultChecked={!!savedEmail}
               />
-              <Label htmlFor="rememberMe" className="text-sm cursor-pointer">
-                  {tAuth.rememberMe || 'Zapamti me'}
+                <Label htmlFor="rememberMe" className="text-sm cursor-pointer" suppressHydrationWarning>
+                    {t('rememberMe') || 'Zapamti me'}
               </Label>
           </div>
 
@@ -165,8 +166,8 @@ export default function PrijavaForm({ tAuth, savedEmail, errorMessage, onRemembe
           )}
 
           {/* Submit Button */}
-          <Button type="submit" className="w-full font-medium">
-              {tAuth.submit || 'Prijavi se'}
+            <Button type="submit" className="w-full font-medium" suppressHydrationWarning>
+                {t('submit') || 'Prijavi se'}
           </Button>
 
             {/* Separator */}
@@ -175,8 +176,8 @@ export default function PrijavaForm({ tAuth, savedEmail, errorMessage, onRemembe
                     <span className="w-full border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
-                        {tAuth.orContinueWith || 'Ili nastavite sa'}
+                    <span className="bg-background px-2 text-muted-foreground" suppressHydrationWarning>
+                        {t('orContinueWith') || 'Ili nastavite sa'}
                     </span>
                 </div>
             </div>
@@ -206,7 +207,7 @@ export default function PrijavaForm({ tAuth, savedEmail, errorMessage, onRemembe
                         fill="#EA4335"
                     />
                 </svg>
-                {tAuth.googleSignIn || 'Prijavite se sa Google'}
+                <span suppressHydrationWarning>{t('loginWithGoogle') || 'Prijavite se sa Google'}</span>
             </Button>
       </form>
   );

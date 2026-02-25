@@ -2,16 +2,25 @@ import { regKorisnikSchema } from '@/lib/validators';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
-import RegistracijaForm from './RegistracijaForm';
+import RegistracijaContent from './RegistracijaContent';
 import { getLocaleMessages, getLanguageFromCookies } from '@/i18n/i18n';
 import prisma from '@/lib/prisma';
 import { createKorisnik } from '@/lib/actions/korisnici';
 import { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'Registracija',
-  description: 'Dobrodošli u našu prodavnicu! Pregledajte našu široku ponudu proizvoda i pronađite savršene artikle za sebe.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const lang = await getLanguageFromCookies();
+  const authMessages = getLocaleMessages(lang, 'auth');
+  const title = authMessages.register?.title || 'Registracija';
+  const description = lang === 'en'
+    ? 'Create a new account to start shopping and enjoy exclusive offers from our store.'
+    : 'Dobrodošli u našu prodavnicu! Pregledajte našu široku ponudu proizvoda i pronađite savršene artikle za sebe.';
+
+  return {
+    title,
+    description,
+  };
+}
 
 
 export default async function RegistracijaPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
@@ -133,15 +142,13 @@ export default async function RegistracijaPage({ searchParams }: { searchParams:
   }
 
   return (
-    <RegistracijaForm
+    <RegistracijaContent
       initialValues={initialValues}
       errorMap={errorMap}
       valueMap={valueMap}
-      translations={tAuth.register}
       errorParam={errorParam}
       successParam={successParam}
       successEmail={successEmail}
-      //vraća server action funkciju za submit u formi
       formAction={handleSubmit}
     />
   );

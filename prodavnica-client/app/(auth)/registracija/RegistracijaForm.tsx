@@ -13,6 +13,7 @@ import { Button } from "@prodavnica/ui";
 import { Input } from "@prodavnica/ui";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@prodavnica/ui";
 import { Label } from "@prodavnica/ui";
+import { useI18n } from '@/app/components/I18nProvider';
 
 
 export interface RegistracijaFormProps {
@@ -24,7 +25,6 @@ export interface RegistracijaFormProps {
   };
   errorMap: Record<string, string>;
   valueMap: Record<string, string>;
-  translations: Record<string, string>;
   errorParam?: string;
   successParam?: string;
   successEmail?: string;
@@ -36,7 +36,6 @@ export default function RegistracijaForm({
   initialValues,
   errorMap,
   valueMap,
-  translations,
   errorParam,
   successParam,
   successEmail,
@@ -50,10 +49,11 @@ export default function RegistracijaForm({
   const [localLozinka, setLocalLozinka] = useState<string>('');
   const [localPotvrdaLozinke, setLocalPotvrdaLozinke] = useState<string>('');
   const router = useRouter();
+  const { t: i18nT } = useI18n();
 
   const { pending } = useFormStatus();
 
-  const t = (key: string) => translations[key] || key;
+  const t = (key: string) => i18nT('auth', `register.${key}`);
 
   const validationSchema = regKorisnikSchema(t).pick({
     email: true,
@@ -188,14 +188,14 @@ export default function RegistracijaForm({
                 ) : null}
               </>
             )}
-            <Image
+            {/* <Image
               src='/apple-touch-icon.png'
               width={70}
               height={70}
               alt="Prodavnica logo"
               priority={true}
-            />
-            <CardTitle className="text-2xl font-bold">{t('title')}</CardTitle>
+            /> */}
+            <CardTitle className="text-2xl font-bold" suppressHydrationWarning>{t('title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <form action={formAction} className="space-y-4">
@@ -225,7 +225,7 @@ export default function RegistracijaForm({
 
               {/* Password Input */}
               <div className="space-y-1">
-                <Label htmlFor="lozinka">{t('password')}</Label>
+                <Label htmlFor="lozinka" suppressHydrationWarning>{t('password')}</Label>
                 <Input
                   id="lozinka"
                   name="lozinka"
@@ -248,7 +248,7 @@ export default function RegistracijaForm({
 
               {/* Confirm Password Input */}
               <div className="space-y-1">
-                <Label htmlFor="potvrdaLozinke">{t('confirm_password')}</Label>
+                <Label htmlFor="potvrdaLozinke" suppressHydrationWarning>{t('confirm_password')}</Label>
                 <Input
                   id="potvrdaLozinke"
                   name="potvrdaLozinke"
@@ -274,6 +274,7 @@ export default function RegistracijaForm({
                   type="button"
                   className="w-full font-medium"
                   onClick={handleTryAgain}
+                  suppressHydrationWarning
                 >
                   {t('try_again') || 'Pokušaj ponovo'}
                 </Button>
@@ -282,6 +283,7 @@ export default function RegistracijaForm({
                   type="submit"
                   className="w-full font-medium"
                   disabled={pending}
+                    suppressHydrationWarning
                 >
                   {pending ? t('loading') || 'Registracija...' : t('submit')}
                 </Button>
@@ -289,7 +291,7 @@ export default function RegistracijaForm({
 
               {/* Link ka prijavi */}
               <div className="text-center">
-                <p className="text-sm">
+                <p className="text-sm" suppressHydrationWarning>
                   {t('have_account') || 'Već imate nalog?'}{' '}
                   <Link
                     href="/prijava"
