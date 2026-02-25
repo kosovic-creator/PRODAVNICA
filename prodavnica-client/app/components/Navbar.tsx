@@ -58,7 +58,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
                 onClick={() => setSidebarOpen?.(true)}
                 aria-label="Otvori meni"
               >
-                <FaBars className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                <FaBars className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
               </Button>
                <Link href="/" className="text-xl font-bold">
                 <Image
@@ -94,7 +94,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
               aria-label="Search"
               onClick={() => setShowMobileSearch(v => !v)}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7 text-white">
                 <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2" fill="none" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" strokeWidth="2" />
               </svg>
@@ -111,7 +111,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
                     aria-haspopup="true"
                     aria-expanded={dropdownOpen}
                   >
-                      <FaUserCircle className="text-white text-xl" />
+                      <FaUserCircle className="text-white text-2xl" />
                       <span className="hidden sm:inline">{tr('profile')}</span>
                     <span className="ml-1">▼</span>
                     </Button>
@@ -140,20 +140,20 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
                     className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-700 transition cursor-pointer text-white"
                     title={tr('logout')}
                 >
-                  <FaSignOutAlt />
+                    <FaSignOutAlt className="text-lg sm:text-xl" />
                     <span className="hidden sm:inline">{tr('logout')}</span>
                   </Button>
               </>
             ) : (
                   <Link href="/prijava" className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-700 transition text-white">
-                <FaSignInAlt />
+                    <FaSignInAlt className="text-lg sm:text-xl" />
                     <span>{tr('login') || 'Prijava'}</span>
               </Link>
             )}
             {/* Cart badge */}
               <Link href="/korpa" className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-white/10 transition relative">
               <span className="relative">
-                <FaShoppingCart />
+                  <FaShoppingCart className="text-lg sm:text-xl" />
                 {badgeCount > 0 && (
                     <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs font-bold border border-black shadow">
                     {badgeCount}
@@ -168,7 +168,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
               <Button
                 variant="ghost"
                 onClick={handleLangSwitch}
-                className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 text-xl leading-none cursor-pointer"
+                className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 text-2xl leading-none cursor-pointer"
               >
                 {language === 'sr' ? '🇬🇧' : '🇲🇪'}
               </Button>
