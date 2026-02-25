@@ -2,7 +2,7 @@ import { regKorisnikSchema } from '@/lib/validators';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
-import RegistracijaContent from './RegistracijaContent';
+import RegistracijaForm from './RegistracijaForm';
 import { getLocaleMessages, getLanguageFromCookies } from '@/i18n/i18n';
 import prisma from '@/lib/prisma';
 import { createKorisnik } from '@/lib/actions/korisnici';
@@ -142,7 +142,7 @@ export default async function RegistracijaPage({ searchParams }: { searchParams:
   }
 
   return (
-    <RegistracijaContent
+    <RegistracijaForm
       initialValues={initialValues}
       errorMap={errorMap}
       valueMap={valueMap}

@@ -295,9 +295,9 @@ export default function RegistracijaForm({
                   {t('have_account') || 'Već imate nalog?'}{' '}
                   <Link
                     href="/prijava"
-                    className="text-primary hover:underline font-medium"
+                    className="text-primary hover:underline font-medium transition-colors hover:text-blue-600"
                   >
-                    {t('login') || 'Prijavite se'}
+                    {t('login_link') || 'Prijavite se'}
                   </Link>
                 </p>
               </div>
