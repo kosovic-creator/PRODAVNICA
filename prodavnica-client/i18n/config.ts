@@ -16,6 +16,14 @@ import enOmiljeni from './locales/en/omiljeni.json';
 import enAddToCartButton from './locales/en/AddToCartButton.json';
 import enHome from './locales/en/home.json';
 import enFooter from './locales/en/footer.json';
+import enProfil from './locales/en/profil.json';
+import enMojePorudzbine from './locales/en/moje_porudzbine.json';
+import enKontakt from './locales/en/kontakt.json';
+import enKorisnici from './locales/en/korisnici.json';
+import enONama from './locales/en/o_nama.json';
+import enPodaciPreuzimanja from './locales/en/podaci-preuzimanja.json';
+import enPorudzbine from './locales/en/porudzbine.json';
+import enUspjesnoPlacanje from './locales/en/uspjesno_placanje.json';
 
 import srCommon from './locales/sr/common.json';
 import srAuth from './locales/sr/auth.json';
@@ -29,6 +37,14 @@ import srOmiljeni from './locales/sr/omiljeni.json';
 import srAddToCartButton from './locales/sr/AddToCartButton.json';
 import srHome from './locales/sr/home.json';
 import srFooter from './locales/sr/footer.json';
+import srProfil from './locales/sr/profil.json';
+import srMojePorudzbine from './locales/sr/moje_porudzbine.json';
+import srKontakt from './locales/sr/kontakt.json';
+import srKorisnici from './locales/sr/korisnici.json';
+import srONama from './locales/sr/o_nama.json';
+import srPodaciPreuzimanja from './locales/sr/podaci-preuzimanja.json';
+import srPorudzbine from './locales/sr/porudzbine.json';
+import srUspjesnoPlacanje from './locales/sr/uspjesno_placanje.json';
 
 const resources = {
   en: {
@@ -44,6 +60,14 @@ const resources = {
     addToCartButton: enAddToCartButton,
     home: enHome,
     footer: enFooter,
+    profil: enProfil,
+    moje_porudzbine: enMojePorudzbine,
+    kontakt: enKontakt,
+    korisnici: enKorisnici,
+    o_nama: enONama,
+    podaci_preuzimanja: enPodaciPreuzimanja,
+    porudzbine: enPorudzbine,
+    uspjesno_placanje: enUspjesnoPlacanje,
   },
   sr: {
     common: srCommon,
@@ -58,10 +82,18 @@ const resources = {
     addToCartButton: srAddToCartButton,
     home: srHome,
     footer: srFooter,
+    profil: srProfil,
+    moje_porudzbine: srMojePorudzbine,
+    kontakt: srKontakt,
+    korisnici: srKorisnici,
+    o_nama: srONama,
+    podaci_preuzimanja: srPodaciPreuzimanja,
+    porudzbine: srPorudzbine,
+    uspjesno_placanje: srUspjesnoPlacanje,
   },
 };
 
-const namespaces = ['common', 'auth', 'navbar', 'sidebar', 'proizvodi', 'korpa', 'placanje', 'notFound', 'omiljeni', 'addToCartButton', 'home', 'footer'];
+const namespaces = ['common', 'auth', 'navbar', 'sidebar', 'proizvodi', 'korpa', 'placanje', 'notFound', 'omiljeni', 'addToCartButton', 'home', 'footer', 'profil', 'moje_porudzbine', 'kontakt', 'korisnici', 'o_nama', 'podaci_preuzimanja', 'porudzbine', 'uspjesno_placanje'];
 
 if (!i18n.isInitialized) {
   i18n

@@ -20,12 +20,12 @@ export type { Language };
  * DEPRECATED: Koristi useLanguage iz useLanguageCompat.ts umjesto ovoga
  */
 export function useLanguage() {
-  const { language, setLanguage, isHydrated } = useI18n();
+  const { language, setLanguage } = useI18n();
 
   const context: LanguageContextType = {
     lang: language as Language,
     setLang: setLanguage,
-    isLoading: !isHydrated,
+    isLoading: false,
   };
 
   return context;

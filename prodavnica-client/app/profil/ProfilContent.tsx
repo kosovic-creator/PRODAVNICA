@@ -24,7 +24,7 @@ export default function ProfilContent({
     <ClientLayout>
       <div className="min-h-screen py-8">
         <div className="max-w-2xl mx-auto px-4">
-          <h1 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-2 text-center justify-center">
+                  <h1 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-2 text-center justify-center" suppressHydrationWarning>
             <span className="inline-block text-gray-700">
               <svg width="24" height="24" fill="currentColor">
                 <circle cx="12" cy="8" r="4" />
@@ -41,41 +41,41 @@ export default function ProfilContent({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-3">
                   <div className="bg-gray-50 p-3 rounded-lg">
-                    <span className="text-sm font-medium text-gray-600">{tr('email')}</span>
+                                      <span className="text-sm font-medium text-gray-600" suppressHydrationWarning>{tr('email')}</span>
                     <p className="text-base text-gray-800">{korisnik.email}</p>
                   </div>
                   <div className="bg-gray-50 p-3 rounded-lg">
-                    <span className="text-sm font-medium text-gray-600">{tr('name')}</span>
+                                      <span className="text-sm font-medium text-gray-600" suppressHydrationWarning>{tr('name')}</span>
                     <p className="text-base text-gray-800">{korisnik.podaciPreuzimanja?.ime || ''}</p>
                   </div>
                   <div className="bg-gray-50 p-3 rounded-lg">
-                    <span className="text-sm font-medium text-gray-600">{tr('surname')}</span>
+                                      <span className="text-sm font-medium text-gray-600" suppressHydrationWarning>{tr('surname')}</span>
                     <p className="text-base text-gray-800">{korisnik.podaciPreuzimanja?.prezime || ''}</p>
                   </div>
                   <div className="bg-gray-50 p-3 rounded-lg">
-                    <span className="text-sm font-medium text-gray-600">{tr('phone')}</span>
+                                      <span className="text-sm font-medium text-gray-600" suppressHydrationWarning>{tr('phone')}</span>
                     <p className="text-base text-gray-800">{korisnik.telefon}</p>
                   </div>
                   <div className="bg-gray-50 p-3 rounded-lg">
-                    <span className="text-sm font-medium text-gray-600">{tr('role')}</span>
+                                      <span className="text-sm font-medium text-gray-600" suppressHydrationWarning>{tr('role')}</span>
                     <p className="text-base text-gray-800">{korisnik.uloga}</p>
                   </div>
                 </div>
                 <div className="space-y-3">
                   <div className="bg-gray-50 p-3 rounded-lg">
-                    <span className="text-sm font-medium text-gray-600">{tr('address')}</span>
+                                      <span className="text-sm font-medium text-gray-600" suppressHydrationWarning>{tr('address')}</span>
                     <p className="text-base text-gray-800">{korisnik.adresa}</p>
                   </div>
                   <div className="bg-gray-50 p-3 rounded-lg">
-                    <span className="text-sm font-medium text-gray-600">{tr('city')}</span>
+                                      <span className="text-sm font-medium text-gray-600" suppressHydrationWarning>{tr('city')}</span>
                     <p className="text-base text-gray-800">{korisnik.grad}</p>
                   </div>
                   <div className="bg-gray-50 p-3 rounded-lg">
-                    <span className="text-sm font-medium text-gray-600">{tr('country')}</span>
+                                      <span className="text-sm font-medium text-gray-600" suppressHydrationWarning>{tr('country')}</span>
                     <p className="text-base text-gray-800">{korisnik.podaciPreuzimanja?.drzava || ''}</p>
                   </div>
                   <div className="bg-gray-50 p-3 rounded-lg">
-                    <span className="text-sm font-medium text-gray-600">{tr('postal_code')}</span>
+                                      <span className="text-sm font-medium text-gray-600" suppressHydrationWarning>{tr('postal_code')}</span>
                     <p className="text-base text-gray-800">{korisnik.postanskiBroj}</p>
                   </div>
                 </div>
@@ -85,6 +85,7 @@ export default function ProfilContent({
                   <Button
                     variant="default"
                     className="w-full px-4 py-3 rounded-lg shadow-md transition-colors flex items-center justify-center gap-2 text-base font-medium"
+                                      suppressHydrationWarning
                   >
                     <FaEdit />
                     {tr('edit_profile')}

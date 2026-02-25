@@ -21,7 +21,7 @@ export default function FooterContent() {
           <h3 className="text-white text-lg font-bold mb-4 flex items-center gap-2">
             <span className="text-amber-400">✨</span> {APP_NAME}
           </h3>
-          <p className="text-sm text-slate-400 leading-relaxed mb-4">
+          <p className="text-sm text-slate-400 leading-relaxed mb-4" suppressHydrationWarning>
             {t('footer', 'about_description')}
           </p>
           <div className="flex gap-3">
@@ -39,20 +39,20 @@ export default function FooterContent() {
 
         {/* Brzi linkovi */}
         <div className="flex flex-col">
-          <h4 className="text-white font-semibold text-base mb-4 border-b-2 border-amber-400 pb-2">
+          <h4 className="text-white font-semibold text-base mb-4 border-b-2 border-amber-400 pb-2" suppressHydrationWarning>
             {t('footer', 'navigation')}
           </h4>
           <nav className="flex flex-col gap-3">
-            <Link href="/proizvodi" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm">
+            <Link href="/proizvodi" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm" suppressHydrationWarning>
               {t('footer', 'products')}
             </Link>
-            <Link href="/mapa" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm flex items-center gap-2">
+            <Link href="/mapa" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm flex items-center gap-2" suppressHydrationWarning>
               <FaMapLocationDot size={16} /> {t('footer', 'map')}
             </Link>
-            <Link href="/korpa" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm">
+            <Link href="/korpa" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm" suppressHydrationWarning>
               {t('footer', 'cart')}
             </Link>
-            <Link href="/moje-porudzbine" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm">
+            <Link href="/moje-porudzbine" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm" suppressHydrationWarning>
               {t('footer', 'my_orders')}
             </Link>
           </nav>
@@ -60,20 +60,20 @@ export default function FooterContent() {
 
         {/* Korisnički nalog */}
         <div className="flex flex-col">
-          <h4 className="text-white font-semibold text-base mb-4 border-b-2 border-amber-400 pb-2">
+          <h4 className="text-white font-semibold text-base mb-4 border-b-2 border-amber-400 pb-2" suppressHydrationWarning>
             {t('footer', 'user_account')}
           </h4>
           <nav className="flex flex-col gap-3">
-            <Link href="/prijava" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm">
+            <Link href="/prijava" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm" suppressHydrationWarning>
               {t('footer', 'login')}
             </Link>
-            <Link href="/registracija" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm">
+            <Link href="/registracija" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm" suppressHydrationWarning>
               {t('footer', 'register')}
             </Link>
-            <Link href="/profil" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm">
+            <Link href="/profil" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm" suppressHydrationWarning>
               {t('footer', 'profile')}
             </Link>
-            <Link href="/omiljeni" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm">
+            <Link href="/omiljeni" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm" suppressHydrationWarning>
               {t('footer', 'favorite_products')}
             </Link>
           </nav>
@@ -81,18 +81,18 @@ export default function FooterContent() {
 
         {/* Kontakt */}
         <div className="flex flex-col">
-          <h4 className="text-white font-semibold text-base mb-4 border-b-2 border-amber-400 pb-2">
+          <h4 className="text-white font-semibold text-base mb-4 border-b-2 border-amber-400 pb-2" suppressHydrationWarning>
             {t('footer', 'contact')}
           </h4>
           <div className="flex flex-col gap-3">
-            <a href="tel:+38267135355" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm flex items-center gap-2">
+            <a href="tel:+38267135355" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm flex items-center gap-2" suppressHydrationWarning>
               <FaPhone size={16} /> {t('footer', 'phone')}
             </a>
-            <a href="mailto:info@prodavnica.me" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm flex items-center gap-2">
+            <a href="mailto:info@prodavnica.me" className="text-slate-400 hover:text-amber-400 transition-colors duration-200 text-sm flex items-center gap-2" suppressHydrationWarning>
               <FaEnvelope size={16} /> {t('footer', 'email')}
             </a>
-            <p className="text-slate-400 text-sm">
-              <span className="font-semibold">{t('footer', 'working_hours')}:</span><br />
+            <p className="text-slate-400 text-sm" suppressHydrationWarning>
+              <span className="font-semibold" suppressHydrationWarning>{t('footer', 'working_hours')}:</span><br />
               {t('footer', 'monday_friday')}<br />
               {t('footer', 'saturday')}
             </p>
@@ -105,19 +105,19 @@ export default function FooterContent() {
 
       {/* Copyright i donje linkove */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-        <p className="text-slate-400 text-sm">
+        <p className="text-slate-400 text-sm" suppressHydrationWarning>
           &copy; {currentYear} <span className="font-semibold text-amber-400">{APP_NAME}</span>.
-          <span className="ml-2">{t('footer', 'all_rights_reserved')}.</span><br className="sm:hidden" />
+          <span className="ml-2" suppressHydrationWarning>{t('footer', 'all_rights_reserved')}.</span><br className="sm:hidden" />
           <span className="text-xs mt-2 sm:mt-0">Izrada: Draško Kosović</span>
         </p>
         <div className="flex gap-6 text-sm">
-          <a href="#" className="text-slate-400 hover:text-amber-400 transition-colors duration-200">
+          <a href="#" className="text-slate-400 hover:text-amber-400 transition-colors duration-200" suppressHydrationWarning>
             {t('footer', 'terms_conditions')}
           </a>
-          <a href="#" className="text-slate-400 hover:text-amber-400 transition-colors duration-200">
+          <a href="#" className="text-slate-400 hover:text-amber-400 transition-colors duration-200" suppressHydrationWarning>
             {t('footer', 'privacy_policy')}
           </a>
-          <a href="#" className="text-slate-400 hover:text-amber-400 transition-colors duration-200">
+          <a href="#" className="text-slate-400 hover:text-amber-400 transition-colors duration-200" suppressHydrationWarning>
             Politika kolačića
           </a>
         </div>

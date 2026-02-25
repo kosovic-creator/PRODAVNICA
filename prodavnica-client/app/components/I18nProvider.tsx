@@ -19,7 +19,6 @@ interface I18nContextType {
   setLanguage: (lang: Language) => void;
   setLang?: (lang: Language) => void; // Alias za kompatibilnost
   t: (namespace: string, key: string) => string;
-  isHydrated: boolean;
 }
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
@@ -43,7 +42,6 @@ export function I18nProvider({
   initialLang?: Language;
 }) {
   const [language, setLanguageState] = useState<Language>(initialLang);
-  const [isHydrated, setIsHydrated] = useState(false);
 
   /**
    * Postavi novi jezik - spremi u cookie i sinkronizuj sa i18n
@@ -73,24 +71,18 @@ export function I18nProvider({
    */
   useEffect(() => {
     // Sinkronizuj i18n sa initialLang koji dolazi od servera
-    if (i18n && i18n.language !== initialLang) {
-      console.log('[I18nProvider] Syncing i18n from initialLang:', initialLang, 'was:', i18n.language);
-      i18n.changeLanguage(initialLang);
-    } else {
-      console.log('[I18nProvider] i18n already synced to:', initialLang);
+    if (i18n && typeof i18n.changeLanguage === 'function') {
+      i18n.changeLanguage(initialLang).catch(() => {
+        // Silent catch - ovo je OK ako se desavi greška pri loadanju
+      });
     }
   }, [initialLang]);
 
   /**
    * Hidratacija - čitaj iz cookie-ja i sinkronizuj
-   * Koristi odvojen effect da se pokrene nakon što je i18n inicijalizovan
+   * Koristi odvojen effect da sinkronizuje sa cookie-j nakon inicijalizacije
    */
   useEffect(() => {
-    // Očisti stare cookie-je ako postoje
-    if (document.cookie.includes('locale=')) {
-      document.cookie = 'locale=; path=/; max-age=0';
-    }
-
     // Čitaj jeziku iz cookie-ja
     const cookieLang = getCookieLanguage();
 
@@ -101,12 +93,6 @@ export function I18nProvider({
         i18n.changeLanguage(cookieLang);
       }
     }
-
-    // Postavi hidrataciju nakon svih sinkronizacija
-    // Koristi queueMicrotask da osiguraj da se svi updates završe prvo
-    queueMicrotask(() => {
-      setIsHydrated(true);
-    });
   }, [initialLang]);
 
   /**
@@ -134,9 +120,8 @@ export function I18nProvider({
       setLanguage,
       setLang: setLanguage, // Alias
       t,
-      isHydrated,
     };
-  }, [language, setLanguage, isHydrated]);
+  }, [language, setLanguage]);
 
   return (
     <I18nContext.Provider value={value}>

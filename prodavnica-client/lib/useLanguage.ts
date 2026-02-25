@@ -12,11 +12,11 @@ export function useLanguage(): {
   setLang: (lang: Language) => void;
   isLoading: boolean;
 } {
-  const { language, setLanguage, isHydrated } = useI18n();
+  const { language, setLanguage } = useI18n();
 
   return {
     lang: language as Language,
     setLang: setLanguage,
-    isLoading: !isHydrated,
+    isLoading: false,
   };
 }

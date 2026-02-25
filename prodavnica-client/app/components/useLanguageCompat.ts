@@ -8,11 +8,11 @@ import type { Language } from '@/i18n/constants';
  * Koristi novu I18nProvider infrastrukturu
  */
 export function useLanguage() {
-  const { language, setLanguage, isHydrated } = useI18n();
+  const { language, setLanguage } = useI18n();
 
   return {
     lang: language as Language,
     setLang: setLanguage,
-    isLoading: !isHydrated,
+    isLoading: false,
   };
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import Link from 'next/link';
@@ -20,13 +21,13 @@ export default function KorpaContent({ stavke, userId }: KorpaContentProps) {
     return (
       <StripeWrapper>
         <div className="flex flex-col items-center justify-center min-h-[300px] text-center">
-          <h2 className="text-xl font-semibold text-shadow-gray-300 mb-2">
+                <h2 className="text-xl font-semibold text-shadow-gray-300 mb-2" suppressHydrationWarning>
             {tr('prazna_korpa')}
           </h2>
-          <p className="text-gray-500 mb-4">
+                <p className="text-gray-500 mb-4" suppressHydrationWarning>
             {tr('nema_proizvoda')}
           </p>
-          <Button variant='default' asChild>
+                <Button variant='default' asChild suppressHydrationWarning>
             <Link href="/proizvodi">
               {tr('nastavi_kupovinu')}
             </Link>
@@ -39,7 +40,7 @@ export default function KorpaContent({ stavke, userId }: KorpaContentProps) {
   return (
     <StripeWrapper>
       <div className="max-w-7xl mx-auto px-4">
-        <h1 className="text-2xl text-amber-50 md:text-3xl font-bold mb-6 flex items-center justify-center gap-2 text-center">
+              <h1 className="text-2xl text-amber-50 md:text-3xl font-bold mb-6 flex items-center justify-center gap-2 text-center" suppressHydrationWarning>
           {tr('naslov')}
         </h1>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

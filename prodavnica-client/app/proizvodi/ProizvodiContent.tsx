@@ -9,9 +9,8 @@ import { Proizvodi } from '@/types';
 import AddToCartButton from './components/AddToCartButton';
 import OmiljeniButton from './components/OmiljeniButton';
 import PaginationControls from './components/PaginationControls';
-import ProizvodiSkeleton from './components/ProizvodiSkeleton';
 import { useI18n } from '@/app/components/I18nProvider';
-import { useSearchParams } from 'next/navigation';
+
 
 interface ProizvodiContentProps {
   proizvodi: Proizvodi[];
@@ -35,11 +34,11 @@ export default function ProizvodiContent({
     return (
       <div className="min-h-screen">
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <h1 className="text-2xl md:text-3xl font-bold mb-6 flex items-center justify-center gap-2 text-center">
+                <h1 className="text-2xl md:text-3xl font-bold mb-6 flex items-center justify-center gap-2 text-center" suppressHydrationWarning>
             {tr('artikli')}
           </h1>
           <div className="col-span-full text-center text-gray-500 py-12">
-            <p className="text-lg">
+                    <p className="text-lg" suppressHydrationWarning>
               {search
                 ? tr('nema_za_pretragu')?.replace('{search}', search)
                 : tr('nema_proizvoda')}
@@ -53,7 +52,7 @@ export default function ProizvodiContent({
   return (
     <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-2xl md:text-3xl font-bold mb-6 flex items-center justify-center gap-2 text-center">
+              <h1 className="text-2xl md:text-3xl font-bold mb-6 flex items-center justify-center gap-2 text-center" suppressHydrationWarning>
           {tr('artikli')}
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
@@ -112,13 +111,13 @@ export default function ProizvodiContent({
                       </span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-500">{tr('kategorija')}: {kategorija || tr('nema_kategorije')}</span>
+                                <span className="text-gray-500" suppressHydrationWarning>{tr('kategorija')}: {kategorija || tr('nema_kategorije')}</span>
                     </div>
                     {detalji.length > 0 && (
                       <div className="text-xs text-gray-600 space-y-1">
                         {detalji.slice(0, 3).map((item) => (
                           <div key={item.label}>
-                            <span className="font-medium text-gray-700">{item.label}:</span> {item.value}
+                                <span className="font-medium text-gray-700" suppressHydrationWarning>{item.label}:</span> {item.value}
                           </div>
                         ))}
                       </div>
