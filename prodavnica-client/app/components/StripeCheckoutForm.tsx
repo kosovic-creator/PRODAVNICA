@@ -4,8 +4,7 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { Button } from "@prodavnica/ui";
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useLanguage } from '@/app/components/LanguageContext';
-import { getNamespace } from '@/lib/translations';
+import { useI18n } from '@/app/components/I18nProvider';
 
 type StripeCheckoutFormProps = {
     amountInCents: number;
@@ -18,14 +17,13 @@ export default function StripeCheckoutForm({ amountInCents, onSuccess, disabled 
     const elements = useElements();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const { lang } = useLanguage();
-    const t = getNamespace(lang, 'placanje');
+    const { t } = useI18n();
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
         if (!stripe || !elements) {
-            toast.error(t.payment_not_ready || 'Plaćanje nije spremno. Pokušajte ponovo.');
+            toast.error(t('placanje', 'payment_not_ready') || 'Plaćanje nije spremno. Pokušajte ponovo.');
             return;
         }
 
@@ -44,7 +42,7 @@ export default function StripeCheckoutForm({ amountInCents, onSuccess, disabled 
             const data = await response.json();
 
             if (!response.ok || !data?.clientSecret) {
-                throw new Error(data?.error || t.failed_create_payment || 'Neuspelo kreiranje plaćanja');
+                throw new Error(data?.error || t('placanje', 'failed_create_payment') || 'Neuspelo kreiranje plaćanja');
             }
 
             const result = await stripe.confirmCardPayment(data.clientSecret, {
@@ -54,20 +52,20 @@ export default function StripeCheckoutForm({ amountInCents, onSuccess, disabled 
             });
 
             if (result.error) {
-                setError(result.error.message || t.payment_error || 'Greška pri plaćanju');
+                setError(result.error.message || t('placanje', 'payment_error') || 'Greška pri plaćanju');
                 return;
             }
 
             if (result.paymentIntent?.status === 'succeeded') {
-                toast.success(t.payment_success || 'Plaćanje uspešno');
+                toast.success(t('placanje', 'payment_success') || 'Plaćanje uspešno');
                 if (onSuccess) {
                     await onSuccess();
                 }
             } else {
-                setError(t.payment_not_confirmed || 'Plaćanje nije potvrđeno.');
+                setError(t('placanje', 'payment_not_confirmed') || 'Plaćanje nije potvrđeno.');
             }
         } catch (err) {
-            const message = err instanceof Error ? err.message : (t.processing_error || 'Greška pri obradi plaćanja');
+            const message = err instanceof Error ? err.message : (t('placanje', 'processing_error') || 'Greška pri obradi plaćanja');
             setError(message);
             toast.error(message);
         } finally {
@@ -77,7 +75,7 @@ export default function StripeCheckoutForm({ amountInCents, onSuccess, disabled 
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border p-4 bg-white shadow-sm">
-            <div className="text-sm text-gray-700 font-medium">{t.card_payment || 'Plaćanje karticom'}</div>
+            <div className="text-sm text-gray-700 font-medium">{t('placanje', 'card_payment') || 'Plaćanje karticom'}</div>
             <div className="rounded-md border p-3 bg-gray-50">
                 <CardElement options={{ style: { base: { fontSize: '16px' } } }} />
             </div>
@@ -87,7 +85,7 @@ export default function StripeCheckoutForm({ amountInCents, onSuccess, disabled 
                 disabled={!stripe || loading || disabled}
                 className="w-full"
             >
-                {loading ? (t.processing || 'Obrada...') : `${t.pay_amount || 'Plati'} ${(amountInCents / 100).toFixed(2)} €`}
+                {loading ? (t('placanje', 'processing') || 'Obrada...') : `${t('placanje', 'pay_amount') || 'Plati'} ${(amountInCents / 100).toFixed(2)} €`}
             </Button>
         </form>
     );

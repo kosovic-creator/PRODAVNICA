@@ -17,8 +17,7 @@ import { Button } from "@prodavnica/ui";
 import { Card, CardContent } from "@prodavnica/ui";
 import { Separator } from "@prodavnica/ui";
 import StripeCheckoutForm from '@/app/components/StripeCheckoutForm';
-import { useLanguage } from '@/app/components/LanguageContext';
-import { getNamespace } from '@/lib/translations';
+import { useI18n } from '@/app/components/I18nProvider';
 
 
 interface stavkeKorpe {
@@ -49,8 +48,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
   const [message, setMessage] = useState('');
   const ukupno = stavke.reduce((acc, s) => acc + (s.proizvod ? s.proizvod.cena * s.kolicina : 0), 0);
   const { refreshKorpa } = useCart();
-  const { lang } = useLanguage();
-  const t = getNamespace(lang, 'korpa');
+  const { t } = useI18n();
 
   const [pendingKorpa, setPendingKorpa] = useState(false);
   const [pendingMontrypay, setPendingMontrypay] = useState(false);
@@ -74,7 +72,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       router.push('/proizvodi');
     } catch (error) {
       console.error('Greška pri brisanju korpe ili ažuriranju stanja proizvoda:', error);
-      setMessage(t.error || 'Greška pri brisanju korpe');
+      setMessage(t('korpa', 'error') || 'Greška pri brisanju korpe');
     } finally {
       setPendingKorpa(false);
     }
@@ -103,14 +101,14 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       console.log('[KorpaActions] Rezultat kreiranja porudžbine:', result);
 
       if (!result.success) {
-        setMessage(result.error || t.error || 'Greška pri kreiranju porudžbine');
+        setMessage(result.error || t('korpa', 'error') || 'Greška pri kreiranju porudžbine');
         return { success: false };
       }
 
       return { success: true, ukupno };
     } catch (error) {
       console.error('[KorpaActions] Error creating order:', error);
-      setMessage(t.error || 'Greška pri kreiranju porudžbine');
+      setMessage(t('korpa', 'error') || 'Greška pri kreiranju porudžbine');
       return { success: false };
     }
   };
@@ -124,7 +122,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       console.log('[KorpaActions] Podaci za preuzimanje:', podaciResult);
 
       if (!podaciResult.success || !podaciResult.data) {
-        setMessage(t.no_data_redirect || "Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.");
+        setMessage(t('korpa', 'no_data_redirect') || "Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.");
         setTimeout(() => {
           router.push('/podaci-preuzimanja');
         }, 2000);
@@ -157,7 +155,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       });
 
       // Prikaži success obaveštenje
-      setSuccessMessage(t.kupovina_uspesna);
+      setSuccessMessage(t('korpa', 'kupovina_uspesna'));
       setShowSuccess(true);
 
       // Očisti korpu i redirect nakon 3 sekunde
@@ -168,7 +166,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       }, 3000);
     } catch (error) {
       console.error('[KorpaActions] Error completing purchase:', error);
-      setMessage(t.error || 'Greška pri završavanju kupovine');
+      setMessage(t('korpa', 'error') || 'Greška pri završavanju kupovine');
     } finally {
       setPendingKupovina(false);
     }
@@ -180,7 +178,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       const podaciResult = await getPodaciPreuzimanja(userId);
 
       if (!podaciResult.success || !podaciResult.data) {
-        setMessage(t.no_data_redirect || 'Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.');
+        setMessage(t('korpa', 'no_data_redirect') || 'Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.');
         setTimeout(() => {
           router.push('/podaci-preuzimanja');
         }, 2000);
@@ -206,7 +204,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
         })),
       });
 
-      setSuccessMessage(t.kupovina_uspesna || 'Porudžbina je uspešno plaćena');
+      setSuccessMessage(t('korpa', 'kupovina_uspesna') || 'Porudžbina je uspešno plaćena');
       setShowSuccess(true);
 
       setTimeout(async () => {
@@ -216,7 +214,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       }, 2500);
     } catch (error) {
       console.error('[KorpaActions] Error after Stripe payment:', error);
-      setMessage(t.error || 'Greška posle plaćanja');
+      setMessage(t('korpa', 'error') || 'Greška posle plaćanja');
     } finally {
       setPendingStripe(false);
     }
@@ -230,7 +228,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       console.log('[KorpaActions] Podaci za preuzimanje:', podaciResult);
 
       if (!podaciResult.success || !podaciResult.data) {
-        setMessage(t.no_data_redirect || "Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.");
+        setMessage(t('korpa', 'no_data_redirect') || "Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.");
         setTimeout(() => {
           router.push('/podaci-preuzimanja');
         }, 3000);
@@ -263,7 +261,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       });
 
       // Prikaži success obaveštenje
-      setSuccessMessage(t.montrypay_success || 'Porudžbina je kreirana!');
+      setSuccessMessage(t('korpa', 'montrypay_success') || 'Porudžbina je kreirana!');
       setShowSuccess(true);
 
       // Očisti korpu i redirect nakon 3 sekunde
@@ -274,7 +272,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       }, 3000);
     } catch (error) {
       console.error('[KorpaActions] Error during Montrypay checkout:', error);
-      setMessage(t.error || 'Greška pri Montrypay plaćanju');
+      setMessage(t('korpa', 'error') || 'Greška pri Montrypay plaćanju');
     } finally {
       setPendingMontrypay(false);
     }
@@ -299,14 +297,14 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
         <CardContent className="p-4 space-y-4">
           {/* Naslov */}
           <h2 className="text-lg font-bold text-gray-800 border-b pb-2">
-            {t.pregled_korpe || 'Pregled korpe'}
+            {t('korpa', 'pregled_korpe') || 'Pregled korpe'}
           </h2>
 
           {/* Ukupno */}
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
             <div className="flex justify-between items-center">
               <span className="text-base font-medium text-gray-700">
-                {t.ukupno || 'Ukupno'}:
+                {t('korpa', 'ukupno') || 'Ukupno'}:
               </span>
               <span className="text-2xl font-bold text-blue-600">
                 {ukupno.toFixed(2)} €
@@ -330,7 +328,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
               ) : (
                   <FaShoppingCart className="h-5 w-5" />
               )}
-              <span>{t.zavrsi_kupovinu || 'Završi kupovinu'}</span>
+              <span>{t('korpa', 'zavrsi_kupovinu') || 'Završi kupovinu'}</span>
             </Button>
 
             {/* Montrypay */}
@@ -346,14 +344,14 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
               ) : (
                   <FaCreditCard className="h-4 w-4" />
               )}
-              <span>{t.montrypay || 'Montrypay'}</span>
+              <span>{t('korpa', 'montrypay') || 'Montrypay'}</span>
             </Button>
 
             <Separator className="my-3" />
 
             {/* Stripe Checkout */}
             <div className="pt-1">
-              <p className="text-xs text-gray-500 mb-2 text-center">{t.ili_platite_karticom || 'Ili platite karticom'}</p>
+              <p className="text-xs text-gray-500 mb-2 text-center">{t('korpa', 'ili_platite_karticom') || 'Ili platite karticom'}</p>
               <StripeCheckoutForm
                 amountInCents={Math.round(ukupno * 100)}
                 onSuccess={handleStripeSuccess}
@@ -376,7 +374,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
               ) : (
                   <Trash2 className="h-3 w-3" />
               )}
-              <span>{t.isprazni_korpu || 'Isprazni korpu'}</span>
+              <span>{t('korpa', 'isprazni_korpu') || 'Isprazni korpu'}</span>
             </Button>
           </div>
         </CardContent>

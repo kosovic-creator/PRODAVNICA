@@ -1,11 +1,13 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { getProizvodNajnoviji } from '@/lib/actions';
 import Image from 'next/image';
 import Link from 'next/link';
 import OmiljeniButton from '../proizvodi/components/OmiljeniButton';
 import AddToCartButton from '../proizvodi/components/AddToCartButton';
 import ProductPrice from '../proizvodi/components/product-price';
-import { getLocaleMessages, getLanguageFromCookies } from '@/i18n/i18n';
-import { Suspense } from 'react';
+import { useI18n } from '@/app/components/I18nProvider';
 import GridSkeleton from './components/GridSkeleton';
 
 function getCloudinaryOptimizedUrl(url: string) {
@@ -13,39 +15,30 @@ function getCloudinaryOptimizedUrl(url: string) {
   return url.replace('/upload/', '/upload/f_auto,q_auto,w_400,h_400/');
 }
 
-export default async function GridPage() {
-  return (
-    <Suspense fallback={<GridSkeleton />}>
-      <GridContent />
-    </Suspense>
-  );
-}
+export default function GridPage() {
+  const { t, language } = useI18n();
+  const [proizvodi, setProizvodi] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-async function GridContent() {
-  const lang = await getLanguageFromCookies();
-  const result = await getProizvodNajnoviji();
-  // Ensure proizvodi is always an array of product objects
-  const proizvodi = (result.success && result.data
-    ? Array.isArray(result.data)
-      ? result.data
-      : [result.data]
-    : []
-  ).map((proizvod: any) => ({
-    ...proizvod,
-    opis_sr: proizvod.opis_sr ?? undefined,
-    opis_en: proizvod.opis_en ?? undefined,
-    karakteristike_sr: proizvod.karakteristike_sr ?? undefined,
-    karakteristike_en: proizvod.karakteristike_en ?? undefined,
-    boja: Array.isArray(proizvod.boja) && proizvod.boja?.length ? proizvod.boja : [],
-    varijante: Array.isArray(proizvod.varijante) ? proizvod.varijante : [],
-    // Add more fields here if needed
-  }));
-  const t = getLocaleMessages(lang, 'proizvodi');
+  useEffect(() => {
+    getProizvodNajnoviji().then(result => {
+      if (result.success && result.data) {
+        const data = Array.isArray(result.data) ? result.data : [result.data];
+        setProizvodi(data);
+      }
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return <GridSkeleton />;
+  }
+
   if (proizvodi.length === 0) {
     return (
       <div className="text-center py-12">
         <p className="text-gray-500 text-lg">
-          {t.nema_proizvoda_prikaz}
+          {t('proizvodi', 'nema_proizvoda_prikaz')}
         </p>
       </div>
     );
@@ -54,18 +47,17 @@ async function GridContent() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold text-amber-50 mb-6 text-center">
-        {t.our_products}
+        {t('proizvodi', 'our_products')}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {proizvodi.map((proizvod) => {
-          // Access 'slike' on each 'proizvod' object, not on the array
+        {proizvodi.map((proizvod: any) => {
           const imageUrl = Array.isArray(proizvod.slike) && proizvod.slike.length > 0
             ? getCloudinaryOptimizedUrl(proizvod.slike[0])
             : null;
-          const naziv = lang === 'en' ? proizvod.naziv_en : proizvod.naziv_sr;
-          const opis = lang === 'en' ? proizvod.opis_en : proizvod.opis_sr;
-          const karakteristike = lang === 'en' ? proizvod.karakteristike_en : proizvod.karakteristike_sr;
-          const kategorija = lang === 'en' ? proizvod.kategorija_en : proizvod.kategorija_sr;
+          const naziv = language === 'en' ? proizvod.naziv_en : proizvod.naziv_sr;
+          const opis = language === 'en' ? proizvod.opis_en : proizvod.opis_sr;
+          const karakteristike = language === 'en' ? proizvod.karakteristike_en : proizvod.karakteristike_sr;
+          const kategorija = language === 'en' ? proizvod.kategorija_en : proizvod.kategorija_sr;
 
           return (
             <div
@@ -94,7 +86,7 @@ async function GridContent() {
                   ) : (
                     <div className="w-32 h-32 bg-linear-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
                       <span className="text-5xl">
-                        {lang === 'en'
+                          {language === 'en'
                           ? (proizvod.kategorija_en === 'bike' ? '🚴' : proizvod.kategorija_en === 'shoes' ? '👟' : '📦')
                           : (proizvod.kategorija_sr === 'bicikla' ? '🚴' : proizvod.kategorija_sr === 'patike' ? '👟' : '📦')}
                       </span>
@@ -128,7 +120,7 @@ async function GridContent() {
               {kategorija && (
                 <div className="flex justify-center mb-4">
                   <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">
-                    {t.kategorija}: {kategorija}
+                    {t('proizvodi', 'kategorija')}: {kategorija}
                   </span>
                 </div>
               )}
@@ -142,7 +134,7 @@ async function GridContent() {
 
               {/* Akcije */}
               <div className="p-0">
-                <AddToCartButton proizvod={proizvod} t={t} />
+                <AddToCartButton proizvod={proizvod} />
               </div>
             </div>
           );

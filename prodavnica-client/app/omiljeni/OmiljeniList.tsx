@@ -7,8 +7,7 @@ import { FiX } from 'react-icons/fi';
 import { useState, useTransition } from 'react';
 import { ukloniIzOmiljenih } from '@/lib/actions/omiljeni';
 import { Button } from "@prodavnica/ui";
-import { useLanguage } from '@/app/components/LanguageContext';
-import { getNamespace } from '@/lib/translations';
+import { useI18n } from '@/app/components/I18nProvider';
 
 interface ProizvodPrevod {
   jezik: string;
@@ -42,8 +41,7 @@ export default function OmiljeniList({
 }: {
     omiljeni: OmiljeniItem[];
 }) {
-  const { lang } = useLanguage();
-  const t = getNamespace(lang, 'omiljeni');
+  const { language, t } = useI18n();
   const [items, setItems] = useState(
     omiljeni.map((o) => ({
       ...o,
@@ -86,14 +84,14 @@ export default function OmiljeniList({
           <Button
             variant="ghost"
             type="button"
-            title={t.ukloni_iz_omiljenih || "Obriši"}
+            title={t('omiljeni', 'ukloni_iz_omiljenih') || "Obriši"}
             size="icon"
             className="absolute top-2 right-2 text-gray-400 hover:text-red-600 transition-colors z-10"
             onClick={async (e) => {
               e.preventDefault();
               await obrisiOmiljeni(o.id);
             }}
-            aria-label={t.ukloni_iz_omiljenih || "Obriši"}
+            aria-label={t('omiljeni', 'ukloni_iz_omiljenih') || "Obriši"}
           >
             <FiX size={20} />
           </Button>
@@ -102,7 +100,7 @@ export default function OmiljeniList({
               <Image
                 src={o.proizvod.slika}
                 alt={
-                  lang === 'en'
+                  language === 'en'
                     ? o.proizvod.prevodi?.find((p: { jezik: string }) => p.jezik === 'en')?.naziv || ''
                     : o.proizvod.prevodi?.find((p: { jezik: string }) => p.jezik === 'sr')?.naziv || ''
                 }
@@ -114,17 +112,17 @@ export default function OmiljeniList({
           )}
           <div className="flex-1 space-y-2">
             <h3 className="font-semibold text-lg text-gray-900 line-clamp-2">
-              {lang === 'en' ? o.proizvod.naziv_en : o.proizvod.naziv_sr}
+              {language === 'en' ? o.proizvod.naziv_en : o.proizvod.naziv_sr}
             </h3>
             <p className="text-gray-600 text-sm line-clamp-2">
-              {lang === 'en' ? o.proizvod.opis_en : o.proizvod.opis_sr}
+              {language === 'en' ? o.proizvod.opis_en : o.proizvod.opis_sr}
             </p>
             <p className="text-gray-500 text-xs line-clamp-1">
-              {lang === 'en' ? o.proizvod.karakteristike_en : o.proizvod.karakteristike_sr}
+              {language === 'en' ? o.proizvod.karakteristike_en : o.proizvod.karakteristike_sr}
             </p>
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-500">
-                {t.kategorija}: {lang === 'en' ? o.proizvod.kategorija_en : o.proizvod.kategorija_sr}
+                {t('omiljeni', 'kategorija')}: {language === 'en' ? o.proizvod.kategorija_en : o.proizvod.kategorija_sr}
               </span>
             </div>
             <div className="flex items-center justify-between">
@@ -138,14 +136,14 @@ export default function OmiljeniList({
                 type="button"
                 aria-disabled
               >
-                {t.kolicina}: {o.proizvod.kolicina}
+                {t('omiljeni', 'kolicina')}: {o.proizvod.kolicina}
               </Button>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 mt-4">
               <Button asChild variant="outline" className="flex-1 flex items-center justify-center gap-2 text-sm font-medium">
                 <Link href={`/proizvodi/${o.proizvod.id}`}>
                   <FaEye />
-                  {t.detalji}
+                  {t('omiljeni', 'detalji')}
                 </Link>
               </Button>
             </div>

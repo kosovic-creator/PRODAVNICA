@@ -3,12 +3,10 @@
 import { signOut } from "next-auth/react";
 import { useEffect } from "react";
 import { FaSignOutAlt } from "react-icons/fa";
-import { useLanguage } from '@/app/components/LanguageContext';
-import { getNamespace } from '@/lib/translations';
+import { useI18n } from '@/app/components/I18nProvider';
 
 export default function OdjavaPage() {
-  const { lang } = useLanguage();
-  const t = getNamespace(lang, 'auth');
+  const { t } = useI18n();
 
   useEffect(() => {
     signOut({ callbackUrl: "/prijava" });
@@ -17,7 +15,7 @@ export default function OdjavaPage() {
   return (
     <div className="flex items-center justify-center h-32 gap-2 text-blue-700 font-semibold">
       <FaSignOutAlt className="text-2xl" />
-      <span>{t['logout.Odjavljujem se'] || 'Odjavljujem se...'}</span>
+      <span>{t('auth', 'logout.Odjavljujem se') || 'Odjavljujem se...'}</span>
     </div>
   );
 }

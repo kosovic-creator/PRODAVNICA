@@ -6,12 +6,11 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import { getKorpa } from '@/lib/actions/korpa';
 import type { ReactNode } from 'react';
-import { cookies } from 'next/headers';
 import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants";
 import { Providers } from "./components/Providers";
-import type { Language } from "./components/LanguageContext";
 import LayoutWrapper from "./components/LayoutWrapper";
 import { CartProvider } from "./components/KorpaContext";
+import { getServerLanguage } from "@/i18n/i18n.server";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,8 +39,7 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
   const isLoggedIn = !!session?.user;
 
-  const cookieStore = await cookies();
-  const lang = (cookieStore.get('lang')?.value || 'sr') as Language;
+  const lang = await getServerLanguage();
 
   let brojUKorpi = 0;
   if (isLoggedIn && session?.user?.id) {

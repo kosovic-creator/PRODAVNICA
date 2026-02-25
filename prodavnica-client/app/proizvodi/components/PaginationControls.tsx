@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useLanguage } from '@/app/components/LanguageContext';
-import { getNamespace } from '@/lib/translations';
+import { useI18n } from '@/app/components/I18nProvider';
 
 interface PaginationControlsProps {
   page: number;
@@ -11,8 +10,7 @@ interface PaginationControlsProps {
 }
 
 export default function PaginationControls({ page, total, pageSize, search }: PaginationControlsProps) {
-  const { lang } = useLanguage();
-  const t = getNamespace(lang, 'proizvodi');
+  const { t } = useI18n();
   const totalPages = Math.ceil(total / pageSize);
 
   if (totalPages <= 1) return null;
@@ -36,11 +34,11 @@ export default function PaginationControls({ page, total, pageSize, search }: Pa
               : 'bg-blue-600 text-white hover:bg-blue-700'
           }`}
         >
-          {t.prethodna || 'Prethodna'}
+          {t('proizvodi', 'prethodna') || 'Prethodna'}
         </Link>
 
         <div className="px-4 py-2 bg-gray-50 rounded-lg text-sm font-medium text-gray-700">
-          <span className="hidden sm:inline">{page} {t.od || 'od'} {totalPages}</span>
+          <span className="hidden sm:inline">{page} {t('proizvodi', 'od') || 'od'} {totalPages}</span>
           <span className="sm:hidden">{page}/{totalPages}</span>
         </div>
 
@@ -52,7 +50,7 @@ export default function PaginationControls({ page, total, pageSize, search }: Pa
               : 'bg-blue-600 text-white hover:bg-blue-700'
           }`}
         >
-          {t.sledeca || 'Sledeća'}
+          {t('proizvodi', 'sledeca') || 'Sledeća'}
         </Link>
       </div>
     </div>

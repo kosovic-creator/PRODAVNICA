@@ -8,8 +8,7 @@ import { Trash2 } from 'lucide-react';
 import { updateStavkuKorpe, ukloniStavkuKorpe } from '@/lib/actions';
 import { useCart } from '../../components/KorpaContext';
 import { Button } from "@prodavnica/ui";
-import { useLanguage } from '@/app/components/LanguageContext';
-import { getNamespace } from '@/lib/translations';
+import { useI18n } from '@/app/components/I18nProvider';
 
 
 interface KorpaItemProps {
@@ -32,8 +31,7 @@ export default function KorpaItem({ stavka }: KorpaItemProps) {
   const [isPending, startTransition] = useTransition();
   const { refreshKorpa } = useCart();
   const [message, setMessage] = useState('');
-  const { lang } = useLanguage();
-  const t = getNamespace(lang, 'korpa');
+  const { language, t } = useI18n();
   const handleKolicina = async (kolicina: number) => {
     if (kolicina < 1) return;
 
@@ -49,7 +47,7 @@ export default function KorpaItem({ stavka }: KorpaItemProps) {
         await refreshKorpa();
       } catch (error) {
         console.error('Greška pri ažuriranju kolicine:', error);
-        setMessage(t.error || 'Greška pri ažuriranju količine');
+        setMessage(t('korpa', 'error') || 'Greška pri ažuriranju količine');
       }
     });
   };
@@ -65,10 +63,10 @@ export default function KorpaItem({ stavka }: KorpaItemProps) {
         }
 
         await refreshKorpa();
-        setMessage(t.artikal_izbrisan || 'Artikal je uklonjen iz korpe');
+        setMessage(t('korpa', 'artikal_izbrisan') || 'Artikal je uklonjen iz korpe');
       } catch (error) {
         console.error('Greška pri brisanju stavke:', error);
-        setMessage(t.error || 'Greška pri brisanju stavke');
+        setMessage(t('korpa', 'error') || 'Greška pri brisanju stavke');
       }
     });
   };
@@ -78,7 +76,7 @@ export default function KorpaItem({ stavka }: KorpaItemProps) {
   const imageUrl = Array.isArray(stavka.proizvod.slike) && stavka.proizvod.slike.length > 0
     ? stavka.proizvod.slike[0]
     : '/placeholder.png';
-  const naziv = lang === 'en' ? stavka.proizvod.naziv_en : stavka.proizvod.naziv_sr;
+  const naziv = language === 'en' ? stavka.proizvod.naziv_en : stavka.proizvod.naziv_sr;
   const boja = stavka.boja;
   const velicina = stavka.velicina;
 
@@ -122,12 +120,12 @@ export default function KorpaItem({ stavka }: KorpaItemProps) {
         <div className="flex flex-wrap gap-2 text-sm">
           {boja && (
             <span className="px-2 py-1 bg-blue-50 text-blue-700 rounded-md border border-blue-200">
-              {t.boja || 'Boja'}: <span className="font-medium">{boja}</span>
+              {t('korpa', 'boja') || 'Boja'}: <span className="font-medium">{boja}</span>
             </span>
           )}
           {velicina && (
             <span className="px-2 py-1 bg-purple-50 text-purple-700 rounded-md border border-purple-200">
-              {t.velicina || 'Veličina'}: <span className="font-medium">{velicina}</span>
+              {t('korpa', 'velicina') || 'Veličina'}: <span className="font-medium">{velicina}</span>
             </span>
           )}
         </div>
@@ -141,7 +139,7 @@ export default function KorpaItem({ stavka }: KorpaItemProps) {
               variant="outline"
               size="icon"
               className="h-8 w-8 rounded-full"
-              aria-label={t.smanji_kolicinu || "Smanji količinu"}
+              aria-label={t('korpa', 'smanji_kolicinu') || "Smanji količinu"}
             >
               <FaMinus className="w-3 h-3" />
             </Button>
@@ -152,7 +150,7 @@ export default function KorpaItem({ stavka }: KorpaItemProps) {
               variant="secondary"
               size="icon"
               className="h-8 w-8 rounded-full"
-              aria-label={t.povecaj_kolicinu || "Povećaj količinu"}
+              aria-label={t('korpa', 'povecaj_kolicinu') || "Povećaj količinu"}
             >
               <FaPlus className="w-3 h-3" />
             </Button>
@@ -175,7 +173,7 @@ export default function KorpaItem({ stavka }: KorpaItemProps) {
           variant="destructive"
           size="icon"
           className="h-9 w-9 flex items-center justify-center"
-          aria-label={t.izbrisi_artikal || "Izbriši artikal"}
+          aria-label={t('korpa', 'izbrisi_artikal') || "Izbriši artikal"}
         >
           <Trash2 className="w-4 h-4" />
         </Button>

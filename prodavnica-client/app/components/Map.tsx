@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import type { LeafletEvent, Marker as LeafletMarker } from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import Image from "next/image";
+import { useI18n } from "./I18nProvider";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
@@ -13,6 +14,7 @@ interface MapProps {
 }
 
 const Map = ({ posix, zoom = 13 }: MapProps) => {
+  const { t } = useI18n();
   const [position, setPosition] = useState<[number, number]>(posix);
 
   const markerHandlers = useMemo(
@@ -42,7 +44,7 @@ const Map = ({ posix, zoom = 13 }: MapProps) => {
               height={48}
             />
             <div className="text-center">
-              Moja prodavnica<br />
+              {t('common', 'my_shop')}<br />
               {position[0].toFixed(5)}, {position[1].toFixed(5)}
             </div>
           </div>

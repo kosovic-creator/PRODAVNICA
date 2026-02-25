@@ -8,5 +8,7 @@
   "register": "Register",
   "add_to_cart": "Add to cart",
   "edit": "Edit",
-  "delete": "Delete"
+  "delete": "Delete",
+  "my_shop": "My Shop",
+  "back_to_home": "Back to Home"
 }

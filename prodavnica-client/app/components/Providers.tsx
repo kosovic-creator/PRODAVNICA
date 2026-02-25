@@ -2,15 +2,15 @@
 
 import React from 'react';
 import AuthProvider from './AuthProvider';
-import { LanguageProvider } from './LanguageContext';
-import type { Language } from './LanguageContext';
+import { I18nProvider } from './I18nProvider';
+import type { Language } from '@/i18n/constants';
 
 export function Providers({ children, initialLang = 'sr' }: { children: React.ReactNode; initialLang?: Language }) {
   return (
     <AuthProvider>
-      <LanguageProvider initialLang={initialLang}>
+      <I18nProvider initialLang={initialLang}>
         {children}
-      </LanguageProvider>
+      </I18nProvider>
     </AuthProvider>
   );
 }

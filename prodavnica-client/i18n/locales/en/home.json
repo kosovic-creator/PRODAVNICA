@@ -45,6 +45,10 @@
   "add_to_cart": "Add to Cart",
   "view_product": "View Product",
   "product_details": "Product Details",
-  "back_to_products": "Back to Products"
-
+  "back_to_products": "Back to Products",
+  "banner_popular_products": "Popular Products",
+  "banner_view_products": "View Products",
+  "banner_new_collection": "New Collection",
+  "banner_summer_fashion": "Summer Fashion",
+  "banner_premium_choice": "Premium Choice"
 }

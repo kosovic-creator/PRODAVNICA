@@ -1,8 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useLanguage } from './LanguageContext';
-import { getNamespace } from '@/lib/translations';
+import { useI18n } from './I18nProvider';
 
 import { usePathname, useRouter } from 'next/navigation';
 import { FaBoxOpen, FaUser, FaTimes, FaShoppingBag, FaChartBar, FaCog, FaPhone, FaInfoCircle } from 'react-icons/fa';
@@ -19,8 +18,7 @@ function SidebarContent({ open, onClose }: SidebarProps) {
   const pathname = usePathname();
   const { data: session } = useSession();
   const router = useRouter();
-  const { lang } = useLanguage();
-  const t = getNamespace(lang, 'sidebar');
+  const { t } = useI18n();
 
 
 
@@ -48,15 +46,15 @@ function SidebarContent({ open, onClose }: SidebarProps) {
 
   // User menu items
   const userMenuItems = React.useMemo(() => [
-    { path: '/proizvodi', icon: FaBoxOpen, label: t.proizvodi },
+    { path: '/proizvodi', icon: FaBoxOpen, label: t('sidebar', 'proizvodi') },
     ...(session?.user ? [
-      // { path: '/moje-porudzbine', icon: FaHistory, label: t.moje_narudzbine },
-      // { path: '/korpa', icon: FaShoppingCart, label: t.korpa },
-      // { path: '/omiljeni', icon: FaHeart, label: t.omiljeni },
-      //  { path: '/profil', icon: FaUser, label: t.profile },
+      // { path: '/moje-porudzbine', icon: FaHistory, label: t('sidebar', 'moje_narudzbine') },
+      // { path: '/korpa', icon: FaShoppingCart, label: t('sidebar', 'korpa') },
+      // { path: '/omiljeni', icon: FaHeart, label: t('sidebar', 'omiljeni') },
+      //  { path: '/profil', icon: FaUser, label: t('sidebar', 'profile') },
     ] : []),
-    // { path: '/o-nama', icon: FaInfoCircle, label: t.o_nama },
-    // { path: '/kontakt', icon: FaPhone, label: t.kontakt },
+    // { path: '/o-nama', icon: FaInfoCircle, label: t('sidebar', 'o_nama') },
+    // { path: '/kontakt', icon: FaPhone, label: t('sidebar', 'kontakt') },
   ], [t, session?.user]);
 
   const menuItems =  userMenuItems;
@@ -64,7 +62,7 @@ function SidebarContent({ open, onClose }: SidebarProps) {
   return (
     <>
       {/* Sidebar - modifikujemo za mobilnu verziju */}
-      <span className="text-xs text-slate-500 absolute left-2 top-0">lang: {lang}</span>
+      <span className="text-xs text-slate-500 absolute left-2 top-0">lang display removed</span>
       <div className={`
         fixed top-16 left-0 h-[calc(100vh-4rem)] bg-linear-to-b from-stone-100 to-slate-50 backdrop-blur-md shadow-2xl z-50 transition-transform duration-300 ease-in-out
         ${open ? 'translate-x-0' : '-translate-x-full'}
@@ -80,7 +78,7 @@ function SidebarContent({ open, onClose }: SidebarProps) {
           <Button variant="ghost"
             onClick={onClose}
             className="p-2 rounded-lg hover:bg-slate-200 transition-colors"
-            aria-label={t.close_sidebar}
+            aria-label={t('sidebar', 'close_sidebar')}
           >
             <FaTimes className="w-5 h-5 text-slate-900 " />
           </Button>
@@ -132,7 +130,7 @@ function SidebarContent({ open, onClose }: SidebarProps) {
         {/* Footer - flex-shrink-0 da ostane na dnu */}
         <div className="p-4 border-t border-slate-300 bg-stone-100/70 shrink-0">
           <div className="text-center">
-            <p className="text-xs text-slate-600">{t.web_trgovina}</p>
+            <p className="text-xs text-slate-600">{t('sidebar', 'web_trgovina')}</p>
             <p className="text-xs text-slate-500">v1.0.0</p>
           </div>
         </div>

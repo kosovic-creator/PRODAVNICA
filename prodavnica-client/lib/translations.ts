@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Language } from '@/app/components/LanguageContext';
+import type { Language } from '@/i18n/constants';
 import srNavbar from '@/i18n/locales/sr/navbar.json';
 import enNavbar from '@/i18n/locales/en/navbar.json';
 import srCommon from '@/i18n/locales/sr/common.json';

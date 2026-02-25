@@ -5,8 +5,7 @@ import { useSession } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
 import { getOmiljeni, dodajUOmiljene, ukloniIzOmiljenih } from '../../../lib/actions/omiljeni';
 import { Button } from "@prodavnica/ui";
-import { useLanguage } from '@/app/components/LanguageContext';
-import { getNamespace } from '@/lib/translations';
+import { useI18n } from '@/app/components/I18nProvider';
 
 interface OmiljeniButtonProps {
   proizvodId: string;
@@ -23,8 +22,7 @@ export default function OmiljeniButton({ proizvodId }: OmiljeniButtonProps) {
   const [omiljeni, setOmiljeni] = useState<Omiljeni[]>([]);
   const [loading, setLoading] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const { lang } = useLanguage();
-  const t = getNamespace(lang, 'proizvodi');
+  const { t } = useI18n();
 
   // Load omiljeni when user session changes
   useEffect(() => {
@@ -63,12 +61,12 @@ export default function OmiljeniButton({ proizvodId }: OmiljeniButtonProps) {
     e.stopPropagation();
 
     if (!session?.user) {
-      toast.error(t.morate_biti_prijavljeni_za_omiljene || 'Morate biti prijavljeni', { duration: 4000 });
+      toast.error(t('proizvodi', 'morate_biti_prijavljeni_za_omiljene') || 'Morate biti prijavljeni', { duration: 4000 });
       return;
     }
 
     if (!session.user.id) {
-      toast.error(t.morate_biti_prijavljeni_za_omiljene || 'Morate biti prijavljeni', { duration: 4000 });
+      toast.error(t('proizvodi', 'morate_biti_prijavljeni_za_omiljene') || 'Morate biti prijavljeni', { duration: 4000 });
       return;
     }
 
@@ -81,7 +79,7 @@ export default function OmiljeniButton({ proizvodId }: OmiljeniButtonProps) {
           const result = await ukloniIzOmiljenih(session.user.id as string, proizvodId as string);
           if (result.success) {
             setOmiljeni(prev => prev.filter(om => om.proizvodId !== proizvodId));
-            toast.success(t.uklonjen_iz_omiljenih || 'Uklonjen iz omiljenih', { duration: 3000 });
+            toast.success(t('proizvodi', 'uklonjen_iz_omiljenih') || 'Uklonjen iz omiljenih', { duration: 3000 });
           } else {
             toast.error(result.error || 'Greška pri uklanjanju iz omiljenih', { duration: 3000 });
           }
@@ -98,7 +96,7 @@ export default function OmiljeniButton({ proizvodId }: OmiljeniButtonProps) {
                   korisnikId: String(om.korisnikId),
                 }))
               );
-              toast.success(t.dodat_u_omiljene || 'Dodato u omiljene', { duration: 3000 });
+              toast.success(t('proizvodi', 'dodat_u_omiljene') || 'Dodato u omiljene', { duration: 3000 });
             }
           } else {
             toast.error(result.error || 'Greška pri dodavanju u omiljene', { duration: 3000 });
@@ -120,8 +118,8 @@ export default function OmiljeniButton({ proizvodId }: OmiljeniButtonProps) {
       variant="outline"
       size="icon"
       className={isProizvodOmiljeni ? "rounded-full text-red-600" : "rounded-full"}
-      title={isProizvodOmiljeni ? (t.omiljeni_ukloniti || 'Ukloni iz omiljenih') : (t.omiljeni_dodati || 'Dodaj u omiljene')}
-      aria-label={isProizvodOmiljeni ? (t.omiljeni_ukloniti || 'Ukloni iz omiljenih') : (t.omiljeni_dodati || 'Dodaj u omiljene')}
+      title={isProizvodOmiljeni ? (t('proizvodi', 'omiljeni_ukloniti') || 'Ukloni iz omiljenih') : (t('proizvodi', 'omiljeni_dodati') || 'Dodaj u omiljene')}
+      aria-label={isProizvodOmiljeni ? (t('proizvodi', 'omiljeni_ukloniti') || 'Ukloni iz omiljenih') : (t('proizvodi', 'omiljeni_dodati') || 'Dodaj u omiljene')}
     >
       {isPending ? (
         <span className="animate-spin w-5 h-5 border-2 border-current border-t-transparent rounded-full" />

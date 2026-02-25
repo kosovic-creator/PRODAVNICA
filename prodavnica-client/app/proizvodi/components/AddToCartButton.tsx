@@ -10,8 +10,7 @@ import { Proizvodi } from '../../../types';
 import { dodajUKorpu } from './../../../lib/actions/korpa';
 import { useCart } from '../../components/KorpaContext';
 import { Button } from "@prodavnica/ui";
-import { useLanguage } from '@/app/components/LanguageContext';
-import { getNamespace } from '@/lib/translations';
+import { useI18n } from '@/app/components/I18nProvider';
 
 declare module 'next-auth' {
   interface Session {
@@ -32,8 +31,7 @@ interface AddToCartButtonProps {
 }
 
 export default function AddToCartButton({ proizvod, selectedBoja, selectedVelicina }: AddToCartButtonProps) {
-  const { lang } = useLanguage();
-  const t = getNamespace(lang, 'addToCartButton');
+  const { t } = useI18n();
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -48,7 +46,7 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
 
     // Proveri da li je korisnik prijavljen
     if (!korisnikId) {
-      toast.error(t.loginRequired, { duration: 4000 });
+      toast.error(t('addToCartButton', 'loginRequired'), { duration: 4000 });
       router.push('/prijava');
       return;
     }
@@ -79,17 +77,17 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
         });
 
         if (!result.success) {
-          toast.error(result.error || t.addError, { duration: 4000 });
+          toast.error(result.error || t('addToCartButton', 'addError'), { duration: 4000 });
           return;
         }
 
         // Ažuriraj broj stavki u korpi globalno
         await refreshKorpa();
 
-        toast.success(t.addSuccess, { duration: 4000 });
+        toast.success(t('addToCartButton', 'addSuccess'), { duration: 4000 });
       } catch (error) {
         console.error('Greška:', error);
-        toast.error(t.addErrorGeneric, { duration: 4000 });
+        toast.error(t('addToCartButton', 'addErrorGeneric'), { duration: 4000 });
       } finally {
         setIsAdding(false);
       }
@@ -102,6 +100,7 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
       className="w-full h-full text-sm font-medium rounded-none flex items-center justify-center gap-2"
       onClick={handleClick}
       disabled={!hasVarijante || isAdding || isPending}
+      suppressHydrationWarning
     >
       {isAdding ? (
         <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
@@ -109,10 +108,10 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
         <FaCartPlus className="w-4 h-4" />
       )}
       {isAdding
-        ? t.adding
+        ? t('addToCartButton', 'adding')
         : !hasVarijante
-          ? t.outOfStock
-          : t.addToCart
+          ? t('addToCartButton', 'outOfStock')
+          : t('addToCartButton', 'addToCart')
       }
     </Button>
   );

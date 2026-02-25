@@ -1,13 +1,26 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useI18n } from '@/app/components/I18nProvider';
 
 export default function Baner() {
+  const { t, isHydrated } = useI18n();
   const [bannerCurrent, setBannerCurrent] = useState(0);
   const bannerImages = ['/slike-proizvoda/p2-1-converted-from-jpg-2.png', '/slike-proizvoda/p6-1.png'];
-  const bannerTitles = ['Nova kolekcija', 'Letna Moda', 'Premium Izbor'];
+
+  // Lokalizovani banner tituli - koristi memoized vrijednosti da sprijeci mutacije
+  const bannerTitles = useMemo(() => {
+    if (!isHydrated) {
+      return ['', '', '']; // Privremene vrijednosti dok se hidratizuje
+    }
+    return [
+      t('home', 'banner_new_collection'),
+      t('home', 'banner_summer_fashion'),
+      t('home', 'banner_premium_choice'),
+    ];
+  }, [t, isHydrated]);
 
   useEffect(() => {
     if (bannerImages.length > 1) {
@@ -18,19 +31,28 @@ export default function Baner() {
     }
   }, [bannerImages.length]);
 
+  // Sprečava renderiranje pre hidratacije ako je kritično
+  if (!isHydrated && bannerTitles.every(t => t === '')) {
+    return (
+      <div className="w-full h-64 sm:h-96 relative overflow-hidden bg-linear-to-b from-gray-900 to-white bg-opacity-50"></div>
+    );
+  }
+
   return (
     <div className="w-full h-64 sm:h-96 relative overflow-hidden bg-linear-to-b from-gray-900 to-white">
       {/* Content */}
       <div className="absolute inset-0 flex items-center justify-between px-4 sm:px-8 lg:px-12">
         {/* Left side - Text and Button */}
         <div className="flex flex-col justify-center z-10 max-w-md">
-          <p className="text-gray-300 text-sm sm:text-base uppercase tracking-wider mb-2">Poularni proizvodi</p>
+          <p className="text-gray-300 text-sm sm:text-base uppercase tracking-wider mb-2">
+            {t('home', 'banner_popular_products')}
+          </p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 line-clamp-2">
-            {bannerTitles[bannerCurrent]}
+            {bannerTitles[bannerCurrent] || '...'}
           </h2>
           <Link href="/proizvodi">
             <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition duration-300 w-fit">
-              Pogledaj Proizvode
+              {t('home', 'banner_view_products')}
             </button>
           </Link>
         </div>

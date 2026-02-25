@@ -2,12 +2,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useCart } from "./KorpaContext";
 import { useSession } from "next-auth/react";
-import { useLanguage } from "./LanguageContext";
-import { getNamespace } from "@/lib/translations";
+import { useI18n } from "./I18nProvider";
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaShoppingCart, FaSignInAlt, FaSignOutAlt, FaBars, FaUserCircle } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { Button } from "@prodavnica/ui";
 import { Input } from "@prodavnica/ui"
@@ -17,9 +15,8 @@ export interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
-  const router = useRouter();
-  const { lang, setLang } = useLanguage();
-  const t = getNamespace(lang, 'navbar');
+  const { language, setLanguage, t } = useI18n();
+  const tr = (key: string) => t('navbar', key);
   const { data: session } = useSession();
   const isLoggedIn = !!session?.user;
   const { brojUKorpi } = useCart();
@@ -44,9 +41,9 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
   }, [dropdownOpen]);
 
   const handleLangSwitch = () => {
-    const newLang = lang === 'sr' ? 'en' : 'sr';
-    setLang(newLang);
-    router.refresh();
+    const newLang = language === 'sr' ? 'en' : 'sr';
+    setLanguage(newLang);
+    // Bez router.refresh() - stanje se ažurira kroz I18nProvider
   };
 
   return (
@@ -59,18 +56,18 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
               <Button variant="ghost"
                 className="p-2 sm:p-3 focus:outline-none rounded-lg hover:bg-gray-700 touch-manipulation transition-colors"
                 onClick={() => setSidebarOpen?.(true)}
-                aria-label="Open sidebar"
+                aria-label="Otvori meni"
               >
                 <FaBars className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </Button>
                <Link href="/" className="text-xl font-bold">
-          <Image
-            src="/apple-touch-icon.png"
-            alt="Prodavnica"
-            width={40}
-            height={40}
-            className="w-8 h-8 sm:w-10 sm:h-10"
-          />
+                <Image
+                  src="/icons/logo-mp-red.svg"
+                  alt="Prodavnica"
+                  width={40}
+                  height={40}
+                  className="w-8 h-8 sm:w-10 sm:h-10"
+                />
         </Link>
             </div>
             {/* Center Section - Desktop Search */}
@@ -80,7 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
                   type="text"
                   name="search"
                   className="flex-1 border rounded-full px-4 py-2 pr-12 bg-gray-800 text-white placeholder:text-gray-400 border-gray-700 focus:outline-none focus:border-red-500"
-                  placeholder={t.search}
+                  placeholder={tr('search')}
                   suppressHydrationWarning
                 />
                 <Button type="submit" className="absolute right-3 bg-transparent hover:bg-transparent text-gray-500 border-none p-0" suppressHydrationWarning>
@@ -115,14 +112,14 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
                     aria-expanded={dropdownOpen}
                   >
                       <FaUserCircle className="text-white text-xl" />
-                    <span className="hidden sm:inline">{t.profile}</span>
+                      <span className="hidden sm:inline">{tr('profile')}</span>
                     <span className="ml-1">▼</span>
                     </Button>
                   {dropdownOpen && (
                       <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-lg shadow-lg z-50 text-slate-900  hover:bg-gray-100 transition">
-                        <Link href="/profil" className="block px-4 py-3 hover:bg-slate-100" onClick={() => setDropdownOpen(false)}>{t.profile}</Link>
-                        <Link href="/moje-porudzbine" className="block px-4 py-3 hover:bg-slate-100" onClick={() => setDropdownOpen(false)}>{t.my_orders}</Link>
-                        <Link href="/omiljeni" className="block px-4 py-3 hover:bg-slate-100" onClick={() => setDropdownOpen(false)}>{t.favorites}</Link>
+                        <Link href="/profil" className="block px-4 py-3 hover:bg-slate-100" onClick={() => setDropdownOpen(false)}>{tr('profile')}</Link>
+                        <Link href="/moje-porudzbine" className="block px-4 py-3 hover:bg-slate-100" onClick={() => setDropdownOpen(false)}>{tr('my_orders')}</Link>
+                        <Link href="/omiljeni" className="block px-4 py-3 hover:bg-slate-100" onClick={() => setDropdownOpen(false)}>{tr('favorites')}</Link>
                         <hr className="my-1 border-slate-200" />
                         <Button variant="ghost"
                           onClick={() => {
@@ -132,7 +129,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
                           className="w-full flex items-center gap-2 px-4 py-3 hover:bg-slate-100 text-slate-900"
                       >
                         <FaSignOutAlt />
-                        <span>{t.logout}</span>
+                          <span>{tr('logout')}</span>
                         </Button>
                     </div>
                   )}
@@ -141,16 +138,16 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
                   <Button variant="ghost"
                     onClick={() => signOut({ callbackUrl: "/" })}
                     className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-700 transition cursor-pointer text-white"
-                  title={t.logout}
+                    title={tr('logout')}
                 >
                   <FaSignOutAlt />
-                  <span className="hidden sm:inline">{t.logout}</span>
+                    <span className="hidden sm:inline">{tr('logout')}</span>
                   </Button>
               </>
             ) : (
                   <Link href="/prijava" className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-700 transition text-white">
                 <FaSignInAlt />
-                <span>{t.login || 'Prijava'}</span>
+                    <span>{tr('login') || 'Prijava'}</span>
               </Link>
             )}
             {/* Cart badge */}
@@ -173,7 +170,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
                 onClick={handleLangSwitch}
                 className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 text-xl leading-none cursor-pointer"
               >
-                {lang === 'sr' ? '🇬🇧' : '🇲🇪'}
+                {language === 'sr' ? '🇬🇧' : '🇲🇪'}
               </Button>
           </div>
         </>
@@ -187,7 +184,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
               type="text"
               name="search"
               className="flex-1 border rounded-full px-4 py-2 pr-12 bg-black/30 text-white placeholder:text-gray-300 border-white/20 focus:outline-none focus:border-gray-500"
-              placeholder={t.search}
+              placeholder={tr('search')}
             />
             <Button type="submit" className="absolute right-3 bg-transparent hover:bg-transparent text-gray-500 border-none p-0">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
