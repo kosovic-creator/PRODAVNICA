@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Button } from "@prodavnica/ui";
 import ClientLayout from "../components/ClientLayout";
-import { useI18n } from "../components/I18nProvider";
+import { useI18n } from '@/i18n/I18nProvider';
 
 const Map = dynamic(() => import("../components/Map"), { ssr: false });
 

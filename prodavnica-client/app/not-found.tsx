@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@prodavnica/ui";
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 export default function NotFoundClient() {
   const { t } = useI18n();

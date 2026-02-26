@@ -8,7 +8,7 @@ import { Trash2 } from 'lucide-react';
 import { updateStavkuKorpe, ukloniStavkuKorpe } from '@/lib/actions';
 import { useCart } from '../../components/KorpaContext';
 import { Button } from "@prodavnica/ui";
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 
 interface KorpaItemProps {

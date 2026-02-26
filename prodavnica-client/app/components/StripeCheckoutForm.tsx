@@ -4,7 +4,7 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { Button } from "@prodavnica/ui";
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 type StripeCheckoutFormProps = {
     amountInCents: number;

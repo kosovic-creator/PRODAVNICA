@@ -7,7 +7,7 @@ import Link from 'next/link';
 import OmiljeniButton from '../proizvodi/components/OmiljeniButton';
 import AddToCartButton from '../proizvodi/components/AddToCartButton';
 import ProductPrice from '../proizvodi/components/product-price';
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 import GridSkeleton from './components/GridSkeleton';
 
 function getCloudinaryOptimizedUrl(url: string) {

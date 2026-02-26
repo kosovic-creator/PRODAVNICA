@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 export default function Baner() {
   const { t } = useI18n();

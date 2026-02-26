@@ -6,7 +6,7 @@ import KorpaItem from './components/KorpaItem';
 import KorpaActions from './components/KorpaActions';
 import StripeWrapper from '../components/StripeWrapper';
 import { Button } from "@prodavnica/ui";
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 interface KorpaContentProps {
   stavke: any[];

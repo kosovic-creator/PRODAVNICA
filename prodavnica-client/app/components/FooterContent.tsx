@@ -3,7 +3,7 @@
 import { APP_NAME } from '../../lib/constants';
 import Link from 'next/link';
 import { FaMapLocationDot, FaPhone, FaEnvelope, FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa6';
-import { useI18n } from './I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 /**
  * Client-side footer sa lokalizacijom preko useI18n()

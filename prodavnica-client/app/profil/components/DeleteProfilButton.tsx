@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import ConfirmModal from '@/app/components/ui/ConfirmModal';
 import { Button } from "@prodavnica/ui";
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 interface DeleteProfilButtonProps {
   handleDeleteKorisnik: () => Promise<void>;

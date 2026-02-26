@@ -17,7 +17,7 @@ import { Button } from "@prodavnica/ui";
 import { Card, CardContent } from "@prodavnica/ui";
 import { Separator } from "@prodavnica/ui";
 import StripeCheckoutForm from '@/app/components/StripeCheckoutForm';
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 
 interface stavkeKorpe {

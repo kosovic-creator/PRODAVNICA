@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react'
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const Test = () => {
   const { t } = useI18n();

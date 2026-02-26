@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
 import OmiljeniList from './OmiljeniList';
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 import { Button } from "@prodavnica/ui";
 
 interface OmiljeniContentProps {
@@ -20,7 +21,7 @@ export default function OmiljeniContent({
 
   if (!isLoggedIn) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
+      <div className="flex flex-col items-center justify-center min-h-100 text-center">
         <FaHeart className="text-gray-300 text-6xl mb-4" />
         <h2 className="text-xl font-semibold text-gray-600 mb-2" suppressHydrationWarning>
           {tr('morate_biti_prijavljeni_za_omiljene')}

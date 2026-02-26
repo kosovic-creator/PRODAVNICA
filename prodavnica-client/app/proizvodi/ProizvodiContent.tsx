@@ -9,7 +9,7 @@ import { Proizvodi } from '@/types';
 import AddToCartButton from './components/AddToCartButton';
 import OmiljeniButton from './components/OmiljeniButton';
 import PaginationControls from './components/PaginationControls';
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 
 interface ProizvodiContentProps {

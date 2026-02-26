@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import type { LeafletEvent, Marker as LeafletMarker } from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import Image from "next/image";
-import { useI18n } from "./I18nProvider";
+import { useI18n } from '@/i18n/I18nProvider';
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";

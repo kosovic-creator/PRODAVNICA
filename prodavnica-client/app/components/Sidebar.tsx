@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useI18n } from './I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 import { usePathname, useRouter } from 'next/navigation';
 import { FaBoxOpen, FaUser, FaTimes, FaShoppingBag, FaChartBar, FaCog, FaPhone, FaInfoCircle } from 'react-icons/fa';

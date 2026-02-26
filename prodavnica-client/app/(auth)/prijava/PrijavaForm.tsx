@@ -11,7 +11,7 @@ import { Label } from "@prodavnica/ui";
 import { Checkbox } from "@prodavnica/ui";
 import { Card, CardHeader, CardTitle, CardContent } from "@prodavnica/ui";
 import { prijavaSchema } from '@/lib/validators';
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 interface PrijavaFormProps {
     savedEmail: string;

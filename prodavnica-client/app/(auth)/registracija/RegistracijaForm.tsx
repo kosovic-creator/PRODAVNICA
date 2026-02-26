@@ -13,7 +13,7 @@ import { Button } from "@prodavnica/ui";
 import { Input } from "@prodavnica/ui";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@prodavnica/ui";
 import { Label } from "@prodavnica/ui";
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 
 export interface RegistracijaFormProps {

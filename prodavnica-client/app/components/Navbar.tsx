@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useCart } from "./KorpaContext";
 import { useSession } from "next-auth/react";
-import { useI18n } from "./I18nProvider";
+import { useI18n } from '@/i18n/I18nProvider';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaShoppingCart, FaSignInAlt, FaSignOutAlt, FaBars, FaUserCircle } from "react-icons/fa";

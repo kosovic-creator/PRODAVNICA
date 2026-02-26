@@ -4,7 +4,7 @@ import { FaEdit } from 'react-icons/fa';
 import DeleteProfilButton from './components/DeleteProfilButton';
 import ClientLayout from '../components/ClientLayout';
 import { Button } from "@prodavnica/ui";
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 interface ProfilContentProps {
   korisnik: any;

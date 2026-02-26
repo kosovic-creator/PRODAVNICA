@@ -7,7 +7,7 @@ import { FiX } from 'react-icons/fi';
 import { useState, useTransition } from 'react';
 import { ukloniIzOmiljenih } from '@/lib/actions/omiljeni';
 import { Button } from "@prodavnica/ui";
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 interface ProizvodPrevod {
   jezik: string;

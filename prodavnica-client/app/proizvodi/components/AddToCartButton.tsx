@@ -10,7 +10,7 @@ import { Proizvodi } from '../../../types';
 import { dodajUKorpu } from './../../../lib/actions/korpa';
 import { useCart } from '../../components/KorpaContext';
 import { Button } from "@prodavnica/ui";
-import { useI18n } from '@/app/components/I18nProvider';
+import { useI18n } from '@/i18n/I18nProvider';
 
 declare module 'next-auth' {
   interface Session {
