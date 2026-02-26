@@ -9,7 +9,7 @@ import ProizvodDetailClient from '../components/ProizvodDetailClient';
 import { getLanguageFromCookies } from '@/i18n/i18n';
 
 export const metadata: Metadata = {
-  title: 'Proizvod',
+  title: 'Detalji artikla',
   description: 'Dobrodošli u našu prodavnicu! Pregledajte našu široku ponudu proizvoda i pronađite savršene artikle za sebe.',
 };
 
