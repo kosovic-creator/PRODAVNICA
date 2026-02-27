@@ -54,7 +54,7 @@ export default async function RootLayout({
   return (
     <html lang={lang}>
       <head>
-        <link rel="shortcut icon" href="/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
