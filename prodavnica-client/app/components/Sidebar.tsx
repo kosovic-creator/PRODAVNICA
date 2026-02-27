@@ -19,6 +19,7 @@ function SidebarContent({ open, onClose }: SidebarProps) {
   const { data: session } = useSession();
   const router = useRouter();
   const { t } = useI18n();
+  const [userDropdownOpen, setUserDropdownOpen] = React.useState(false);
 
 
 
@@ -45,16 +46,15 @@ function SidebarContent({ open, onClose }: SidebarProps) {
 
 
   // User menu items
-  const userMenuItems = React.useMemo(() => [
+  const menuItems = React.useMemo(() => [
     { path: '/proizvodi', icon: FaBoxOpen, label: t('sidebar', 'proizvodi') },
-    ...(session?.user ? [
-      { path: '/profil', icon: FaUser, label: t('sidebar', 'profile') },
-      { path: '/moje-porudzbine', icon: FaHistory, label: t('sidebar', 'my_orders') },
-      { path: '/omiljeni', icon: FaHeart, label: t('sidebar', 'favorites') },
-    ] : []),
-  ], [t, session?.user]);
+  ], [t]);
 
-  const menuItems =  userMenuItems;
+  const userItems = [
+    { path: '/profil', icon: FaUser, label: t('sidebar', 'profile') },
+    { path: '/moje-porudzbine', icon: FaHistory, label: t('sidebar', 'my_orders') },
+    { path: '/omiljeni', icon: FaHeart, label: t('sidebar', 'favorites') },
+  ];
 
   return (
     <>
@@ -121,6 +121,50 @@ function SidebarContent({ open, onClose }: SidebarProps) {
                 </li>
               );
             })}
+
+            {/* User dropdown menu - only visible for logged in users */}
+            {session?.user && (
+              <li className="relative">
+                <Button variant="ghost"
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                  className={`w-full flex items-center justify-between px-3 py-3 rounded-lg transition-all duration-200
+                    ${userDropdownOpen ? 'bg-slate-200 text-slate-900' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 cursor-pointer'}`}
+                >
+                  <span className="flex items-center gap-3">
+                    <span className={`flex items-center justify-center ${userDropdownOpen ? 'bg-amber-600 text-white' : 'bg-slate-200 text-slate-600'} rounded-full w-8 h-8`}>
+                      <FaUser className="w-5 h-5" />
+                    </span>
+                    <span className="font-medium text-sm truncate">{t('sidebar', 'profile')}</span>
+                  </span>
+                  <span className={`text-xs transition-transform duration-200 ${userDropdownOpen ? 'rotate-180' : ''}`}>▼</span>
+                </Button>
+
+                {/* Dropdown items */}
+                {userDropdownOpen && (
+                  <ul className="mt-1 space-y-1 bg-slate-100 rounded-lg p-2 ml-4">
+                    {userItems.map((item) => {
+                      const Icon = item.icon;
+                      const active = isActive(item.path);
+                      return (
+                        <li key={item.path}>
+                          <Button variant="ghost"
+                            onClick={() => {
+                              navigateWithLang(item.path);
+                              setUserDropdownOpen(false);
+                            }}
+                            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm
+                              ${active ? 'bg-white text-slate-900 font-semibold' : 'text-slate-600 hover:bg-white hover:text-slate-900 cursor-pointer'}`}
+                          >
+                            <Icon className="w-4 h-4" />
+                            <span className="truncate">{item.label}</span>
+                          </Button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </li>
+            )}
           </ul>
         </nav>
 

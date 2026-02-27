@@ -61,7 +61,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
                 <FaBars className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
               </Button>
               <Button variant="ghost"
-                className="hidden sm:flex px-2 py-2 sm:px-3 focus:outline-none rounded-lg hover:bg-gray-700 transition-colors"
+                className="px-2 py-2 sm:px-3 focus:outline-none rounded-lg hover:bg-gray-700 transition-colors"
                 asChild
               >
                 <Link href="/">
