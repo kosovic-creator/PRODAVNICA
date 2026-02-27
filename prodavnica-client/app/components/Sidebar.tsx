@@ -151,8 +151,8 @@ function SidebarContent({ open, onClose }: SidebarProps) {
                               navigateWithLang(item.path);
                               setUserDropdownOpen(false);
                             }}
-                            className={`w-full flex items-center px-11 py-2 rounded-lg transition-all duration-200 text-sm
-                              ${active ? 'bg-white text-slate-900 font-semibold' : 'text-slate-600 hover:bg-white hover:text-slate-900 cursor-pointer'}`}
+                            className={`w-full flex items-center justify-start text-left px-4 py-2 rounded-lg transition-all duration-200 text-sm
+                              ${active ? 'bg-white text-slate-900' : 'text-slate-600 hover:bg-white hover:text-slate-900 cursor-pointer'}`}
                           >
                             <span className="truncate">{item.label}</span>
                           </Button>
