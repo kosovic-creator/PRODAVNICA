@@ -26,5 +26,9 @@
   "o_nama": "About Us",
   "kontakt": "Contact",
   "web_trgovina": "Web Store",
-  "meni": "Menu"
+  "meni": "Menu",
+  "my_orders": "My Orders",
+  "my_profile": "My Profile",
+  "admin_dashboard": "Admin Dashboard",
+  "favorites": "Favorites"
 }

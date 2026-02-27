@@ -141,9 +141,8 @@ function SidebarContent({ open, onClose }: SidebarProps) {
 
                 {/* Dropdown items */}
                 {userDropdownOpen && (
-                  <ul className="mt-1 space-y-1 bg-slate-100 rounded-lg p-2 ml-4">
+                  <ul className="mt-1 space-y-1 bg-slate-100 rounded-lg p-2">
                     {userItems.map((item) => {
-                      const Icon = item.icon;
                       const active = isActive(item.path);
                       return (
                         <li key={item.path}>
@@ -152,10 +151,9 @@ function SidebarContent({ open, onClose }: SidebarProps) {
                               navigateWithLang(item.path);
                               setUserDropdownOpen(false);
                             }}
-                            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm
+                            className={`w-full flex items-center px-11 py-2 rounded-lg transition-all duration-200 text-sm
                               ${active ? 'bg-white text-slate-900 font-semibold' : 'text-slate-600 hover:bg-white hover:text-slate-900 cursor-pointer'}`}
                           >
-                            <Icon className="w-4 h-4" />
                             <span className="truncate">{item.label}</span>
                           </Button>
                         </li>
