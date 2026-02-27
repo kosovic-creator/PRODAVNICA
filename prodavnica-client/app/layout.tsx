@@ -53,7 +53,7 @@ export default async function RootLayout({
 
   return (
     <html lang={lang}>
-      <head>
+       <head>
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
