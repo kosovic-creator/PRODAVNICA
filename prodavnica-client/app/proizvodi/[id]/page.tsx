@@ -4,8 +4,8 @@ import type { Proizvodi } from '../../../types';
 import ClientLayout from '@/app/components/ClientLayout';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
-import ProizvodDetailSkeleton from '../components/ProizvodDetailSkeleton';
-import ProizvodDetailClient from '../components/ProizvodDetailClient';
+import ProizvodDetailSkeleton from './ProizvodDetailSkeleton';
+import ProizvodDetailClient from './ProizvodDetailClient';
 import { getLanguageFromCookies } from '@/i18n/i18n';
 
 export const metadata: Metadata = {

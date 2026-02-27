@@ -43,7 +43,7 @@ export default function OmiljeniContent({
           {tr('omiljeni_proizvodi')}
         </h1>
         {omiljeni.length === 0 ? (
-          <div className="flex flex-col items-center justify-center min-h-[300px] text-center">
+          <div className="flex flex-col items-center justify-center min-h-75 text-center">
             <FaHeart className="text-gray-300 text-6xl mb-4" />
             <h2 className="text-xl font-semibold text-gray-600 mb-2" suppressHydrationWarning>
               {tr('nema_omiljenih_proizvoda')}

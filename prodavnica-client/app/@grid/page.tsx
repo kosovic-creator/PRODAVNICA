@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useEffect, useState } from 'react';
 import { getProizvodNajnoviji } from '@/lib/actions';
 import Image from 'next/image';
 import Link from 'next/link';
-import OmiljeniButton from '../proizvodi/components/OmiljeniButton';
+import OmiljeniButton from '../omiljeni/OmiljeniButton';
 import AddToCartButton from '../proizvodi/components/AddToCartButton';
 import ProductPrice from '../proizvodi/components/product-price';
 import { useI18n } from '@/i18n/I18nProvider';

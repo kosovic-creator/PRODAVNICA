@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { Trash2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { updateStavkuKorpe, ukloniStavkuKorpe } from '@/lib/actions';
 import { useCart } from '../../components/KorpaContext';
 import { Button } from "@prodavnica/ui";
@@ -63,7 +64,7 @@ export default function KorpaItem({ stavka }: KorpaItemProps) {
         }
 
         await refreshKorpa();
-        setMessage(t('korpa', 'artikal_izbrisan') || 'Artikal je uklonjen iz korpe');
+        toast.success(t('korpa', 'artikal_izbrisan') || 'Artikal je uklonjen iz korpe', { duration: 3000 });
       } catch (error) {
         console.error('Greška pri brisanju stavke:', error);
         setMessage(t('korpa', 'error') || 'Greška pri brisanju stavke');

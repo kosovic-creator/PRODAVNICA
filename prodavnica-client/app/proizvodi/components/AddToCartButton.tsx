@@ -11,6 +11,7 @@ import { dodajUKorpu } from './../../../lib/actions/korpa';
 import { useCart } from '../../components/KorpaContext';
 import { Button } from "@prodavnica/ui";
 import { useI18n } from '@/i18n/I18nProvider';
+import SuccessMessage from '@/app/components/SuccessMessage';
 
 declare module 'next-auth' {
   interface Session {
@@ -37,6 +38,7 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
 
   const [isPending, startTransition] = useTransition();
   const [isAdding, setIsAdding] = useState(false);
+  const [loginError, setLoginError] = useState('');
   const { refreshKorpa } = useCart();
 
   const hasVarijante = proizvod.varijante && proizvod.varijante.length > 0;
@@ -46,8 +48,7 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
 
     // Proveri da li je korisnik prijavljen
     if (!korisnikId) {
-      toast.error(t('addToCartButton', 'loginRequired'), { duration: 4000 });
-      router.push('/prijava');
+      setLoginError(t('addToCartButton', 'loginRequired') || 'Morate biti prijavljeni');
       return;
     }
 
@@ -77,17 +78,20 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
         });
 
         if (!result.success) {
-          toast.error(result.error || t('addToCartButton', 'addError'), { duration: 4000 });
+          toast.error(result.error || t('addToCartButton', 'addError') || 'Greška pri dodavanju u korpu', { duration: 4000 });
           return;
         }
 
         // Ažuriraj broj stavki u korpi globalno
         await refreshKorpa();
 
-        toast.success(t('addToCartButton', 'addSuccess'), { duration: 4000 });
+        toast.success(t('addToCartButton', 'addSuccess') || 'Proizvod je dodat u korpu', { duration: 2000 });
+        setTimeout(() => {
+          router.push('/korpa');
+        }, 1200);
       } catch (error) {
         console.error('Greška:', error);
-        toast.error(t('addToCartButton', 'addErrorGeneric'), { duration: 4000 });
+        toast.error(t('addToCartButton', 'addErrorGeneric') || 'Došlo je do greške', { duration: 4000 });
       } finally {
         setIsAdding(false);
       }
@@ -95,24 +99,38 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
   };
 
   return (
-    <Button
-      variant="default"
-      className="w-full h-full text-sm font-medium rounded-none flex items-center justify-center gap-2"
-      onClick={handleClick}
-      disabled={!hasVarijante || isAdding || isPending}
-      suppressHydrationWarning
-    >
-      {isAdding ? (
-        <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
-      ) : (
-        <FaCartPlus className="w-4 h-4" />
+    <>
+      {loginError && (
+        <SuccessMessage
+          message={loginError}
+          type="error"
+          redirectTo="/prijava"
+          redirectDelay={2000}
+        />
       )}
-      {isAdding
-        ? t('addToCartButton', 'adding')
-        : !hasVarijante
-          ? t('addToCartButton', 'outOfStock')
-          : t('addToCartButton', 'addToCart')
-      }
-    </Button>
+      <Button
+        variant="default"
+        className="w-full h-12 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-lg flex items-center justify-center gap-2 transition-colors"
+        onClick={handleClick}
+        disabled={!hasVarijante || isAdding || isPending}
+        suppressHydrationWarning
+      >
+        {isAdding ? (
+          <>
+            <span className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full" />
+            <span suppressHydrationWarning>{t('addToCartButton', 'adding') || 'Dodavanje...'}</span>
+          </>
+        ) : (
+          <>
+            <FaCartPlus className="w-5 h-5" />
+            <span suppressHydrationWarning>
+              {!hasVarijante
+                ? t('addToCartButton', 'outOfStock') || 'Nema na stanju'
+                : t('addToCartButton', 'addToCart') || 'Dodaj u korpu'}
+            </span>
+          </>
+        )}
+      </Button>
+    </>
   );
 }

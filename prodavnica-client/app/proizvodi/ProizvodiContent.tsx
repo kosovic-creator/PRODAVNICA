@@ -7,7 +7,7 @@ import { FaStar } from 'react-icons/fa';
 import ProductPrice from './components/product-price';
 import { Proizvodi } from '@/types';
 import AddToCartButton from './components/AddToCartButton';
-import OmiljeniButton from './components/OmiljeniButton';
+import OmiljeniButton from '../omiljeni/OmiljeniButton';
 import PaginationControls from './components/PaginationControls';
 import { useI18n } from '@/i18n/I18nProvider';
 

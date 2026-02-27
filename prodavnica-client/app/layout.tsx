@@ -8,8 +8,6 @@ import { getKorpa } from '@/lib/actions/korpa';
 import type { ReactNode } from 'react';
 import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants";
 import { Providers } from "./components/Providers";
-import LayoutWrapper from "./components/LayoutWrapper";
-import { CartProvider } from "./components/KorpaContext";
 import { getServerLanguage } from "@/i18n/i18n.server";
 
 const geistSans = Geist({
@@ -61,11 +59,7 @@ export default async function RootLayout({
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers initialLang={lang}>
-          <CartProvider>
-            <LayoutWrapper>
-              {children}
-            </LayoutWrapper>
-          </CartProvider>
+          {children}
         </Providers>
       </body>
     </html>

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { FaCreditCard, FaShoppingCart } from 'react-icons/fa';
 import { Trash2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { ocistiKorpu } from '@/lib/actions/korpa';
 import { kreirajPorudzbinu } from '@/lib/actions/porudzbine';
 import { getPodaciPreuzimanja } from '@/lib/actions/podaci-preuzimanja';
@@ -67,9 +68,12 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
 
       await refreshKorpa();
       console.log('Korpa je ispražnjena i stanje proizvoda smanjeno');
+      toast.success(t('korpa', 'cart_emptied') || 'Korpa je ispražnjena', { duration: 3000 });
 
       // Redirect na proizvodi
-      router.push('/proizvodi');
+      setTimeout(() => {
+        router.push('/proizvodi');
+      }, 800);
     } catch (error) {
       console.error('Greška pri brisanju korpe ili ažuriranju stanja proizvoda:', error);
       setMessage(t('korpa', 'error') || 'Greška pri brisanju korpe');
@@ -301,7 +305,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
           </h2>
 
           {/* Ukupno */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
+          <div className="bg-linear-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
             <div className="flex justify-between items-center">
               <span className="text-base font-medium text-gray-700">
                 {t('korpa', 'ukupno') || 'Ukupno'}:
@@ -321,7 +325,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
               onClick={handleZavrsiKupovinu}
               disabled={pendingKupovina || isPending}
               size="lg"
-              className="w-full h-12 text-base font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              className="w-full h-12 text-base font-semibold bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
             >
               {pendingKupovina ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />

@@ -4,11 +4,11 @@ import { useI18n } from '@/i18n/I18nProvider';
 import type { Proizvodi } from '@/types';
 import type { Language } from '@/i18n/constants';
 import Link from 'next/link';
-import ProductPrice from './product-price';
+import ProductPrice from '../../proizvodi/components/product-price';
 import { FaStar } from 'react-icons/fa';
-import ProductImagesSlider from './ProductImagesSlider';
-import ProductVarijanteSection from './ProductVarijanteSection';
-import Breadcrumbs from './Breadcrumbs';
+import ProductImagesSlider from '../../proizvodi/components/ProductImagesSlider';
+import ProductVarijanteSection from '../../proizvodi/components/ProductVarijanteSection';
+import Breadcrumbs from '../../proizvodi/components/Breadcrumbs';
 import { useState, useEffect } from 'react';
 
 // Static translations for SSR/hydration to prevent mismatch

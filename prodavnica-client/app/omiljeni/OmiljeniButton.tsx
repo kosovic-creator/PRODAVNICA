@@ -3,7 +3,7 @@ import { useState, useEffect, useTransition } from 'react';
 import { Heart } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
-import { getOmiljeni, dodajUOmiljene, ukloniIzOmiljenih } from '../../../lib/actions/omiljeni';
+import { getOmiljeni, dodajUOmiljene, ukloniIzOmiljenih } from '@/lib/actions/omiljeni';
 import { Button } from "@prodavnica/ui";
 import { useI18n } from '@/i18n/I18nProvider';
 

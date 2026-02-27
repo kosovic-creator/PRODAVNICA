@@ -4,8 +4,6 @@ import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/authOptions';
 import { deleteKorisnik } from '@/lib/actions/korisnici';
 import { revalidatePath } from 'next/cache';
-import ProfilSkeleton from './components/ProfilSkeleton';
-import { Button } from "@prodavnica/ui";
 import { Metadata } from 'next';
 import ProfilContent from './ProfilContent';
 
