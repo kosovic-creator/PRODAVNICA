@@ -54,20 +54,16 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
             {/* Left Section - Hamburger + Logo */}
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <Button variant="ghost"
-                className="p-2 sm:p-3 focus:outline-none rounded-lg hover:bg-gray-700 touch-manipulation transition-colors"
+                className="px-2 py-2 sm:px-3 focus:outline-none rounded-lg hover:bg-gray-700 touch-manipulation transition-colors"
                 onClick={() => setSidebarOpen?.(true)}
                 aria-label="Otvori meni"
               >
                 <FaBars className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
               </Button>
                <Link href="/" className="text-xl font-bold">
-                <Image
-                  src="/icons/logo-mp-red.svg"
-                  alt="Prodavnica"
-                  width={40}
-                  height={40}
-                  className="w-8 h-8 sm:w-10 sm:h-10"
-                />
+                <svg className="w-8 h-8 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                </svg>
         </Link>
             </div>
             {/* Center Section - Desktop Search */}
