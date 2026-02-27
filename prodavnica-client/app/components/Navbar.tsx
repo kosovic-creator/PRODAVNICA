@@ -102,10 +102,10 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
             </Button>
           {/* Right Section - Profile, Cart, Language Switcher */}
             <div className="flex items-center gap-3 text-white">
-            {/* Profile dropdown for logged-in user */}
+              {/* Profile dropdown for logged-in user - hidden on mobile */}
             {isLoggedIn ? (
               <>
-                  <div className="relative" ref={dropdownRef}>
+                  <div className="hidden sm:block relative" ref={dropdownRef}>
                     <Button variant="ghost"
                     onClick={() => setDropdownOpen(v => !v)}
                       className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-700 transition cursor-pointer text-white"
@@ -135,10 +135,10 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
                     </div>
                   )}
                 </div>
-                {/* Odjava ikona direktno u navbaru */}
+                  {/* Logout button - hidden on mobile */}
                   <Button variant="ghost"
                     onClick={() => signOut({ callbackUrl: "/" })}
-                    className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-700 transition cursor-pointer text-white"
+                    className="hidden sm:flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-700 transition cursor-pointer text-white"
                     title={tr('logout')}
                 >
                     <FaSignOutAlt className="text-lg sm:text-xl" />

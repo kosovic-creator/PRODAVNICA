@@ -4,8 +4,8 @@ import * as React from 'react';
 import { useI18n } from '@/i18n/I18nProvider';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { FaBoxOpen, FaUser, FaTimes, FaShoppingBag, FaChartBar, FaCog, FaPhone, FaInfoCircle } from 'react-icons/fa';
-import { useSession } from 'next-auth/react';
+import { FaBoxOpen, FaUser, FaTimes, FaShoppingBag, FaChartBar, FaCog, FaPhone, FaInfoCircle, FaHistory, FaHeart, FaSignOutAlt } from 'react-icons/fa';
+import { useSession, signOut } from 'next-auth/react';
 import { Button } from "@prodavnica/ui";
 
 
@@ -48,13 +48,10 @@ function SidebarContent({ open, onClose }: SidebarProps) {
   const userMenuItems = React.useMemo(() => [
     { path: '/proizvodi', icon: FaBoxOpen, label: t('sidebar', 'proizvodi') },
     ...(session?.user ? [
-      // { path: '/moje-porudzbine', icon: FaHistory, label: t('sidebar', 'moje_narudzbine') },
-      // { path: '/korpa', icon: FaShoppingCart, label: t('sidebar', 'korpa') },
-      // { path: '/omiljeni', icon: FaHeart, label: t('sidebar', 'omiljeni') },
-      //  { path: '/profil', icon: FaUser, label: t('sidebar', 'profile') },
+      { path: '/profil', icon: FaUser, label: t('sidebar', 'profile') },
+      { path: '/moje-porudzbine', icon: FaHistory, label: t('sidebar', 'my_orders') },
+      { path: '/omiljeni', icon: FaHeart, label: t('sidebar', 'favorites') },
     ] : []),
-    // { path: '/o-nama', icon: FaInfoCircle, label: t('sidebar', 'o_nama') },
-    // { path: '/kontakt', icon: FaPhone, label: t('sidebar', 'kontakt') },
   ], [t, session?.user]);
 
   const menuItems =  userMenuItems;
@@ -129,6 +126,20 @@ function SidebarContent({ open, onClose }: SidebarProps) {
 
         {/* Footer - flex-shrink-0 da ostane na dnu */}
         <div className="p-4 border-t border-slate-300 bg-stone-100/70 shrink-0">
+          {session?.user && (
+            <Button variant="ghost"
+              onClick={() => {
+                onClose();
+                signOut({ callbackUrl: "/" });
+              }}
+              className="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-red-600 hover:bg-red-100 transition-all duration-200 mb-3"
+            >
+              <span className="flex items-center justify-center bg-red-100 text-red-600 rounded-full w-8 h-8">
+                <FaSignOutAlt className="w-5 h-5" />
+              </span>
+              <span className="font-medium text-sm truncate">{t('sidebar', 'logout')}</span>
+            </Button>
+          )}
           <div className="text-center">
             <p className="text-xs text-slate-600">{t('sidebar', 'web_trgovina')}</p>
             <p className="text-xs text-slate-500">v1.0.0</p>
