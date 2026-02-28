@@ -13,7 +13,7 @@ import { getPodaciPreuzimanja } from '@/lib/actions/podaci-preuzimanja';
 import { posaljiObavestenjePorudzbina } from '@/lib/actions/email';
 import { getProizvodById } from '@/lib/actions/proizvodi';
 import { useCart } from '../../components/KorpaContext';
-import SuccessMessage from '@/app/components/SuccessMessage';
+// import SuccessMessage from '@/app/components/SuccessMessage';
 import { Button } from "@prodavnica/ui";
 import { Card, CardContent } from "@prodavnica/ui";
 import { Separator } from "@prodavnica/ui";
@@ -42,8 +42,8 @@ interface KorpaActionsProps {
 
 export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
   const [isPending, setIsPending] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
+  // const [showSuccess, setShowSuccess] = useState(false);
+  // const [successMessage, setSuccessMessage] = useState('');
   const router = useRouter();
   const { data: session } = useSession();
   const [message, setMessage] = useState('');
@@ -158,9 +158,8 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
         })),
       });
 
-      // Prikaži success obaveštenje
-      setSuccessMessage(t('korpa', 'kupovina_uspesna'));
-      setShowSuccess(true);
+      // Prikaži toast obaveštenje
+      toast.success(t('korpa', 'kupovina_uspesna') || 'Porudžbina je uspješno dodata', { duration: 3000 });
 
       // Očisti korpu i redirect nakon 3 sekunde
       setTimeout(async () => {
@@ -208,8 +207,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
         })),
       });
 
-      setSuccessMessage(t('korpa', 'kupovina_uspesna') || 'Porudžbina je uspešno plaćena');
-      setShowSuccess(true);
+      toast.success(t('korpa', 'kupovina_uspesna') || 'Porudžbina je uspešno plaćena', { duration: 2500 });
 
       setTimeout(async () => {
         await ocistiKorpu(userId);
@@ -264,9 +262,8 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
         })),
       });
 
-      // Prikaži success obaveštenje
-      setSuccessMessage(t('korpa', 'montrypay_success') || 'Porudžbina je kreirana!');
-      setShowSuccess(true);
+      // Prikaži toast obaveštenje
+      toast.success(t('korpa', 'montrypay_success') || 'Porudžbina je kreirana!', { duration: 3000 });
 
       // Očisti korpu i redirect nakon 3 sekunde
       setTimeout(async () => {
@@ -292,10 +289,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
         </div>
       )}
 
-      {/* Success Message */}
-      {showSuccess && (
-        <SuccessMessage message={successMessage} />
-      )}
+      {/* Success Message uklonjen, koristi se toast */}
 
       <Card className="shadow-lg border-2">
         <CardContent className="p-4 space-y-4">
