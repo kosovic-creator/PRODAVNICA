@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -37,12 +36,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <head>
         <link rel="shortcut icon" href="/favicon.ico" />
         {/* Apple touch icon for mobile shortcuts */}
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        {/* Manifest for PWA (optional, can be added later) */}
-      </head>
         {/* Manifest for PWA (optional, can be added later) */}
       </head>
       <body

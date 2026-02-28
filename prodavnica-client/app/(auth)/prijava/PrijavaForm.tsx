@@ -25,7 +25,6 @@ export default function PrijavaForm({ savedEmail, errorMessage, onRememberMe }: 
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [touched, setTouched] = useState<Record<string, boolean>>({});
     const { t: i18nT } = useI18n();
-
     const t = (key: string) => i18nT('auth', `login.${key}`);
 
     const tLogin = {
