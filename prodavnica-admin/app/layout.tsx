@@ -23,7 +23,10 @@ export const metadata: Metadata = {
     default: APP_NAME,
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/apple-touch-icon.png", sizes: "any" },
+      { url: "/apple-touch-icon.svg", type: "image/svg+xml" },
+    ],
     apple: "/apple-touch-icon.png",
   },
 };
@@ -35,10 +38,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
