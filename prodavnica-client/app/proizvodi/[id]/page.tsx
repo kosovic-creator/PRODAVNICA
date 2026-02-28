@@ -6,7 +6,7 @@ import { Metadata } from 'next';
 import { Suspense } from 'react';
 import ProizvodDetailSkeleton from './ProizvodDetailSkeleton';
 import ProizvodDetailClient from './ProizvodDetailClient';
-import { getLanguageFromCookies } from '@/i18n/i18n';
+
 
 export const metadata: Metadata = {
   title: 'Detalji artikla',
@@ -17,8 +17,6 @@ export default async function ProizvodPage({ params }: { params: Promise<{ id: s
   const resolvedParams = await params;
   const result = await getProizvodById(resolvedParams.id);
   if (!result.success || !result.data) notFound();
-
-  const initialLang = await getLanguageFromCookies();
 
   const proizvod: Proizvodi = {
     ...result.data,
@@ -46,7 +44,7 @@ export default async function ProizvodPage({ params }: { params: Promise<{ id: s
   return (
     <ClientLayout>
       <Suspense fallback={<ProizvodDetailSkeleton />}>
-        <ProizvodDetailClient proizvod={proizvod} initialLang={initialLang} />
+        <ProizvodDetailClient proizvod={proizvod} />
       </Suspense>
     </ClientLayout>
   );

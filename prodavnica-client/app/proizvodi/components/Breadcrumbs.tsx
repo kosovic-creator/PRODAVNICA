@@ -3,27 +3,15 @@
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import { useI18n } from '@/i18n/I18nProvider';
-import { useState, useEffect } from 'react';
-import type { Language } from '@/i18n/constants';
 
 interface BreadcrumbsProps {
   items: Array<{ label: string; href?: string }>;
-  initialLang?: Language;
 }
 
-export default function Breadcrumbs({ items, initialLang }: BreadcrumbsProps) {
-  const [mounted, setMounted] = useState(false);
+export default function Breadcrumbs({ items }: BreadcrumbsProps) {
   const { t } = useI18n();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // For SSR/hydration, use initialLang prop to ensure consistency
-  // After mount, use reactive i18n translation
-  const pocetna = mounted
-    ? t('common', 'pocetna')
-    : initialLang === 'en' ? 'HOME' : 'POČETNA';
+  const pocetna = t('common', 'pocetna');
 
   return (
     <nav className="flex items-center space-x-2 text-sm mb-6 overflow-x-auto">
