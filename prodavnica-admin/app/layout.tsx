@@ -37,9 +37,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="shortcut icon" href="/favicon.ico" />
-        {/* Apple touch icon for mobile shortcuts */}
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        {/* Manifest for PWA (optional, can be added later) */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
