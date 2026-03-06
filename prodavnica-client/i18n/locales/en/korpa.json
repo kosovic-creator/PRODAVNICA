@@ -33,5 +33,6 @@
   "smanji_kolicinu": "Decrease quantity",
   "povecaj_kolicinu": "Increase quantity",
   "izbrisi_artikal": "Delete item",
-  "montrypay": "Montrypay"
+  "montrypay": "Montrypay",
+  "ili_platite_karticom": "or pay with card"
 }

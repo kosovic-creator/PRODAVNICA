@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -13,7 +14,9 @@ const nextConfig: NextConfig = {
     ],
     qualities: [75, 90],
   },
-  turbopack: {},
+  turbopack: {
+    root: path.resolve(__dirname, '..'),
+  },
   serverExternalPackages: ['@prisma/client', '@prisma/adapter-pg'],
 };
 

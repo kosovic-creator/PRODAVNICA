@@ -115,7 +115,7 @@ export default function OmiljeniButton({ proizvodId }: OmiljeniButtonProps) {
     <Button
       onClick={handleClick}
       disabled={loading || isPending}
-      variant="outline"
+      variant="ghost"
       size="icon"
       className={isProizvodOmiljeni ? "rounded-full text-red-600" : "rounded-full"}
       title={isProizvodOmiljeni ? (t('proizvodi', 'omiljeni_ukloniti') || 'Ukloni iz omiljenih') : (t('proizvodi', 'omiljeni_dodati') || 'Dodaj u omiljene')}

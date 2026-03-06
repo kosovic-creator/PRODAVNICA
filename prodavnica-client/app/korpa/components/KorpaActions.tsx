@@ -76,7 +76,8 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       }, 800);
     } catch (error) {
       console.error('Greška pri brisanju korpe ili ažuriranju stanja proizvoda:', error);
-      setMessage(t('korpa', 'error') || 'Greška pri brisanju korpe');
+      // setMessage(t('korpa', 'error') || 'Greška pri brisanju korpe');
+      toast.error(t('korpa', 'error') || 'Greška pri brisanju korpe', { duration: 3000 });
     } finally {
       setPendingKorpa(false);
     }
@@ -106,13 +107,15 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
 
       if (!result.success) {
         setMessage(result.error || t('korpa', 'error') || 'Greška pri kreiranju porudžbine');
+        toast.error(result.error || t('korpa', 'error') || 'Greška pri kreiranju porudžbine', { duration: 3000 });
         return { success: false };
       }
 
       return { success: true, ukupno };
     } catch (error) {
       console.error('[KorpaActions] Error creating order:', error);
-      setMessage(t('korpa', 'error') || 'Greška pri kreiranju porudžbine');
+      // setMessage(t('korpa', 'error') || 'Greška pri kreiranju porudžbine');
+      toast.error(t('korpa', 'error') || 'Greška pri kreiranju porudžbine', { duration: 3000 });
       return { success: false };
     }
   };
@@ -126,7 +129,8 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       console.log('[KorpaActions] Podaci za preuzimanje:', podaciResult);
 
       if (!podaciResult.success || !podaciResult.data) {
-        setMessage(t('korpa', 'no_data_redirect') || "Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.");
+        // setMessage(t('korpa', 'no_data_redirect') || "Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.");
+        toast.error(t('korpa', 'no_data_redirect') || "Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.", { duration: 3000 });
         setTimeout(() => {
           router.push('/podaci-preuzimanja');
         }, 2000);
@@ -169,7 +173,8 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       }, 3000);
     } catch (error) {
       console.error('[KorpaActions] Error completing purchase:', error);
-      setMessage(t('korpa', 'error') || 'Greška pri završavanju kupovine');
+      // setMessage(t('korpa', 'error') || 'Greška pri završavanju kupovine');
+      toast.error(t('korpa', 'error') || 'Greška pri završavanju kupovine', { duration: 3000 });
     } finally {
       setPendingKupovina(false);
     }
@@ -182,6 +187,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
 
       if (!podaciResult.success || !podaciResult.data) {
         setMessage(t('korpa', 'no_data_redirect') || 'Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.');
+        toast.error(t('korpa', 'no_data_redirect') || 'Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.', { duration: 3000 });
         setTimeout(() => {
           router.push('/podaci-preuzimanja');
         }, 2000);
@@ -216,7 +222,8 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       }, 2500);
     } catch (error) {
       console.error('[KorpaActions] Error after Stripe payment:', error);
-      setMessage(t('korpa', 'error') || 'Greška posle plaćanja');
+      // setMessage(t('korpa', 'error') || 'Greška posle plaćanja');
+      toast.error(t('korpa', 'error') || 'Greška posle plaćanja', { duration: 3000 });
     } finally {
       setPendingStripe(false);
     }
@@ -273,7 +280,8 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       }, 3000);
     } catch (error) {
       console.error('[KorpaActions] Error during Montrypay checkout:', error);
-      setMessage(t('korpa', 'error') || 'Greška pri Montrypay plaćanju');
+      // setMessage(t('korpa', 'error') || 'Greška pri Montrypay plaćanju');
+      toast.error(t('korpa', 'error') || 'Greška pri Montrypay plaćanju', { duration: 3000 });
     } finally {
       setPendingMontrypay(false);
     }
@@ -294,9 +302,9 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       <Card className="shadow-lg border-2">
         <CardContent className="p-4 space-y-4">
           {/* Naslov */}
-          <h2 className="text-lg font-bold text-gray-800 border-b pb-2">
+          {/* <h2 className="text-lg font-bold text-gray-800 border-b pb-2">
             {t('korpa', 'pregled_korpe') || 'Pregled korpe'}
-          </h2>
+          </h2> */}
 
           {/* Ukupno */}
           <div className="bg-linear-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
@@ -328,7 +336,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
               )}
               <span>{t('korpa', 'zavrsi_kupovinu') || 'Završi kupovinu'}</span>
             </Button>
-
+   <p className="text-xs text-gray-500 mb-2 text-center">{t('korpa', 'ili_platite_karticom') || 'Ili platite karticom'}</p>
             {/* Montrypay */}
             <Button
               onClick={handleMontrypayPlaćanje}
@@ -337,6 +345,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
               variant="outline"
               className="w-full h-11 text-base font-medium border-2 border-green-600 text-green-600 hover:bg-green-50 hover:border-green-700 transition-all flex items-center justify-center gap-2"
             >
+
               {pendingMontrypay ? (
                 <div className="w-5 h-5 border-2 border-green-600 border-t-transparent rounded-full animate-spin" />
               ) : (
@@ -349,7 +358,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
 
             {/* Stripe Checkout */}
             <div className="pt-1">
-              <p className="text-xs text-gray-500 mb-2 text-center">{t('korpa', 'ili_platite_karticom') || 'Ili platite karticom'}</p>
+
               <StripeCheckoutForm
                 amountInCents={Math.round(ukupno * 100)}
                 onSuccess={handleStripeSuccess}

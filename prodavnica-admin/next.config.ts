@@ -3,6 +3,7 @@ import type { Configuration } from "webpack";
 
 const nextConfig = {
   turbopack: {
+    root: path.resolve(__dirname, '..'),
     resolveAlias: {
       '@': './',
     },
