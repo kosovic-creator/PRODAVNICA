@@ -22,8 +22,8 @@ Na Vercel-u, kreiraj novi projekat sa:
 - **Project Name**: `prodavnica-admin` (ili kako god želiš)
 - **Framework Preset**: Next.js
 - **Root Directory**: `apps/prodavnica-admin` ⚠️ **OVO JE KLJUČNO!**
-- **Build Command**: `cd ../.. && npm install && npm run build:admin`
-- **Install Command**: `npm install` (u root-u)
+- **Build Command**: `cd ../.. && npm run db:generate && npm run build:admin`
+- **Install Command**: `cd ../.. && npm install`
 - **Output Directory**: `.next` (default)
 
 **Environment Variables** (u Vercel projektu):
@@ -44,8 +44,8 @@ Na Vercel-u, kreiraj DRUGI projekat sa:
 - **Project Name**: `prodavnica-client` (ili kako god želiš)
 - **Framework Preset**: Next.js
 - **Root Directory**: `apps/prodavnica-client` ⚠️ **OVO JE KLJUČNO!**
-- **Build Command**: `cd ../.. && npm install && npm run build:client`
-- **Install Command**: `npm install` (u root-u)
+- **Build Command**: `cd ../.. && npm run db:generate && npm run build:client`
+- **Install Command**: `cd ../.. && npm install`
 - **Output Directory**: `.next` (default)
 
 **Environment Variables** (u Vercel projektu):
@@ -66,14 +66,16 @@ CLOUDINARY_API_SECRET=...
 3. **Konfiguriši Prvi Projekat (Admin)**:
    - Klikni "Configure Project"
    - Postavi "Root Directory" na `apps/prodavnica-admin`
-   - Postavi "Build Command" na `cd ../.. && npm install && npm run build:admin`
+   - Postavi "Install Command" na `cd ../.. && npm install`
+   - Postavi "Build Command" na `cd ../.. && npm run db:generate && npm run build:admin`
    - Dodaj sve Environment Variables
    - Deploy!
 
 4. **Kreiraj Drugi Projekat (Client)**:
    - Opet import-uj isti GitHub repo
    - Ovaj put postavi "Root Directory" na `apps/prodavnica-client`
-   - Postavi "Build Command" na `cd ../.. && npm install && npm run build:client`
+   - Postavi "Install Command" na `cd ../.. && npm install`
+   - Postavi "Build Command" na `cd ../.. && npm run db:generate && npm run build:client`
    - Dodaj sve Environment Variables (sa drugim URL-ovima!)
    - Deploy!
 

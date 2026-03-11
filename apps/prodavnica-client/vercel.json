@@ -1,4 +1,5 @@
 {
-  "buildCommand": "cd ../.. && npm run build:client",
+  "installCommand": "cd ../.. && npm install",
+  "buildCommand": "cd ../.. && npm run db:generate && npm run build:client",
   "outputDirectory": ".next"
 }
