@@ -8,6 +8,7 @@ import Navbar from "@/app/components/Navbar";
 import { APP_NAME } from "@/lib/constants";
 import PWARegister from "./components/PWARegister";
 import InstallBanner from "./components/InstallBanner";
+import OfflineNotice from "./components/OfflineNotice";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
       >
         <AuthProvider>
           <PWARegister />
+          <OfflineNotice />
           <InstallBanner />
           <div className="min-h-screen bg-gray-50">
             <Navbar />

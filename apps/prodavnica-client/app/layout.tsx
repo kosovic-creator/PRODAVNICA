@@ -11,6 +11,7 @@ import { Providers } from "./components/Providers";
 import { getServerLanguage } from "@/i18n/i18n.server";
 import PWARegister from "./components/PWARegister";
 import InstallBanner from "./components/InstallBanner";
+import OfflineNotice from "./components/OfflineNotice";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -66,6 +67,7 @@ export default async function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers initialLang={lang}>
           <PWARegister />
+          <OfflineNotice />
           <InstallBanner />
           {children}
         </Providers>
