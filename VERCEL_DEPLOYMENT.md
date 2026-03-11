@@ -27,7 +27,7 @@ Na Vercel-u, kreiraj novi projekat sa:
 - **Output Directory**: `.next` (default)
 
 **Environment Variables** (u Vercel projektu):
-```
+```dd
 DATABASE_URL=postgresql://...
 NEXTAUTH_SECRET=...
 NEXTAUTH_URL=https://your-admin-domain.vercel.app
