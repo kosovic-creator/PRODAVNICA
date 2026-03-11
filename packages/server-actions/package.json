@@ -1,0 +1,10 @@
+{
+  "name": "@prodavnica/server-actions",
+  "version": "1.0.0",
+  "description": "Shared server actions package",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "echo \"shared-server-actions: no build step\""
+  }
+}

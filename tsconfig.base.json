@@ -2,10 +2,22 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@prodavnica/prisma": ["packages/prisma/index.ts"],
-      "@prodavnica/lib": ["packages/lib/index.ts"],
+      "@prodavnica/prisma": [
+        "packages/database/index.ts"
+      ],
+      "@prodavnica/lib": [
+        "packages/features/index.ts"
+      ],
+      "@prodavnica/auth": [
+        "packages/auth/index.ts"
+      ],
+      "@prodavnica/server-actions": [
+        "packages/server-actions/index.ts"
+      ],
       "@prodavnica/ui": ["packages/ui/index.ts"],
-      "@prodavnica/validators": ["packages/validators/index.ts"],
+      "@prodavnica/validators": [
+        "packages/validation/index.ts"
+      ],
       "@prodavnica/*": ["packages/*/index.ts"]
     },
     "target": "ES2020",

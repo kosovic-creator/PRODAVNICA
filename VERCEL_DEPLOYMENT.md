@@ -5,7 +5,7 @@
 Ovo je NPM workspaces monorepo sa sledećom strukturom:
 
 ```
-/packages/prisma       - Deljeni Prisma schema i migracije
+/packages/database     - Deljeni Prisma schema i migracije
 /apps/prodavnica-admin    - Admin dashboard aplikacija (port 4000)
 /apps/prodavnica-client   - Customer-facing aplikacija (port 3000)
 /root package.json   - Workspace definicija
@@ -108,16 +108,16 @@ npm run prisma:studio          # Otvori Prisma Studio
 1. **Vercel detektuje monorepo** - vidi `workspaces` u root `package.json`
 2. **Root Directory setting** - kaže Vercel-u koji workspace da deploy-uje
 3. **Build Command** - `cd ../..` ide u root, instalira sve, pa build-a specifičan workspace
-4. **Prisma** - svaki `postinstall` script automatski generiše Prisma client iz packages/prisma
+4. **Prisma** - svaki `postinstall` script automatski generiše Prisma client iz packages/database
 
 ## Troubleshooting
 
 ### "Cannot find module '@prisma/client'"
 - Proveri da svaki workspace ima `"postinstall": "npx prisma generate"` u package.json
-- Proveri da `prisma.config.ts` pokazuje na `../../packages/prisma/schema.prisma`
+- Proveri da `prisma.config.ts` pokazuje na `../../packages/database/schema.prisma`
 
 ### "Prisma schema not found"
-- Proveri da `packages/prisma/schema.prisma` postoji
+- Proveri da `packages/database/schema.prisma` postoji
 - Proveri putanju u `prisma.config.ts`
 
 ### Build Command fails

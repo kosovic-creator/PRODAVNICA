@@ -82,7 +82,7 @@ npm run build  # Priprema za build (trenutno samo echo)
 
 - `apps/prodavnica-admin` - Koristi komponente za admin dashboard
 - `apps/prodavnica-client` - Koristi komponente za klijentsku web aplikaciju
-- `packages/prisma` - Deljeni Prisma klijent
+- `packages/database` - Deljeni Prisma klijent
 
 ## Verzioniranje
 
