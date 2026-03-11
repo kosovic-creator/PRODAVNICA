@@ -1,13 +1,13 @@
 # Shared Prisma Schema
 
 Ovaj folder sadrži zajednički Prisma model i migracije za obe aplikacije:
-- `prodavnica-admin`
-- `prodavnica-client`
+- `apps/prodavnica-admin`
+- `apps/prodavnica-client`
 
 ## 🔥 VAŽNA PRAVILA
 
 ### ✅ SAMO U OVOM FOLDERU:
-1. **Izmene schema.prisma** - Uvek menjaj samo u `shared-prisma/schema.prisma`
+1. **Izmene schema.prisma** - Uvek menjaj samo u `packages/prisma/schema.prisma`
 2. **Kreiranje migracija** - Uvek pokreći `npx prisma migrate dev` samo ovde
 3. **Prisma Studio** - Pokreći `npx prisma studio` samo ovde
 
@@ -22,14 +22,14 @@ Ovaj folder sadrži zajednički Prisma model i migracije za obe aplikacije:
 
 ### 1. Izmeni Prisma model
 ```bash
-cd /Users/drasko/PRODAVNICA/shared-prisma
+cd /Users/drasko/PRODAVNICA/packages/prisma
 # Izmeni schema.prisma
 ```
 
 ### 2. Kreiraj migraciju
 ```bash
 # Kopiraj .env iz jedne od aplikacija (ako ne postoji lokalno)
-cp ../prodavnica-admin/.env .env
+cp ../../apps/prodavnica-admin/.env .env
 
 # Kreiraj migraciju
 npx prisma migrate dev --name describe_your_change
@@ -41,19 +41,19 @@ npx prisma generate
 ### 3. Sinhronizuj u obe aplikacije
 ```bash
 # Admin aplikacija
-cd ../prodavnica-admin
+cd ../../apps/prodavnica-admin
 npx prisma generate
 
 # Client aplikacija
-cd ../prodavnica-client
+cd ../../apps/prodavnica-client
 npx prisma generate
 ```
 
 ### 4. Testiranje
 ```bash
 # Pokreni obe aplikacije i testiraj da sve radi
-cd ../prodavnica-admin && npm run dev
-cd ../prodavnica-client && npm run dev
+cd ../../apps/prodavnica-admin && npm run dev
+cd ../../apps/prodavnica-client && npm run dev
 ```
 
 ---
@@ -61,7 +61,7 @@ cd ../prodavnica-client && npm run dev
 ## 🚀 Setup za novi dev environment
 
 ```bash
-cd /Users/drasko/PRODAVNICA/shared-prisma
+cd /Users/drasko/PRODAVNICA/packages/prisma
 
 # 1. Kopiraj i konfiguriši .env
 cp .env.example .env
@@ -74,8 +74,8 @@ npx prisma migrate deploy
 npx prisma generate
 
 # 4. Generiši u obe aplikacije
-cd ../prodavnica-admin && npx prisma generate
-cd ../prodavnica-client && npx prisma generate
+cd ../../apps/prodavnica-admin && npx prisma generate
+cd ../../apps/prodavnica-client && npx prisma generate
 ```
 
 ---
@@ -101,7 +101,7 @@ npx prisma format
 ## 📂 Struktura
 
 ```
-shared-prisma/
+packages/prisma/
 ├── schema.prisma       # Jedini izvor istine za model
 ├── migrations/         # Sve migracije (AUTO-SYNC u admin/client)
 ├── package.json        # Prisma dependencies
@@ -125,9 +125,9 @@ npx prisma migrate deploy
 ### Problem: Nesinhronizovani modeli
 ```bash
 # Uvek regeneriši u obe aplikacije nakon izmena:
-cd /Users/drasko/PRODAVNICA/shared-prisma && npx prisma generate
-cd ../prodavnica-admin && npx prisma generate
-cd ../prodavnica-client && npx prisma generate
+cd /Users/drasko/PRODAVNICA/packages/prisma && npx prisma generate
+cd ../../apps/prodavnica-admin && npx prisma generate
+cd ../../apps/prodavnica-client && npx prisma generate
 ```
 
 ### Problem: Konflikti u migracijama
@@ -141,8 +141,8 @@ npx prisma migrate reset
 ## 📝 Git best practices
 
 ```bash
-# Uvek commit-uj shared-prisma izmene PRVO
-git add shared-prisma/
+# Uvek commit-uj packages/prisma izmene PRVO
+git add packages/prisma/
 git commit -m "feat: add prodavnica_br field to ProizvodVarijanta"
 
 # Zatim commit admin/client samo ako ima drugih izmena

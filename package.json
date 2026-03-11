@@ -5,25 +5,36 @@
   "private": true,
   "packageManager": "npm@11.6.3",
   "workspaces": [
-    "shared-prisma",
-    "shared-lib",
-    "shared-ui",
-    "shared-validators",
-    "prodavnica-admin",
-    "prodavnica-client"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev -w prodavnica-admin\" \"npm run dev -w prodavnica-client\"",
-    "build": "npm run build:admin && npm run build:client",
-    "build:admin": "npm run build -w prodavnica-admin",
-    "build:client": "npm run build -w prodavnica-client",
-    "start:admin": "npm start -w prodavnica-admin",
-    "start:client": "npm start -w prodavnica-client",
-    "prisma:migrate:dev": "npm run migrate:dev -w shared-prisma",
-    "prisma:migrate:deploy": "npm run migrate:deploy -w shared-prisma",
-    "prisma:studio": "npm run studio -w shared-prisma"
+    "postinstall": "npm run db:generate --workspace=packages/prisma || true",
+    "db:migrate": "npm run db:migrate --workspace=packages/prisma",
+    "db:deploy": "npm run db:deploy --workspace=packages/prisma",
+    "db:reset": "npm run db:reset --workspace=packages/prisma",
+    "dev:client": "npm run dev --workspace=apps/prodavnica-client",
+    "dev:klient": "npm run dev --workspace=apps/prodavnica-client",
+    "dev:admin": "npm run dev --workspace=apps/prodavnica-admin",
+    "dev": "concurrently \"npm run dev --workspace=apps/prodavnica-client\" \"npm run dev --workspace=apps/prodavnica-admin\"",
+    "build:all": "npm run build --workspace=apps/prodavnica-client && npm run build --workspace=apps/prodavnica-admin",
+    "build:vercel": "npm run db:generate --workspace=packages/prisma || true && if echo \"$VERCEL_PROJECT_PRODUCTION_URL$VERCEL_URL\" | grep -qi 'admin'; then npm run build --workspace=apps/prodavnica-admin; else npm run build --workspace=apps/prodavnica-client; fi",
+    "build": "if [ \"$VERCEL\" = \"1\" ]; then npm run build:vercel; else npm run db:generate --workspace=packages/prisma || true && npm run build:all; fi",
+    "build:admin": "npm run build --workspace=apps/prodavnica-admin",
+    "build:klient": "npm run build --workspace=apps/prodavnica-client",
+    "build:client": "npm run build --workspace=apps/prodavnica-client",
+    "start:admin": "npm start --workspace=apps/prodavnica-admin",
+    "start:klient": "npm start --workspace=apps/prodavnica-client",
+    "start:client": "npm start --workspace=apps/prodavnica-client",
+    "db:generate": "npm run db:generate --workspace=packages/prisma",
+    "db:push": "npm run db:push --workspace=packages/prisma",
+    "db:studio": "npm run db:studio --workspace=packages/prisma",
+    "prisma:migrate:dev": "npm run migrate:dev --workspace=packages/prisma",
+    "prisma:migrate:deploy": "npm run migrate:deploy --workspace=packages/prisma",
+    "prisma:studio": "npm run studio --workspace=packages/prisma"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "next-pwa": "^5.6.0"
   }
 }

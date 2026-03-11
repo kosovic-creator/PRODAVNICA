@@ -5,9 +5,9 @@
 Ovo je NPM workspaces monorepo sa sledećom strukturom:
 
 ```
-/shared-prisma       - Deljeni Prisma schema i migracije
-/prodavnica-admin    - Admin dashboard aplikacija (port 4000)
-/prodavnica-client   - Customer-facing aplikacija (port 3000)
+/packages/prisma       - Deljeni Prisma schema i migracije
+/apps/prodavnica-admin    - Admin dashboard aplikacija (port 4000)
+/apps/prodavnica-client   - Customer-facing aplikacija (port 3000)
 /root package.json   - Workspace definicija
 ```
 
@@ -21,8 +21,8 @@ Na Vercel-u, kreiraj novi projekat sa:
 
 - **Project Name**: `prodavnica-admin` (ili kako god želiš)
 - **Framework Preset**: Next.js
-- **Root Directory**: `prodavnica-admin` ⚠️ **OVO JE KLJUČNO!**
-- **Build Command**: `cd .. && npm install && npm run build:admin`
+- **Root Directory**: `apps/prodavnica-admin` ⚠️ **OVO JE KLJUČNO!**
+- **Build Command**: `cd ../.. && npm install && npm run build:admin`
 - **Install Command**: `npm install` (u root-u)
 - **Output Directory**: `.next` (default)
 
@@ -38,13 +38,13 @@ CLOUDINARY_API_SECRET=...
 ```
 
 ### 2. PRODAVNICA-CLIENT Projekat
-s
+
 Na Vercel-u, kreiraj DRUGI projekat sa:
 
 - **Project Name**: `prodavnica-client` (ili kako god želiš)
 - **Framework Preset**: Next.js
-- **Root Directory**: `prodavnica-client` ⚠️ **OVO JE KLJUČNO!**
-- **Build Command**: `cd .. && npm install && npm run build:client`
+- **Root Directory**: `apps/prodavnica-client` ⚠️ **OVO JE KLJUČNO!**
+- **Build Command**: `cd ../.. && npm install && npm run build:client`
 - **Install Command**: `npm install` (u root-u)
 - **Output Directory**: `.next` (default)
 
@@ -65,15 +65,15 @@ CLOUDINARY_API_SECRET=...
 2. **Import Git Repository**: Konektuj GitHub repo
 3. **Konfiguriši Prvi Projekat (Admin)**:
    - Klikni "Configure Project"
-   - Postavi "Root Directory" na `prodavnica-admin`
-   - Postavi "Build Command" na `cd .. && npm install && npm run build:admin`
+   - Postavi "Root Directory" na `apps/prodavnica-admin`
+   - Postavi "Build Command" na `cd ../.. && npm install && npm run build:admin`
    - Dodaj sve Environment Variables
    - Deploy!
 
 4. **Kreiraj Drugi Projekat (Client)**:
    - Opet import-uj isti GitHub repo
-   - Ovaj put postavi "Root Directory" na `prodavnica-client`
-   - Postavi "Build Command" na `cd .. && npm install && npm run build:client`
+   - Ovaj put postavi "Root Directory" na `apps/prodavnica-client`
+   - Postavi "Build Command" na `cd ../.. && npm install && npm run build:client`
    - Dodaj sve Environment Variables (sa drugim URL-ovima!)
    - Deploy!
 
@@ -105,21 +105,21 @@ npm run prisma:studio          # Otvori Prisma Studio
 
 1. **Vercel detektuje monorepo** - vidi `workspaces` u root `package.json`
 2. **Root Directory setting** - kaže Vercel-u koji workspace da deploy-uje
-3. **Build Command** - `cd ..` ide u root, instalira sve, pa build-a specifičan workspace
-4. **Prisma** - svaki `postinstall` script automatski generiše Prisma client iz shared-prisma
+3. **Build Command** - `cd ../..` ide u root, instalira sve, pa build-a specifičan workspace
+4. **Prisma** - svaki `postinstall` script automatski generiše Prisma client iz packages/prisma
 
 ## Troubleshooting
 
 ### "Cannot find module '@prisma/client'"
 - Proveri da svaki workspace ima `"postinstall": "npx prisma generate"` u package.json
-- Proveri da `prisma.config.ts` pokazuje na `../shared-prisma/schema.prisma`
+- Proveri da `prisma.config.ts` pokazuje na `../../packages/prisma/schema.prisma`
 
 ### "Prisma schema not found"
-- Proveri da `shared-prisma/schema.prisma` postoji
+- Proveri da `packages/prisma/schema.prisma` postoji
 - Proveri putanju u `prisma.config.ts`
 
 ### Build Command fails
-- Proveri da Build Command počinje sa `cd ..` da bi bio u root-u
+- Proveri da Build Command počinje sa `cd ../..` da bi bio u root-u
 - Proveri da koristiš `npm run build:admin` ili `npm run build:client` (ne `build`)
 
 ### Environment Variables not working

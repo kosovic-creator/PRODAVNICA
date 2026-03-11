@@ -1,6 +1,6 @@
 # @prodavnica/ui
 
-Centralni UI komponenti paket za Prodavnica monorepo aplikacija. Sadrži sve shadcn/ui komponente koje se koriste u admin dashboard-u (`prodavnica-admin`) i klijentskoj aplikaciji (`prodavnica-client`).
+Centralni UI komponenti paket za Prodavnica monorepo aplikacija. Sadrži sve shadcn/ui komponente koje se koriste u admin dashboard-u (`apps/prodavnica-admin`) i klijentskoj aplikaciji (`apps/prodavnica-client`).
 
 ## Pregled
 
@@ -38,7 +38,7 @@ import { Button, Card, Input } from "@prodavnica/ui"
 ## Struktura
 
 ```
-shared-ui/
+packages/ui/
 ├── components/
 │   └── ui/
 │       ├── button.tsx
@@ -80,9 +80,9 @@ npm run build  # Priprema za build (trenutno samo echo)
 
 ## Veza sa ostalim paketima
 
-- `prodavnica-admin` - Koristi komponente za admin dashboard
-- `prodavnica-client` - Koristi komponente za klijentsku web aplikaciju
-- `shared-prisma` - Deljeni Prisma klijent
+- `apps/prodavnica-admin` - Koristi komponente za admin dashboard
+- `apps/prodavnica-client` - Koristi komponente za klijentsku web aplikaciju
+- `packages/prisma` - Deljeni Prisma klijent
 
 ## Verzioniranje
 

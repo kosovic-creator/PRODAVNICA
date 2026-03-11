@@ -9,6 +9,8 @@ import type { ReactNode } from 'react';
 import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants";
 import { Providers } from "./components/Providers";
 import { getServerLanguage } from "@/i18n/i18n.server";
+import PWARegister from "./components/PWARegister";
+import InstallBanner from "./components/InstallBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,10 +29,11 @@ export const metadata: Metadata = {
   },
   description: APP_DESCRIPTION,
   metadataBase: new URL(SERVER_URL),
+  manifest: "/manifest.webmanifest",
   icons: {
     icon: [
-      { url: "/apple-touch-icon.png", sizes: "any" },
-      { url: "/apple-touch-icon.svg", type: "image/svg+xml" },
+      { url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512x512.png", sizes: "512x512", type: "image/png" },
     ],
     apple: "/apple-touch-icon.png",
   },
@@ -62,6 +65,8 @@ export default async function RootLayout({
     <html lang={lang}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers initialLang={lang}>
+          <PWARegister />
+          <InstallBanner />
           {children}
         </Providers>
       </body>

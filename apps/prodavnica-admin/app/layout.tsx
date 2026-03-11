@@ -6,6 +6,8 @@ import "./globals.css";
 import AuthProvider from "./components/AuthProvider";
 import Navbar from "@/app/components/Navbar";
 import { APP_NAME } from "@/lib/constants";
+import PWARegister from "./components/PWARegister";
+import InstallBanner from "./components/InstallBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,10 +24,11 @@ export const metadata: Metadata = {
     template: `%s | Prodavnica`,
     default: APP_NAME,
   },
+  manifest: "/manifest.webmanifest",
   icons: {
     icon: [
-      { url: "/apple-touch-icon.png", sizes: "any" },
-      { url: "/apple-touch-icon.svg", type: "image/svg+xml" },
+      { url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512x512.png", sizes: "512x512", type: "image/png" },
     ],
     apple: "/apple-touch-icon.png",
   },
@@ -42,6 +45,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider>
+          <PWARegister />
+          <InstallBanner />
           <div className="min-h-screen bg-gray-50">
             <Navbar />
             {children}

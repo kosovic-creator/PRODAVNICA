@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@prodavnica/prisma": ["packages/prisma/index.ts"],
+      "@prodavnica/lib": ["packages/lib/index.ts"],
+      "@prodavnica/ui": ["packages/ui/index.ts"],
+      "@prodavnica/validators": ["packages/validators/index.ts"],
+      "@prodavnica/*": ["packages/*/index.ts"]
+    },
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "NodeNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
+  }
+}

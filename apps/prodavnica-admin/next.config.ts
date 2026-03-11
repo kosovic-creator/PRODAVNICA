@@ -1,9 +1,17 @@
 import path from "path";
 import type { Configuration } from "webpack";
+import withPWAInit from "next-pwa";
+
+const withPWA = withPWAInit({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === "development",
+});
 
 const nextConfig = {
   turbopack: {
-    root: path.resolve(__dirname, '..'),
+    root: path.resolve(__dirname, '../..'),
     resolveAlias: {
       '@': './',
     },
@@ -36,4 +44,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withPWA(nextConfig);

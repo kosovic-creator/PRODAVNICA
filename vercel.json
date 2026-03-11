@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "cd .. && npm install && npm run build:admin",
-  "outputDirectory": "prodavnica-admin/.next",
+  "buildCommand": "npm install && npm run build",
+  "outputDirectory": "apps/prodavnica-admin/.next",
   "monorepo": true,
   "monorepoRoot": "."
 }
