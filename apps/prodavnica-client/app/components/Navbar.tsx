@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useCart } from "./KorpaContext";
 import { useSession } from "next-auth/react";
 import { useI18n } from '@/i18n/I18nProvider';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaShoppingCart, FaSignInAlt, FaSignOutAlt, FaBars, FaUserCircle } from "react-icons/fa";
@@ -16,6 +17,7 @@ export interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
   const { language, setLanguage, t } = useI18n();
+  const router = useRouter();
   const tr = (key: string) => t('navbar', key);
   const { data: session } = useSession();
   const isLoggedIn = !!session?.user;
@@ -43,7 +45,8 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebarOpen }) => {
   const handleLangSwitch = () => {
     const newLang = language === 'sr' ? 'en' : 'sr';
     setLanguage(newLang);
-    // Bez router.refresh() - stanje se ažurira kroz I18nProvider
+    // Refresh ensures server-rendered routes read the updated language cookie immediately.
+    router.refresh();
   };
 
   return (
