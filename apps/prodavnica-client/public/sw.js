@@ -1,5 +1,5 @@
 const CACHE_NAME = "prodavnica-client-v1";
-const OFFLINE_URLS = ["/", "/manifest.webmanifest", "/icon-192x192.png", "/icon-512x512.png"];
+const OFFLINE_URLS = ["/", "/manifest.webmanifest", "/apple-touch-icon.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
