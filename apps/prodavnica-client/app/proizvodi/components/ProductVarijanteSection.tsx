@@ -7,6 +7,7 @@ import { Heart } from 'lucide-react';
 
 type VarijantaSummary = {
   boja: string;
+  boja_en: string;
   velicina: string;
   kolicina: number;
 };
@@ -26,6 +27,7 @@ interface ProductVarijanteSectionProps {
 
 export default function ProductVarijanteSection({ proizvod, t }: ProductVarijanteSectionProps) {
   const [selectedBoja, setSelectedBoja] = useState<string | null>(null);
+  const [selectedBojaEn, setSelectedBojaEn] = useState<string | null>(null);
   const [selectedVelicina, setSelectedVelicina] = useState<string | null>(null);
   const [selectedVarijanta, setSelectedVarijanta] = useState<VarijantaSummary | null>(null);
   const [sizeUnit, setSizeUnit] = useState<SizeUnit>('EU');
@@ -40,7 +42,7 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
       if (current) {
         current.kolicina += v.kolicina;
       } else {
-        acc.set(key, { boja: v.boja, velicina: v.velicina, kolicina: v.kolicina });
+        acc.set(key, { boja: v.boja, boja_en: v.boja_en, velicina: v.velicina, kolicina: v.kolicina });
       }
       return acc;
     }, new Map()).values()
@@ -74,6 +76,7 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
       // Auto-select the only available color
       const varijanta = varijanteSummary.find(v => v.velicina === velicina && v.boja === bojeZaVelicinu[0]);
       setSelectedBoja(bojeZaVelicinu[0]);
+      setSelectedBojaEn(varijanta?.boja_en || bojeZaVelicinu[0]);
       setSelectedVarijanta(varijanta || null);
     } else if (bojeZaVelicinu.length === 0) {
       // No colors available, set a basic varijanta with just size
@@ -83,6 +86,7 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
         .reduce((sum, v) => sum + v.kolicina, 0);
       setSelectedVarijanta({
         boja: '',
+        boja_en: '',
         velicina,
         kolicina: ukupnaKolicina
       });
@@ -98,6 +102,7 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
     // Find the varijanta with selected velicina and boja
     if (selectedVelicina) {
       const varijanta = varijanteSummary.find(v => v.velicina === selectedVelicina && v.boja === boja);
+      setSelectedBojaEn(varijanta?.boja_en || boja);
       setSelectedVarijanta(varijanta || null);
     }
   };
@@ -242,7 +247,7 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
         <div className="space-y-3">
           <div className="flex gap-3">
             <div className="flex-1">
-              <AddToCartButton proizvod={proizvod} selectedBoja={selectedBoja} selectedVelicina={selectedVelicina} t={t} />
+              <AddToCartButton proizvod={proizvod} selectedBoja={selectedBoja} selectedBojaEn={selectedBojaEn} selectedVelicina={selectedVelicina} t={t} />
             </div>
             <button
               className="px-6 py-3 border-2 border-gray-300 rounded-md hover:border-gray-400 transition flex items-center justify-center"

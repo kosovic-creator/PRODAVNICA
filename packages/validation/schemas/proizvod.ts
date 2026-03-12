@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const varijanteSchema = z.object({
   boja: z.string().optional().or(z.literal('')),
+  boja_en: z.string().optional().or(z.literal('')),
   velicina: z.string().min(1, { message: 'Veličina je obavezna' }),
   kolicina: z.number().int().positive({ message: 'Količina mora biti pozitivna' }),
   prodavnica_br: z.number().int().min(1, { message: 'Prodavnica je obavezna' }).max(3, { message: 'Prodavnica mora biti između 1 i 3' }),
@@ -28,5 +29,6 @@ export const noviProizvodSchemaStatic = z.object({
   materijal_en: z.string().optional(),
   brend: z.string().optional(),
   boja: z.array(z.string()).optional(),
+  boja_en: z.array(z.string()).optional(),
   velicina: z.string().optional(),
 });

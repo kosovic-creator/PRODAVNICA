@@ -8,6 +8,7 @@ export const authOptions = createAuthOptions({
   googleClientId: process.env.GOOGLE_CLIENT_ID!,
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET!,
   secret: process.env.NEXTAUTH_SECRET,
+  sessionCookieName: "prodavnica-client.session-token",
   signInPage: "/prijava",
   errorPage: "/prijava",
 });

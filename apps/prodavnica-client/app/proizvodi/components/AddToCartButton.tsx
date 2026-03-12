@@ -27,11 +27,12 @@ declare module 'next-auth' {
 interface AddToCartButtonProps {
   proizvod: Proizvodi;
   selectedBoja?: string | null;
+  selectedBojaEn?: string | null;
   selectedVelicina?: string | null;
   t?: Record<string, string>;
 }
 
-export default function AddToCartButton({ proizvod, selectedBoja, selectedVelicina }: AddToCartButtonProps) {
+export default function AddToCartButton({ proizvod, selectedBoja, selectedBojaEn, selectedVelicina }: AddToCartButtonProps) {
   const { t } = useI18n();
   const { data: session } = useSession();
   const router = useRouter();
@@ -74,6 +75,7 @@ export default function AddToCartButton({ proizvod, selectedBoja, selectedVelici
           proizvodId: proizvod.id,
           kolicina: 1,
           boja: selectedBoja || undefined,
+          boja_en: selectedBojaEn || undefined,
           velicina: selectedVelicina || undefined
         });
 

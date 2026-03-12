@@ -2,6 +2,7 @@ export type ProizvodVarijanta = {
   id: string;
   proizvodId: string;
   boja: string;
+  boja_en: string;
   velicina: string;
   kolicina: number;
   prodavnica_br: number;
@@ -31,6 +32,7 @@ export type Proizvod = {
   uzrast_en?: string;
   brend?: string;
   boja?: string[]; // Sada je niz boja
+  boja_en?: string[];
   materijal?: string;
   materijal_en?: string;
   cena: number;

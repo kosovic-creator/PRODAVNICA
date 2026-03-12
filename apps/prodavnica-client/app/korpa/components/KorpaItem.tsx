@@ -17,6 +17,7 @@ interface KorpaItemProps {
     id: string;
     kolicina: number;
     boja?: string | null;
+    boja_en?: string | null;
     velicina?: string | null;
     proizvod?: {
       id: string;
@@ -78,7 +79,7 @@ export default function KorpaItem({ stavka }: KorpaItemProps) {
     ? stavka.proizvod.slike[0]
     : '/placeholder.png';
   const naziv = language === 'en' ? stavka.proizvod.naziv_en : stavka.proizvod.naziv_sr;
-  const boja = stavka.boja;
+  const boja = language === 'en' ? (stavka.boja_en || stavka.boja) : stavka.boja;
   const velicina = stavka.velicina;
 
   const handleCardClick = (e: React.MouseEvent) => {

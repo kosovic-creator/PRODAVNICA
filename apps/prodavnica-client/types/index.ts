@@ -8,6 +8,7 @@ export type UpdateKorisnikData = z.infer<ReturnType<typeof regKorisnikSchema>> &
 export type varijante = {
   id: string;
   boja: string;
+  boja_en: string;
   velicina: string;
   kolicina: number;
   prodavnica_br?: number;
@@ -33,6 +34,7 @@ export type Proizvodi = {
   materijal_en?: string | null;
   brend?: string | null;
   boja?: string[];
+  boja_en?: string[];
   cena: number;
   slike: string[];
   varijante?: varijante[];

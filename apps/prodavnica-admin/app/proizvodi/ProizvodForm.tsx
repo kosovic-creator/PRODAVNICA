@@ -40,6 +40,7 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
   const [varijante, setVarijante] = useState<VarijantaData[]>(
     proizvod?.varijante?.map(v => ({
       boja: v.boja,
+      boja_en: v.boja_en ?? '',
       velicina: v.velicina,
       kolicina: v.kolicina,
       prodavnica_br: v.prodavnica_br ?? 1

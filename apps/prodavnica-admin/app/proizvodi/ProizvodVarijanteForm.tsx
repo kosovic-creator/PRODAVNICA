@@ -26,6 +26,7 @@ export default function ProizvodVarijanteForm({
 }: ProizvodVarijanteFormProps) {
   const [novaVarijanta, setNovaVarijanta] = useState<VarijantaData>({
     boja: '',
+    boja_en: '',
     velicina: '',
     kolicina: 0,
     prodavnica_br: 1
@@ -77,6 +78,7 @@ export default function ProizvodVarijanteForm({
 
     setNovaVarijanta({
       boja: '',
+      boja_en: '',
       velicina: '',
       kolicina: 0,
       prodavnica_br: 1
@@ -96,6 +98,7 @@ export default function ProizvodVarijanteForm({
     setEditIndex(null);
     setNovaVarijanta({
       boja: '',
+      boja_en: '',
       velicina: '',
       kolicina: 0,
       prodavnica_br: 1
@@ -113,9 +116,9 @@ export default function ProizvodVarijanteForm({
       )}
 
       {/* Form za dodavanje/uređivanje varijante */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4 p-4 bg-white rounded border">
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-3 mb-4 p-4 bg-white rounded border">
         <div>
-          <Label className="block text-sm font-medium mb-1">Boja</Label>
+          <Label className="block text-sm font-medium mb-1">Boja (SR)</Label>
           <Input
             type="text"
             placeholder="npr. Crvena"
@@ -125,6 +128,20 @@ export default function ProizvodVarijanteForm({
               setNovaVarijanta({ ...novaVarijanta, boja: e.target.value });
             }}
             aria-invalid={varijantaError ? 'true' : 'false'}
+            className="border-gray-300"
+          />
+        </div>
+
+        <div>
+          <Label className="block text-sm font-medium mb-1">Boja (EN)</Label>
+          <Input
+            type="text"
+            placeholder="e.g. Red"
+            value={novaVarijanta.boja_en}
+            onChange={(e) => {
+              setVarijantaError(null);
+              setNovaVarijanta({ ...novaVarijanta, boja_en: e.target.value });
+            }}
             className="border-gray-300"
           />
         </div>
@@ -203,7 +220,8 @@ export default function ProizvodVarijanteForm({
           <table className="w-full border-collapse border border-gray-300">
             <thead>
               <tr className="bg-gray-200">
-                <th className="border border-gray-300 px-3 py-2 text-left">Boja</th>
+                <th className="border border-gray-300 px-3 py-2 text-left">Boja (SR)</th>
+                <th className="border border-gray-300 px-3 py-2 text-left">Boja (EN)</th>
                 <th className="border border-gray-300 px-3 py-2 text-left">Veličina</th>
                 <th className="border border-gray-300 px-3 py-2 text-center">Količina</th>
                 <th className="border border-gray-300 px-3 py-2 text-center">Prodavnica</th>
@@ -214,6 +232,7 @@ export default function ProizvodVarijanteForm({
               {varijante.map((varijanta, index) => (
                 <tr key={index} className="hover:bg-gray-100">
                   <td className="border border-gray-300 px-3 py-2">{varijanta.boja}</td>
+                  <td className="border border-gray-300 px-3 py-2">{varijanta.boja_en}</td>
                   <td className="border border-gray-300 px-3 py-2">{varijanta.velicina}</td>
                   <td className="border border-gray-300 px-3 py-2 text-center">{varijanta.kolicina}</td>
                   <td className="border border-gray-300 px-3 py-2 text-center">

@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 
 export type VarijantaData = {
   boja: string;
+  boja_en: string;
   velicina: string;
   kolicina: number;
   prodavnica_br: number;
@@ -27,6 +28,7 @@ export type ProizvodData = {
   uzrast_en?: string;
   brend?: string;
   boja?: string[]; // Niz boja
+  boja_en?: string[]; // Niz boja na engleskom
   materijal?: string;
   materijal_en?: string;
   varijante: VarijantaData[]; // Nove varijante sa boja + velicina + kolicina
@@ -86,6 +88,7 @@ export async function getProizvodi(page: number = 1, pageSize: number = 10, sear
       brend: proizvod.brend,
       boja: proizvod.boja,
       materijal: proizvod.materijal,
+      boja_en: proizvod.boja_en,
       materijal_en: proizvod.materijal_en,
       varijante: proizvod.varijante,
     }));
@@ -149,6 +152,7 @@ export async function createProizvod(data: ProizvodData) {
         varijante: {
           create: varijante.map(v => ({
             boja: v.boja,
+            boja_en: v.boja_en,
             velicina: v.velicina,
             kolicina: v.kolicina,
             prodavnica_br: v.prodavnica_br
@@ -188,6 +192,7 @@ export async function updateProizvod(data: UpdateProizvodData) {
           deleteMany: {}, // Obriši stare varijante
           create: varijante.map(v => ({ // Kreiraj nove varijante
             boja: v.boja,
+            boja_en: v.boja_en,
             velicina: v.velicina,
             kolicina: v.kolicina,
             prodavnica_br: v.prodavnica_br

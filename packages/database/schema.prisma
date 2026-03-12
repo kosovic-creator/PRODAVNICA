@@ -52,6 +52,7 @@ model StavkaKorpe {
   proizvodId String
   kolicina   Int      @default(1)
   boja       String?
+  boja_en    String?
   velicina   String?
   kreiran    DateTime @default(now())
   azuriran   DateTime @updatedAt
@@ -129,6 +130,7 @@ model Proizvod {
   uzrast_en         String?
   brend             String?
   boja              String[]
+  boja_en           String[]
   materijal         String?
   materijal_en      String?
   varijante         ProizvodVarijanta[]
@@ -141,6 +143,7 @@ model ProizvodVarijanta {
   id         String   @id @default(uuid())
   proizvodId String
   boja       String
+  boja_en    String   @default("")
   velicina   String
   kolicina   Int
   prodavnica_br Int      @default(1)

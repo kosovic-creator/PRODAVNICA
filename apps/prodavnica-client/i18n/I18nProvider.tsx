@@ -100,10 +100,10 @@ export function I18nProvider({
    */
   const t = (namespace: string, key: string): string => {
     try {
-      const translation = i18n.t(key, { ns: namespace });
+      const translation = i18n.t(key, { ns: namespace, lng: language });
       // Ako je t() vratio ključ (što znači da nema prevoda) budi oprezan
       if (translation === key || !translation) {
-        console.warn(`[i18n] Translation missing: ${namespace}.${key} (current lang: ${i18n.language})`);
+        console.warn(`[i18n] Translation missing: ${namespace}.${key} (current lang: ${language})`);
         return key;
       }
       // Debug log - ukloniti kada radi

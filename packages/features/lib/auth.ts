@@ -77,6 +77,11 @@ export interface CreateAuthOptionsParams {
    * Custom sign-out redirect URL
    */
   signOutUrl?: string;
+
+  /**
+   * Custom session cookie name (useful in monorepo with multiple NextAuth apps on localhost)
+   */
+  sessionCookieName?: string;
 }
 
 /**
@@ -114,6 +119,7 @@ export function createAuthOptions({
   signInPage = "/prijava",
   errorPage = "/prijava",
   signOutUrl,
+  sessionCookieName,
 }: CreateAuthOptionsParams): NextAuthOptions {
   const providers: NextAuthOptions["providers"] = [];
 
@@ -177,12 +183,29 @@ export function createAuthOptions({
     })
   );
 
+  const isProduction = process.env.NODE_ENV === "production";
+
   return {
     secret,
     providers,
     session: {
       strategy: "jwt",
     },
+    ...(sessionCookieName
+      ? {
+        cookies: {
+          sessionToken: {
+            name: sessionCookieName,
+            options: {
+              httpOnly: true,
+              sameSite: "lax",
+              path: "/",
+              secure: isProduction,
+            },
+          },
+        },
+      }
+      : {}),
     callbacks: {
       async signIn({ user, account }) {
         // OAuth sign-in handling (samo za Google provider)

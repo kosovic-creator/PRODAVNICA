@@ -8,12 +8,13 @@ export type DodajUKorpuData = {
   proizvodId: string;
   kolicina?: number;
   boja?: string;
+  boja_en?: string;
   velicina?: string;
 };
 
 export async function dodajUKorpu(data: DodajUKorpuData) {
   try {
-    const { korisnikId, proizvodId, kolicina = 1, boja, velicina } = data;
+    const { korisnikId, proizvodId, kolicina = 1, boja, boja_en, velicina } = data;
 
     if (!korisnikId) {
       return {
@@ -50,7 +51,7 @@ export async function dodajUKorpu(data: DodajUKorpuData) {
     } else {
       // Create new item
       stavka = await prisma.stavkaKorpe.create({
-        data: { korisnikId, proizvodId, kolicina, boja: boja || null, velicina: velicina || null }
+        data: { korisnikId, proizvodId, kolicina, boja: boja || null, boja_en: boja_en || null, velicina: velicina || null }
       });
     }
 
