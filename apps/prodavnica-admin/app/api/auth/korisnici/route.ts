@@ -40,7 +40,6 @@ export async function POST(req: NextRequest) {
 
     // Hashujemo lozinku
     const hashovanaLozinka = await bcrypt.hash(lozinka, 10);
-    console.log("Hashovana lozinka:", hashovanaLozinka);
 
     // Kreiramo novog korisnika
     const noviKorisnik = await prisma.korisnikAdmin.create({

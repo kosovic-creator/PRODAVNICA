@@ -127,8 +127,6 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
     setError(null);
     setErrors({});
 
-    console.log('handleSubmit pokrenut');
-
     // Mark all fields as touched
     setTouched({
       naziv_sr: true,
@@ -142,16 +140,14 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
 
     // Validate varijante
     if (varijante.length === 0) {
-      console.log('Greška: Nema varijanti');
       setErrors({ varijante: 'Molimo dodajte bar jednu varijante proizvoda' });
       setError('Molimo dodajte bar jednu varijante proizvoda');
       return;
     }
 
-    console.log('Varijante:', varijante);
-
-    // Extract unique boje from varijante
+    // Extract unique boje from varijante for both languages
     const jedinstvene_boje = Array.from(new Set(varijante.map(v => v.boja)));
+    const jedinstvene_boje_en = Array.from(new Set(varijante.map(v => v.boja_en)));
 
     const formData = new FormData(e.currentTarget);
 
@@ -171,18 +167,19 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
       uzrast_en: (formData.get('uzrast_en') as string) || undefined,
       brend: (formData.get('brend') as string) || undefined,
       boja: jedinstvene_boje.length > 0 ? jedinstvene_boje : undefined,
+      boja_en: jedinstvene_boje_en.length > 0 ? jedinstvene_boje_en : undefined,
       materijal: (formData.get('materijal') as string) || undefined,
       materijal_en: (formData.get('materijal_en') as string) || undefined,
       cena: Number(formData.get('cena')),
-      slike: formData.getAll('slike').filter(Boolean) as string[],
+      slike: isEditMode
+        ? (proizvod?.slike ?? [])
+        : (formData.getAll('slike').filter(Boolean) as string[]),
       varijante: varijante // Dodaj varijante
     };
 
     // Validacija cijele forme
     const parsed = schema.safeParse(data);
-    console.log('Validacija rezultat:', parsed);
     if (!parsed.success) {
-      console.log('Validacija nije uspela:', parsed.error);
       const fieldErrors: Record<string, string> = {};
       parsed.error.issues.forEach((err) => {
         if (err.path[0]) {
@@ -194,11 +191,9 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
       return;
     }
 
-    console.log('Validacija uspela, pozivam serverAction...');
     startTransition(async () => {
       try {
         const result = await serverAction(data);
-        console.log('ServerAction rezultat:', result);
         if (result?.success === false) {
           setError(result.error || `Došlo je do greške prilikom ${isEditMode ? 'izmene' : 'dodavanja'} proizvoda.`);
         } else {
@@ -359,7 +354,7 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
               <Label className="block text-sm font-medium mb-1">Pol (EN)</Label>
               <select
                 name="pol_en"
-                defaultValue={isEditMode ? proizvod?.pol || '' : ''}
+                defaultValue={isEditMode ? proizvod?.pol_en || '' : ''}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 aria-invalid={touched.pol_en && !!errors.pol_en}
@@ -375,7 +370,7 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
               <Label className="block text-sm font-medium mb-1">Uzrast (EN)</Label>
               <select
                 name="uzrast_en"
-                defaultValue={isEditMode ? proizvod?.uzrast || '' : ''}
+                defaultValue={isEditMode ? proizvod?.uzrast_en || '' : ''}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 aria-invalid={touched.uzrast_en && !!errors.uzrast_en}
@@ -393,7 +388,7 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
                 type="text"
                 name="materijal_en"
                 placeholder="Materijal (EN)"
-                defaultValue={isEditMode ? proizvod?.materijal || '' : ''}
+                defaultValue={isEditMode ? proizvod?.materijal_en || '' : ''}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 aria-invalid={touched.materijal_en && !!errors.materijal_en}

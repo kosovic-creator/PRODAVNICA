@@ -149,7 +149,6 @@ export function createAuthOptions({
       async authorize(credentials) {
         const result = loginSchema.safeParse(credentials);
         if (!result.success) {
-          console.log("❌ Validacija nije uspela:", result.error);
           return null;
         }
 
@@ -161,17 +160,13 @@ export function createAuthOptions({
         });
 
         if (!korisnik || !korisnik.lozinka) {
-          console.log(`❌ Korisnik ne postoji ili nema lozinku: ${email}`);
           return null;
         }
 
         const valid = await bcrypt.compare(lozinka, korisnik.lozinka);
         if (!valid) {
-          console.log(`❌ Pogrešna lozinka za: ${email}`);
           return null;
         }
-
-        console.log(`✅ Uspešna prijava (${userModel}):`, email);
         return {
           id: korisnik.id,
           email: korisnik.email,

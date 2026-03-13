@@ -54,13 +54,6 @@ export default async function RegistracijaPage({ searchParams }: { searchParams:
     const potvrdaLozinke = formData.get('potvrdaLozinke') as string;
     const uloga = formData.get('uloga') as string;
 
-    console.log('📋 Form submission - Raw values:', {
-      email: email || 'EMPTY',
-      lozinka: lozinka ? `${lozinka.length} chars` : 'EMPTY',
-      potvrdaLozinke: potvrdaLozinke ? `${potvrdaLozinke.length} chars` : 'EMPTY',
-      uloga
-    });
-
     const values = {
       email,
       lozinka,
@@ -98,14 +91,11 @@ export default async function RegistracijaPage({ searchParams }: { searchParams:
       redirect(`/registracija?error=email_exists`);
     }
 
-    console.log('🚀 Calling createKorisnik with email:', values.email, 'lozinka length:', values.lozinka.length);
     // Upis korisnika u bazu preko server action funkcije
     const createResult = await createKorisnik({
       email: values.email,
       lozinka: values.lozinka,
     });
-
-    console.log('📝 createKorisnik result:', { success: createResult.success, error: createResult.error });
 
     if (!createResult.success) {
       console.error('❌ createKorisnik failed:', createResult.error);
@@ -115,7 +105,6 @@ export default async function RegistracijaPage({ searchParams }: { searchParams:
       redirect(`/registracija?${params.toString()}`);
     }
 
-    console.log('✅ Registration successful, redirecting...');
     redirect(`/registracija?success=true&email=${encodeURIComponent(values.email)}`);
   }
 

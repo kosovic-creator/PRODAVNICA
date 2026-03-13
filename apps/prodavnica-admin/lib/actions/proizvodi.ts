@@ -108,7 +108,6 @@ export async function getProizvodi(page: number = 1, pageSize: number = 10, sear
 
 export async function getProizvodById(id: string) {
   try {
-    console.log("getProizvodById id:", id);
     if (!id) {
       console.error("ID nije prosleđen u getProizvodById");
       return { success: false, error: "ID nije prosleđen." };
@@ -142,8 +141,6 @@ export async function getProizvodById(id: string) {
 
 export async function createProizvod(data: ProizvodData) {
   try {
-    console.log('Server Action createProizvod payload:', JSON.stringify(data, null, 2));
-
     const { varijante, ...proizvodData } = data;
 
     const proizvod = await prisma.proizvod.create({

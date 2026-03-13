@@ -106,5 +106,8 @@
   "prethodna": "Previous",
   "sledeca": "Next",
   "od": "of",
-  "dostupno": "Available"
+  "dostupno": "Available",
+  "dostupnost_u_radnjama": "Store availability",
+  "sakrij_dostupnost_u_radnjama": "Hide store availability",
+  "dostupno_po_prodavnicama": "Available in stores"
 }

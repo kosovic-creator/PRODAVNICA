@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Proizvodi } from '@/types';
 import AddToCartButton from './AddToCartButton';
 import { Heart } from 'lucide-react';
+import { useI18n } from '@/i18n/I18nProvider';
 
 type VarijantaSummary = {
   boja: string;
@@ -26,6 +27,7 @@ interface ProductVarijanteSectionProps {
 }
 
 export default function ProductVarijanteSection({ proizvod, t }: ProductVarijanteSectionProps) {
+  const { language } = useI18n();
   const [selectedBoja, setSelectedBoja] = useState<string | null>(null);
   const [selectedBojaEn, setSelectedBojaEn] = useState<string | null>(null);
   const [selectedVelicina, setSelectedVelicina] = useState<string | null>(null);
@@ -35,6 +37,18 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
 
   const varijante = proizvod.varijante || [];
 
+  const bojaMap = useMemo(() => {
+    const sr = Array.isArray(proizvod.boja) ? proizvod.boja : [];
+    const en = Array.isArray(proizvod.boja_en) ? proizvod.boja_en : [];
+    return sr.reduce<Record<string, string>>((acc, srBoja, index) => {
+      const enBoja = en[index];
+      if (typeof enBoja === 'string' && enBoja.trim()) {
+        acc[srBoja] = enBoja;
+      }
+      return acc;
+    }, {});
+  }, [proizvod.boja, proizvod.boja_en]);
+
   const varijanteSummary = Array.from(
     varijante.reduce<Map<string, VarijantaSummary>>((acc, v) => {
       const key = `${v.boja}__${v.velicina}`;
@@ -42,7 +56,12 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
       if (current) {
         current.kolicina += v.kolicina;
       } else {
-        acc.set(key, { boja: v.boja, boja_en: v.boja_en, velicina: v.velicina, kolicina: v.kolicina });
+        acc.set(key, {
+          boja: v.boja,
+          boja_en: (v.boja_en && v.boja_en.trim()) || bojaMap[v.boja] || '',
+          velicina: v.velicina,
+          kolicina: v.kolicina,
+        });
       }
       return acc;
     }, new Map()).values()
@@ -53,17 +72,27 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
 
   // Filter colors based on selected size (only show colors with available stock)
   const dostupneBoje = selectedVelicina
-    ? Array.from(new Set(
+    ? Array.from(
       varijanteSummary
         .filter(v => v.velicina === selectedVelicina && v.kolicina > 0)
-        .map(v => v.boja)
-    ))
+        .reduce<Map<string, { boja: string; label: string }>>((acc, v) => {
+          if (!acc.has(v.boja)) {
+            acc.set(v.boja, {
+              boja: v.boja,
+              label: language === 'en' ? (v.boja_en || v.boja) : v.boja,
+            });
+          }
+          return acc;
+        }, new Map())
+        .values()
+    )
     : [];
 
   // Update selected varijanta when selections change
   const handleVelicinaChange = (velicina: string) => {
     setSelectedVelicina(velicina);
     setSelectedBoja(null); // Reset boja when velicina changes
+    setSelectedBojaEn(null);
 
     // Get all colors available for this size
     const bojeZaVelicinu = Array.from(new Set(
@@ -76,7 +105,7 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
       // Auto-select the only available color
       const varijanta = varijanteSummary.find(v => v.velicina === velicina && v.boja === bojeZaVelicinu[0]);
       setSelectedBoja(bojeZaVelicinu[0]);
-      setSelectedBojaEn(varijanta?.boja_en || bojeZaVelicinu[0]);
+      setSelectedBojaEn((varijanta?.boja_en && varijanta.boja_en.trim()) || bojaMap[bojeZaVelicinu[0]] || bojeZaVelicinu[0]);
       setSelectedVarijanta(varijanta || null);
     } else if (bojeZaVelicinu.length === 0) {
       // No colors available, set a basic varijanta with just size
@@ -102,7 +131,7 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
     // Find the varijanta with selected velicina and boja
     if (selectedVelicina) {
       const varijanta = varijanteSummary.find(v => v.velicina === selectedVelicina && v.boja === boja);
-      setSelectedBojaEn(varijanta?.boja_en || boja);
+      setSelectedBojaEn((varijanta?.boja_en && varijanta.boja_en.trim()) || bojaMap[boja] || boja);
       setSelectedVarijanta(varijanta || null);
     }
   };
@@ -197,7 +226,7 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
         <div>
           <h3 className="font-semibold text-gray-900 mb-3 text-sm uppercase tracking-wide">{t['boja'] || 'BOJA'}:</h3>
           <div className="flex flex-wrap gap-2">
-            {dostupneBoje.map((boja) => (
+            {dostupneBoje.map(({ boja, label }) => (
               <button
                 key={boja}
                 onClick={() => handleBojaChange(boja)}
@@ -206,7 +235,7 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
                     : 'border-gray-300 hover:border-gray-400 bg-white'
                   }`}
               >
-                {boja}
+                {label}
               </button>
             ))}
           </div>
@@ -219,7 +248,9 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
           onClick={() => setShowStoreAvailability(!showStoreAvailability)}
           className="w-full px-4 py-3 border-2 border-gray-300 rounded-md text-sm font-semibold hover:border-gray-400 transition bg-white"
         >
-          {showStoreAvailability ? '▲ Sakrij dostupnost u radnjama' : '▼ Dostupnost u radnjama'}
+          {showStoreAvailability
+            ? `▲ ${t['sakrij_dostupnost_u_radnjama'] || 'Sakrij dostupnost u radnjama'}`
+            : `▼ ${t['dostupnost_u_radnjama'] || 'Dostupnost u radnjama'}`}
         </button>
       )}
 
@@ -258,7 +289,7 @@ export default function ProductVarijanteSection({ proizvod, t }: ProductVarijant
           </div>
           <p className="text-sm text-gray-600 text-center">
             <span className="font-semibold">
-              {selectedBoja ? `${selectedBoja} / ` : ''}{selectedVelicina}
+              {(selectedBoja ? `${language === 'en' ? (selectedBojaEn || selectedBoja) : selectedBoja} / ` : '')}{selectedVelicina}
             </span>
             {selectedVarijanta && (
               <>

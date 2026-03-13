@@ -27,6 +27,9 @@ export default function ProizvodDetailClient({ proizvod }: ProizvodDetailClientP
   const pol = lang === 'en' ? proizvod.pol_en : proizvod.pol;
   const uzrast = lang === 'en' ? proizvod.uzrast_en : proizvod.uzrast;
   const materijal = lang === 'en' ? proizvod.materijal_en : proizvod.materijal;
+  const bojeDetalji = lang === 'en'
+    ? (Array.isArray(proizvod.boja_en) && proizvod.boja_en.length > 0 ? proizvod.boja_en : proizvod.boja)
+    : proizvod.boja;
 
   // Breadcrumbs items
   const breadcrumbItems = [
@@ -39,7 +42,7 @@ export default function ProizvodDetailClient({ proizvod }: ProizvodDetailClientP
     { label: getTranslation('uzrast'), value: uzrast },
     { label: getTranslation('materijal'), value: materijal },
     { label: getTranslation('brend'), value: proizvod.brend },
-    { label: getTranslation('boja'), value: Array.isArray(proizvod.boja) ? proizvod.boja.join(', ') : proizvod.boja },
+    { label: getTranslation('boja'), value: Array.isArray(bojeDetalji) ? bojeDetalji.join(', ') : bojeDetalji },
   ].filter((item) => item.value && String(item.value).trim() !== '');
 
   const slike: string[] = Array.isArray(proizvod.slike) ? proizvod.slike : [];
@@ -61,6 +64,11 @@ export default function ProizvodDetailClient({ proizvod }: ProizvodDetailClientP
     materijal: getTranslation('materijal'),
     brend: getTranslation('brend'),
     boja: getTranslation('boja'),
+    velicina: getTranslation('velicina'),
+    dostupnost_u_radnjama: getTranslation('dostupnost_u_radnjama'),
+    sakrij_dostupnost_u_radnjama: getTranslation('sakrij_dostupnost_u_radnjama'),
+    dostupno_po_prodavnicama: getTranslation('dostupno_po_prodavnicama'),
+    nema_zalihama: getTranslation('nema_na_zalihama'),
   };
 
   return (

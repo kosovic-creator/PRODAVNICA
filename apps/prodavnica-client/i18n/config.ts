@@ -114,10 +114,6 @@ if (!i18n.isInitialized) {
         useSuspense: false,
       },
     });
-  // Postavi default jezik sa log-om
-  if (typeof window !== 'undefined') {
-    console.log('[i18n] Initialized on client with language:', i18n.language);
-  }
 }
 
 export default i18n;

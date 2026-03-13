@@ -32,6 +32,7 @@ export default async function ProizvodPage({ params }: { params: Promise<{ id: s
     materijal_en: result.data.materijal_en ?? undefined,
     brend: result.data.brend ?? undefined,
     boja: Array.isArray(result.data.boja) ? result.data.boja : [],
+    boja_en: Array.isArray(result.data.boja_en) ? result.data.boja_en : [],
     varijante: result.data.varijante ?? [],
     avgRating: typeof result.data.avgRating === 'number'
       ? result.data.avgRating

@@ -39,8 +39,6 @@ export async function createKorisnik(data: {
   try {
     let { email, lozinka } = data;
 
-    console.log('🔵 Input data:', { email: email || 'EMPTY', lozinka: lozinka ? '***' : 'EMPTY' });
-
     // Sanitize and validate
     if (!email || typeof email !== 'string') {
       console.error('❌ Invalid email type:', typeof email);
@@ -145,9 +143,6 @@ export async function updateKorisnik(data: UpdateKorisnikData) {
       where: { id },
       data: updateData
     });
-
-    console.log('✅ Korisnik updated:', id);
-
     revalidatePath('/profil');
 
     return {

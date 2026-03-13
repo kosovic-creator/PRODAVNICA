@@ -67,7 +67,6 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       }
 
       await refreshKorpa();
-      console.log('Korpa je ispražnjena i stanje proizvoda smanjeno');
       toast.success(t('korpa', 'cart_emptied') || 'Korpa je ispražnjena', { duration: 3000 });
 
       // Redirect na proizvodi
@@ -84,9 +83,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
   };
 
   const potvrdiPorudzbinu = async (): Promise<{ success: boolean; ukupno?: number }> => {
-    console.log('[KorpaActions] Email koji se šalje:', session?.user?.email);
     try {
-      console.log('[KorpaActions] Kreiranje porudžbine...');
       const porudzbinaData = {
         korisnikId: userId,
         ukupno,
@@ -103,8 +100,6 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
       };
 
       const result = await kreirajPorudzbinu(porudzbinaData);
-      console.log('[KorpaActions] Rezultat kreiranja porudžbine:', result);
-
       if (!result.success) {
         setMessage(result.error || t('korpa', 'error') || 'Greška pri kreiranju porudžbine');
         toast.error(result.error || t('korpa', 'error') || 'Greška pri kreiranju porudžbine', { duration: 3000 });
@@ -123,10 +118,8 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
   const handleZavrsiKupovinu = async () => {
     setPendingKupovina(true);
     try {
-      console.log('[KorpaActions] Pokrenut završetak kupovine');
       // Check delivery data
       const podaciResult = await getPodaciPreuzimanja(userId);
-      console.log('[KorpaActions] Podaci za preuzimanje:', podaciResult);
 
       if (!podaciResult.success || !podaciResult.data) {
         // setMessage(t('korpa', 'no_data_redirect') || "Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.");
@@ -139,7 +132,6 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
 
       // PRVO kreiraj porudžbinu
       const result = await potvrdiPorudzbinu();
-      console.log('[KorpaActions] Rezultat potvrde porudžbine:', result);
 
       if (!result.success) {
         return; // Zaustavi izvršavanje ako kreiranje nije uspelo
@@ -232,9 +224,7 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
   const handleMontrypayPlaćanje = async () => {
     setPendingMontrypay(true);
     try {
-      console.log('[KorpaActions] Pokrenut Montrypay checkout');
       const podaciResult = await getPodaciPreuzimanja(userId);
-      console.log('[KorpaActions] Podaci za preuzimanje:', podaciResult);
 
       if (!podaciResult.success || !podaciResult.data) {
         setMessage(t('korpa', 'no_data_redirect') || "Nemate unete podatke za preuzimanje. Bićete preusmereni na stranicu za unos podataka.");
@@ -246,7 +236,6 @@ export default function KorpaActions({ userId, stavke }: KorpaActionsProps) {
 
       // PRVO kreiraj porudžbinu
       const result = await potvrdiPorudzbinu();
-      console.log('[KorpaActions] Rezultat potvrde porudžbine (Montrypay):', result);
 
       if (!result.success) {
         return; // Zaustavi izvršavanje ako kreiranje nije uspelo

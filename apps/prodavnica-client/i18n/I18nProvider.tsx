@@ -106,10 +106,6 @@ export function I18nProvider({
         console.warn(`[i18n] Translation missing: ${namespace}.${key} (current lang: ${language})`);
         return key;
       }
-      // Debug log - ukloniti kada radi
-      if (namespace === 'auth' && (key.includes('login') || key.includes('register'))) {
-        console.log(`[i18n] Translation found: ${namespace}.${key} = "${translation}"`);
-      }
       return translation;
     } catch (error) {
       console.warn(`[i18n] Error translating ${namespace}.${key}:`, error);

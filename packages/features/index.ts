@@ -1,5 +1,5 @@
 // Utils
-export { cn } from './lib/utils'
+export { cn, normalizeDatabaseUrl } from './lib/utils'
 
 // Constants
 export * from './lib/constants'

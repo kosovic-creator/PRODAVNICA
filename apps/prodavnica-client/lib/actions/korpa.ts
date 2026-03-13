@@ -99,8 +99,6 @@ export async function getKorpa(korisnikId: string) {
       orderBy: { kreiran: 'desc' }
     });
 
-    console.log('[getKorpa] Loaded cart items:', stavke.length, JSON.stringify(stavke.map(s => ({ id: s.id, proizvod: s.proizvod }))));
-
     // stavke already have proizvod property populated
     const mappedStavke = stavke;
 

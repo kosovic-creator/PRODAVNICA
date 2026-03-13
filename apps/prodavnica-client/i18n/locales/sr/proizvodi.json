@@ -103,6 +103,9 @@
   "prethodna": "Prethodna",
   "sledeca": "Sledeća",
   "od": "od",
-  "dostupno": "Dostupno"
+  "dostupno": "Dostupno",
+  "dostupnost_u_radnjama": "Dostupnost u radnjama",
+  "sakrij_dostupnost_u_radnjama": "Sakrij dostupnost u radnjama",
+  "dostupno_po_prodavnicama": "Dostupno po radnjama"
 
 }

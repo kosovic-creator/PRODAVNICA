@@ -132,12 +132,9 @@ export async function kreirajPorudzbinu(data: KreirajPorudzbinuData) {
       };
     }
 
-    console.log('[kreirajPorudzbinu] Starting to create order for user:', korisnikId, 'with', stavke.length, 'items');
-
     // Create order with order items in transaction
     const porudzbina = await prisma.$transaction(async (tx) => {
       // Create the order
-      console.log('[kreirajPorudzbinu] Creating order with status:', status);
       const novaPorudzbina = await tx.porudzbina.create({
         data: {
           korisnikId,
@@ -146,9 +143,6 @@ export async function kreirajPorudzbinu(data: KreirajPorudzbinuData) {
           email
         }
       });
-
-      console.log('[kreirajPorudzbinu] Order created with ID:', novaPorudzbina.id);
-
       // Create order items and decrease product variants
       const stavkePorudzbine = await Promise.all(
         stavke.map(async stavka => {
@@ -165,12 +159,8 @@ export async function kreirajPorudzbinu(data: KreirajPorudzbinuData) {
               velicina: stavka.velicina
             }
           });
-
-          console.log('[kreirajPorudzbinu] Order item created:', stavkaPorudzbine.id, 'with color:', stavka.boja, 'size:', stavka.velicina);
-
           // Decrease quantity from varijante if color and size are provided
           if (stavka.boja && stavka.velicina) {
-            console.log('[kreirajPorudzbinu] Updating variant quantity for product:', stavka.proizvodId, 'color:', stavka.boja, 'size:', stavka.velicina);
             try {
               // First, find any variant with this product, color, and size
               const existingVariant = await tx.proizvodVarijanta.findFirst({
@@ -190,17 +180,12 @@ export async function kreirajPorudzbinu(data: KreirajPorudzbinuData) {
                     }
                   }
                 });
-                console.log('[kreirajPorudzbinu] Variant updated, new quantity:', updated.kolicina);
-              } else {
-                console.log('[kreirajPorudzbinu] Variant not found for product:', stavka.proizvodId, 'color:', stavka.boja, 'size:', stavka.velicina);
               }
             } catch (err) {
               console.error('[kreirajPorudzbinu] Error updating variant:', err);
               // Don't throw - just log the error and continue
               // throw err;
             }
-          } else {
-            console.log('[kreirajPorudzbinu] No variant update needed - missing boja or velicina');
           }
 
           return stavkaPorudzbine;
@@ -209,9 +194,6 @@ export async function kreirajPorudzbinu(data: KreirajPorudzbinuData) {
 
       return { ...novaPorudzbina, stavkePorudzbine };
     });
-
-    console.log('[kreirajPorudzbinu] Transaction completed successfully. Order ID:', porudzbina.id);
-
     revalidatePath('/moje-porudzbine');
 
     return {
