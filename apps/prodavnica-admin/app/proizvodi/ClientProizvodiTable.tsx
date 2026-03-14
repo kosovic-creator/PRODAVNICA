@@ -127,18 +127,18 @@ const ClientProizvodiTable: React.FC<Props> = ({ proizvodi, total, totalPages, p
         <Table className="min-w-full text-gray-900 dark:text-gray-900">
           <TableHeader className="bg-gray-50">
             <TableRow>
-              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Naziv (SR)</TableHead>
-              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Naziv (EN)</TableHead>
+              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Naziv </TableHead>
+              {/* <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Naziv (EN)</TableHead> */}
               <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Cena</TableHead>
               <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Varijante</TableHead>
-              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Pol (SR)</TableHead>
-              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Pol (EN)</TableHead>
-              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Uzrast (SR)</TableHead>
-              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Uzrast (EN)</TableHead>
+              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Pol </TableHead>
+              {/* <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Pol (EN)</TableHead> */}
+              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Uzrast </TableHead>
+              {/* <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Uzrast (EN)</TableHead> */}
               <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Brend</TableHead>
               <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Boje</TableHead>
-              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Materijal (SR)</TableHead>
-              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Materijal (EN)</TableHead>
+              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Materijal </TableHead>
+              {/* <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Materijal (EN)</TableHead> */}
               <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Akcije</TableHead>
             </TableRow>
           </TableHeader>
@@ -151,7 +151,7 @@ const ClientProizvodiTable: React.FC<Props> = ({ proizvodi, total, totalPages, p
               proizvodi.map((proizvod) => (
                 <TableRow key={proizvod.id} className="hover:bg-gray-50">
                   <TableCell className="px-6 py-4 whitespace-nowrap font-medium">{proizvod.naziv_sr}</TableCell>
-                  <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.naziv_en}</TableCell>
+                  {/* <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.naziv_en}</TableCell> */}
                   <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.cena} €</TableCell>
                   <TableCell className="px-6 py-4">
                     <div className="text-sm max-w-xs">
@@ -169,15 +169,15 @@ const ClientProizvodiTable: React.FC<Props> = ({ proizvodi, total, totalPages, p
                     </div>
                   </TableCell>
                   <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.pol || '-'}</TableCell>
-                  <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.pol_en || '-'}</TableCell>
+                  {/* <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.pol_en || '-'}</TableCell> */}
                   <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.uzrast || '-'}</TableCell>
-                  <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.uzrast_en || '-'}</TableCell>
+                  {/* <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.uzrast_en || '-'}</TableCell> */}
                   <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.brend || '-'}</TableCell>
                   <TableCell className="px-6 py-4 whitespace-nowrap">
                     {proizvod.boja && proizvod.boja.length > 0 ? proizvod.boja.join(', ') : '-'}
                   </TableCell>
                   <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.materijal || '-'}</TableCell>
-                  <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.materijal_en || '-'}</TableCell>
+                  {/* <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.materijal_en || '-'}</TableCell> */}
                   <TableCell className="px-6 py-4 whitespace-nowrap">
                     <div className="flex gap-2">
                       <Button
