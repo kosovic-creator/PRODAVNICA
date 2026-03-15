@@ -46,14 +46,13 @@ function SidebarContent({ open, onClose }: SidebarProps) {
 
 
   // User menu items
-  const menuItems = React.useMemo(() => [
+  const menuItems = [
     { path: '/proizvodi', icon: FaBoxOpen, label: t('sidebar', 'proizvodi') },
-  ], [t]);
-
-  const userItems = [
-    { path: '/profil', icon: FaUser, label: t('sidebar', 'profile') },
-    { path: '/moje-porudzbine', icon: FaHistory, label: t('sidebar', 'my_orders') },
+  ];
+  const profileDropdownItems = [
+    { path: '/profil', icon: FaUser, label: t('sidebar', 'my_profile') || t('sidebar', 'profile') },
     { path: '/omiljeni', icon: FaHeart, label: t('sidebar', 'favorites') },
+    { path: '/moje-porudzbine', icon: FaHistory, label: t('sidebar', 'my_orders') },
   ];
 
   return (
@@ -110,19 +109,21 @@ function SidebarContent({ open, onClose }: SidebarProps) {
                 <li key={item.path}>
                   <Button variant="ghost"
                     onClick={() => navigateWithLang(item.path)}
-                    className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200
+                    className={`w-full flex items-center justify-between px-3 py-3 rounded-lg transition-all duration-200
                       ${active ? 'bg-slate-200 text-slate-900' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 cursor-pointer'}`}
                   >
-                    <span className={`flex items-center justify-center ${active ? 'bg-amber-600 text-white' : 'bg-slate-200 text-slate-600'} rounded-full w-8 h-8`}>
-                      <Icon className="w-5 h-5" />
+                    <span className="flex items-center gap-3">
+                      <span className={`flex items-center justify-center ${active ? 'bg-amber-600 text-white' : 'bg-slate-200 text-slate-600'} rounded-full w-8 h-8`}>
+                        <Icon className="w-5 h-5" />
+                      </span>
+                      <span className="font-medium text-sm truncate">{item.label}</span>
                     </span>
-                    <span className="font-medium text-sm truncate">{item.label}</span>
                   </Button>
                 </li>
               );
             })}
 
-            {/* User dropdown menu - only visible for logged in users */}
+            {/* Profil kao dropdown label ispod Proizvodi */}
             {session?.user && (
               <li className="relative">
                 <Button variant="ghost"
@@ -139,11 +140,12 @@ function SidebarContent({ open, onClose }: SidebarProps) {
                   <span className={`text-xs transition-transform duration-200 ${userDropdownOpen ? 'rotate-180' : ''}`}>▼</span>
                 </Button>
 
-                {/* Dropdown items */}
+                {/* Dropdown items: Moj profil, Omiljeni, Moje porudzbine */}
                 {userDropdownOpen && (
                   <ul className="mt-1 space-y-1 bg-slate-100 rounded-lg p-2">
-                    {userItems.map((item) => {
+                    {profileDropdownItems.map((item) => {
                       const active = isActive(item.path);
+                      const Icon = item.icon;
                       return (
                         <li key={item.path}>
                           <Button variant="ghost"
@@ -151,9 +153,12 @@ function SidebarContent({ open, onClose }: SidebarProps) {
                               navigateWithLang(item.path);
                               setUserDropdownOpen(false);
                             }}
-                            className={`w-full flex items-center justify-start text-left px-4 py-2 rounded-lg transition-all duration-200 text-sm
+                            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm
                               ${active ? 'bg-white text-slate-900' : 'text-slate-600 hover:bg-white hover:text-slate-900 cursor-pointer'}`}
                           >
+                            <span className={`flex items-center justify-center ${active ? 'bg-amber-600 text-white' : 'bg-slate-200 text-slate-600'} rounded-full w-7 h-7`}>
+                              <Icon className="w-4 h-4" />
+                            </span>
                             <span className="truncate">{item.label}</span>
                           </Button>
                         </li>
