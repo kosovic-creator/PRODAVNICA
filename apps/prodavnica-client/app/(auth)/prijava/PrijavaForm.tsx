@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { Button } from "@prodavnica/ui";
@@ -17,7 +17,10 @@ interface PrijavaFormProps {
     onRememberMe: (email: string) => Promise<void>;
 }
 
-export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
+export default function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
+    // DEBUG: Log render and state
+    console.log('[PrijavaForm] render', { savedEmail });
+
     const formRef = useRef<HTMLFormElement>(null);
     const { t: i18nT } = useI18n();
     const t = (key: string) => i18nT('auth', `login.${key}`);
@@ -27,8 +30,19 @@ export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
         registerHere: t('registerHere') || 'Registrujte se',
     };
     const [state, formAction, pending] = useActionState(loginAction, { error: null, success: false, email: '', lozinka: '' });
+    const [rememberMe, setRememberMe] = useState(!!savedEmail);
+    const [email, setEmail] = useState(savedEmail || '');
 
-    // Kada je validacija prošla, pozovi signIn na klijentu
+    // DEBUG: Log state changes
+    useEffect(() => {
+        console.log('[PrijavaForm] state', { state, rememberMe, email });
+    }, [state, rememberMe, email]);
+
+    useEffect(() => {
+        console.log('[PrijavaForm] mounted');
+        return () => console.log('[PrijavaForm] unmounted');
+    }, []);
+
     useEffect(() => {
         if (state.success && state.email && state.lozinka) {
             signIn('credentials', {
@@ -40,6 +54,25 @@ export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
         }
     }, [state.success, state.email, state.lozinka]);
 
+    // (Nema automatskog sync-a cookie-ja, poziva se samo iz handlera)
+
+    const handleRememberMeChange = (checked: boolean) => {
+        setRememberMe(checked);
+        if (checked) {
+            onRememberMe(email);
+        } else {
+            onRememberMe('');
+        }
+    };
+
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newEmail = e.target.value;
+        setEmail(newEmail);
+        if (rememberMe) {
+            onRememberMe(newEmail);
+        }
+    };
+
     return (
         <div className="flex items-center justify-center px-4 py-8">
             <div className="max-w-md w-full">
@@ -49,7 +82,6 @@ export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
                             {tLogin.title}
                         </CardTitle>
                     </CardHeader>
-
                     <CardContent>
                         <form ref={formRef} action={formAction} className="space-y-4">
                             {/* Email Input */}
@@ -60,11 +92,10 @@ export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
                                     name="email"
                                     type="email"
                                     placeholder={t('emailPlaceholder') || 'ime@primer.com'}
-                                    defaultValue={savedEmail}
-
+                                    value={email}
+                                    onChange={handleEmailChange}
                                 />
                             </div>
-
                             {/* Password Input */}
                             <div className="space-y-1">
                                 <Label htmlFor="lozinka" suppressHydrationWarning>{t('password') || 'Lozinka'}</Label>
@@ -73,34 +104,30 @@ export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
                                     name="lozinka"
                                     type="password"
                                     placeholder={t('passwordPlaceholder') || '••••••••'}
-
                                 />
                             </div>
-
                             {/* Remember Me Checkbox */}
                             <div className="flex items-center gap-2">
                                 <Checkbox
                                     id="rememberMe"
                                     name="rememberMe"
-                                    defaultChecked={!!savedEmail}
+                                    checked={rememberMe}
+                                    onCheckedChange={handleRememberMeChange}
                                 />
                                 <Label htmlFor="rememberMe" className="text-sm cursor-pointer" suppressHydrationWarning>
                                     {t('rememberMe') || 'Zapamti me'}
                                 </Label>
                             </div>
-
                             {/* Error Message */}
                             {state?.error && (
                                 <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-md text-sm">
                                     {state.error}
                                 </div>
                             )}
-
                             {/* Submit Button */}
                             <Button type="submit" disabled={pending} className="w-full font-medium" suppressHydrationWarning>
                                 {pending ? t('submitting') || 'Prijavi se' : t('submit') || 'Prijavi se'}
                             </Button>
-
                             {/* Separator */}
                             <div className="relative my-4">
                                 <div className="absolute inset-0 flex items-center">
@@ -112,7 +139,6 @@ export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
                                     </span>
                                 </div>
                             </div>
-
                             {/* Google Sign In Button */}
                             <Button
                                 type="button"
@@ -141,7 +167,6 @@ export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
                                 <span suppressHydrationWarning>{t('loginWithGoogle') || 'Prijavite se sa Google'}</span>
                             </Button>
                         </form>
-
                         {/* Link ka registraciji */}
                         <div className="text-center mt-4">
                             <p className="text-sm" suppressHydrationWarning>

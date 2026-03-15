@@ -1,7 +1,7 @@
 import { getLocaleMessages, getLanguageFromCookies } from '@/i18n/i18n';
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
-import { PrijavaForm } from './PrijavaForm';
+import PrijavaForm from './PrijavaForm';
 
 export async function generateMetadata(): Promise<Metadata> {
   const lang = await getLanguageFromCookies();
