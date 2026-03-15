@@ -1,117 +1,47 @@
+
 'use client';
 
-import { useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRef, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { z } from 'zod';
 import { Button } from "@prodavnica/ui";
 import { Input } from "@prodavnica/ui";
 import { Label } from "@prodavnica/ui";
 import { Checkbox } from "@prodavnica/ui";
 import { Card, CardHeader, CardTitle, CardContent } from "@prodavnica/ui";
-import { prijavaSchema } from '@/lib/validators';
+import { useActionState } from 'react';
+import { loginAction } from './loginAction';
 import { useI18n } from '@/i18n/I18nProvider';
 
 interface PrijavaFormProps {
     savedEmail: string;
-    errorMessage: string;
     onRememberMe: (email: string) => Promise<void>;
 }
 
-export default function PrijavaForm({ savedEmail, errorMessage, onRememberMe }: PrijavaFormProps) {
-    const router = useRouter();
+export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
     const formRef = useRef<HTMLFormElement>(null);
-    const [errors, setErrors] = useState<Record<string, string>>({});
-    const [touched, setTouched] = useState<Record<string, boolean>>({});
     const { t: i18nT } = useI18n();
     const t = (key: string) => i18nT('auth', `login.${key}`);
-
     const tLogin = {
         title: t('title') || 'Prijava',
         noAccount: t('noAccount') || 'Nemate nalog?',
         registerHere: t('registerHere') || 'Registrujte se',
     };
 
-    const validationSchema = prijavaSchema(t);
+    // Server action state
+    const [state, formAction] = useActionState(loginAction, { error: null, success: false, email: '', lozinka: '' });
 
-    const validateField = (name: string, value: string) => {
-        try {
-            const fieldSchema = validationSchema.shape[name as keyof typeof validationSchema.shape];
-            if (!fieldSchema) return;
-
-            fieldSchema.parse(value);
-
-            setErrors(prev => {
-                const newErrors = { ...prev };
-                delete newErrors[name];
-                return newErrors;
+    // Kada je validacija prošla, pozovi signIn na klijentu
+    useEffect(() => {
+        if (state.success && state.email && state.lozinka) {
+            signIn('credentials', {
+                email: state.email,
+                lozinka: state.lozinka,
+                redirect: true,
+                callbackUrl: '/'
             });
-        } catch (error: unknown) {
-            if (error instanceof z.ZodError) {
-                const firstError = error.issues[0];
-                if (firstError?.message) {
-                    setErrors(prev => ({ ...prev, [name]: firstError.message }));
-                }
-            }
         }
-    };
-
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setTouched(prev => ({ ...prev, [name]: true }));
-        validateField(name, value);
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        if (touched[name]) {
-            validateField(name, value);
-        }
-    };
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        const formData = new FormData(e.currentTarget);
-        const email = formData.get('email') as string;
-        const lozinka = formData.get('lozinka') as string;
-        const rememberMe = formData.get('rememberMe') === 'on';
-
-        // Validacija sa zod shemom
-        try {
-            validationSchema.parse({ email, lozinka });
-        } catch (error) {
-            if (error instanceof z.ZodError) {
-                const newErrors: Record<string, string> = {};
-                error.issues.forEach(issue => {
-                    const key = String(issue.path[0]);
-                    newErrors[key] = issue.message;
-                });
-                setErrors(newErrors);
-            }
-            return;
-        }
-
-        // Set remember me cookie via server action
-        if (rememberMe && email) {
-            await onRememberMe(email);
-        }
-
-        // Sign in using next-auth
-        const result = await signIn('credentials', {
-            email,
-            lozinka,
-            redirect: false,
-        });
-
-        if (result?.error) {
-            router.push('/prijava?error=Pogrešan email ili lozinka');
-        } else {
-            router.push('/');
-            router.refresh();
-        }
-    };
+    }, [state.success, state.email, state.lozinka]);
 
     return (
         <div className="flex items-center justify-center px-4 py-8">
@@ -124,7 +54,7 @@ export default function PrijavaForm({ savedEmail, errorMessage, onRememberMe }: 
                     </CardHeader>
 
                     <CardContent>
-                        <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+                        <form ref={formRef} action={formAction} className="space-y-4">
                             {/* Email Input */}
                             <div className="space-y-1">
                                 <Label htmlFor="email">Email</Label>
@@ -134,14 +64,8 @@ export default function PrijavaForm({ savedEmail, errorMessage, onRememberMe }: 
                                     type="email"
                                     placeholder={t('emailPlaceholder') || 'ime@primer.com'}
                                     defaultValue={savedEmail}
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    className={errors.email ? 'border-red-500' : ''}
                                     required
                                 />
-                                {errors.email && touched.email && (
-                                    <p className="text-red-500 text-sm">{errors.email}</p>
-                                )}
                             </div>
 
                             {/* Password Input */}
@@ -152,14 +76,8 @@ export default function PrijavaForm({ savedEmail, errorMessage, onRememberMe }: 
                                     name="lozinka"
                                     type="password"
                                     placeholder={t('passwordPlaceholder') || '••••••••'}
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    className={errors.lozinka ? 'border-red-500' : ''}
                                     required
                                 />
-                                {errors.lozinka && touched.lozinka && (
-                                    <p className="text-red-500 text-sm">{errors.lozinka}</p>
-                                )}
                             </div>
 
                             {/* Remember Me Checkbox */}
@@ -175,9 +93,9 @@ export default function PrijavaForm({ savedEmail, errorMessage, onRememberMe }: 
                             </div>
 
                             {/* Error Message */}
-                            {errorMessage && (
+                            {state?.error && (
                                 <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-md text-sm">
-                                    {errorMessage}
+                                    {state.error}
                                 </div>
                             )}
 
