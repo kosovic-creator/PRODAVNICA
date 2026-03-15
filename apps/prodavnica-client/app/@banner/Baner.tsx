@@ -8,7 +8,7 @@ import { useI18n } from '@/i18n/I18nProvider';
 export default function Baner() {
   const { t } = useI18n();
   const [bannerCurrent, setBannerCurrent] = useState(0);
-  const bannerImages = ['/slike-proizvoda/p2-1-converted-from-jpg-2.png', '/slike-proizvoda/p6-1.png'];
+  const bannerImages = ['/slike-proizvoda/p2-1-converted-from-jpg-2.png', '/slike-proizvoda/p6-1.png', '/slike-proizvoda/kolaž.png'];
 
   // Lokalizovani banner tituli
   const bannerTitles = useMemo(() => {
