@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useRef, useEffect } from 'react';
@@ -27,9 +26,7 @@ export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
         noAccount: t('noAccount') || 'Nemate nalog?',
         registerHere: t('registerHere') || 'Registrujte se',
     };
-
-    // Server action state
-    const [state, formAction] = useActionState(loginAction, { error: null, success: false, email: '', lozinka: '' });
+    const [state, formAction, pending] = useActionState(loginAction, { error: null, success: false, email: '', lozinka: '' });
 
     // Kada je validacija prošla, pozovi signIn na klijentu
     useEffect(() => {
@@ -64,7 +61,7 @@ export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
                                     type="email"
                                     placeholder={t('emailPlaceholder') || 'ime@primer.com'}
                                     defaultValue={savedEmail}
-                                    required
+
                                 />
                             </div>
 
@@ -76,7 +73,7 @@ export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
                                     name="lozinka"
                                     type="password"
                                     placeholder={t('passwordPlaceholder') || '••••••••'}
-                                    required
+
                                 />
                             </div>
 
@@ -100,8 +97,8 @@ export function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormProps) {
                             )}
 
                             {/* Submit Button */}
-                            <Button type="submit" className="w-full font-medium" suppressHydrationWarning>
-                                {t('submit') || 'Prijavi se'}
+                            <Button type="submit" disabled={pending} className="w-full font-medium" suppressHydrationWarning>
+                                {pending ? t('submitting') || 'Prijavi se' : t('submit') || 'Prijavi se'}
                             </Button>
 
                             {/* Separator */}

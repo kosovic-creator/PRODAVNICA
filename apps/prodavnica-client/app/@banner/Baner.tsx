@@ -41,7 +41,7 @@ export default function Baner() {
             {bannerTitles[bannerCurrent] || '...'}
           </h2>
           <Link href="/proizvodi">
-            <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition duration-300 w-fit" suppressHydrationWarning>
+            <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-2xl transition duration-300 w-fit" suppressHydrationWarning>
               {t('home', 'banner_view_products')}
             </button>
           </Link>

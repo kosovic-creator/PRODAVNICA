@@ -29,21 +29,13 @@ async function setRememberMeCookie(email: string) {
   });
 }
 
-export default async function PrijavaPage({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | undefined>>;
-}) {
-  const params = await searchParams;
-  const errorMessage = params.error || '';
-
+export default async function PrijavaPage() {
   const cookieStore = await cookies();
   const savedEmail = cookieStore.get('rememberMe')?.value || '';
 
   return (
     <PrijavaForm
       savedEmail={savedEmail}
-      errorMessage={errorMessage}
       onRememberMe={setRememberMeCookie}
     />
   );
