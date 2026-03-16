@@ -108,12 +108,7 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
         <h2 className="text-2xl font-bold mb-6 text-gray-600">Dodaj novi proizvod</h2>
       )}
 
-      <form className="space-y-4 w-full" action={formAction} noValidate
-        onSubmit={(e) => {
-          e.preventDefault();
-          formAction(new FormData(e.currentTarget));
-        }}
-      >
+      <form className="space-y-4 w-full" action={formAction} noValidate>
 
         {/* SRPSKI PODACI */}
         <div className="border-t pt-4 mt-4">

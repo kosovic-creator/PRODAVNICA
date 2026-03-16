@@ -1,26 +1,16 @@
+"use client";
+import { useEffect, useState } from 'react';
+import { useActionState } from 'react';
+import { z } from 'zod';
 import { getPorudzbine, deletePorudzbinu } from '@/lib/actions/porudzbine';
 import PorudzbineSkeleton from './PorudzbineSkeleton';
-import { redirect } from 'next/navigation';
 import SuccessMessage from '../components/SuccessMessage';
 import { Button } from "@prodavnica/ui";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@prodavnica/ui";
 import { StatusSelect } from '../components/StatusSelect';
-import { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: "Porudžbine",
-};
 
-// Server action za brisanje porudžbine
-export async function handleDeleteAction(formData: FormData) {
-  'use server';
-  const id = formData.get('id');
-  if (typeof id === 'string' && id) {
-    await deletePorudzbinu(id);
-    // SSR redirect with success message
-    return redirect('/porudzbine?success=' + encodeURIComponent('Porudžbina je uspješno obrisana'));
-  }
-}
+const deleteSchema = z.object({ id: z.string().min(1, 'ID je obavezan') });
 
 const formatDate = (date: string | Date) => {
   const d = typeof date === 'string' ? new Date(date) : date;
@@ -37,24 +27,60 @@ const formatCurrency = (amount: string | number | bigint) =>
   }).format(typeof amount === 'string' ? Number(amount) : amount);
 
 
-export default async function PorudzbinePage({ searchParams }: { searchParams: Promise<{ success?: string }> }) {
-  const result = await getPorudzbine();
-  if (!result.success || !result.data) {
-    return <PorudzbineSkeleton />;
-  }
-  const porudzbine = result.success && result.data ? result.data.porudzbine : [];
-  const totalRevenue = porudzbine.reduce(
-    (sum, porudzbina) => sum + porudzbina.ukupno,
-    0
+export default function PorudzbinePage() {
+  const [initial, setInitial] = useState<{ porudzbine: any[]; totalRevenue: number }>({ porudzbine: [], totalRevenue: 0 });
+  const [state, deleteAction, isPending] = useActionState(
+    async (prevState: any, formData: FormData) => {
+      const id = formData.get('id');
+      const parsed = deleteSchema.safeParse({ id });
+      if (!parsed.success) {
+        return { ...prevState, success: false, error: parsed.error.issues[0]?.message || 'Neispravan ID' };
+      }
+      try {
+        await deletePorudzbinu(id as string);
+        // Refetch porudzbine after delete
+        const result = await getPorudzbine();
+        if (!result.success || !result.data) {
+          return { ...prevState, success: false, error: 'Greška pri osvježavanju liste' };
+        }
+        return {
+          ...prevState,
+          success: true,
+          error: '',
+          porudzbine: result.data.porudzbine,
+          totalRevenue: result.data.porudzbine.reduce((sum: number, p: any) => sum + p.ukupno, 0),
+        };
+      } catch (e) {
+        return { ...prevState, success: false, error: 'Greška pri brisanju porudžbine' };
+      }
+    },
+    {
+      success: false,
+      error: '',
+      porudzbine: [],
+      totalRevenue: 0,
+    }
   );
-  const params = await searchParams;
-  const successMsg = params?.success;
+
+  // Initial fetch
+  useEffect(() => {
+    (async () => {
+      const result = await getPorudzbine();
+      if (result.success && result.data) {
+        setInitial({
+          porudzbine: result.data.porudzbine,
+          totalRevenue: result.data.porudzbine.reduce((sum: number, p: any) => sum + p.ukupno, 0),
+        });
+      }
+    })();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Success message */}
-        {successMsg && <SuccessMessage message={successMsg} type="success" />}
+        {/* Success/Error message */}
+        {state.success && <SuccessMessage message="Porudžbina je uspješno obrisana" type="success" />}
+        {state.error && <SuccessMessage message={state.error} type="error" />}
         {/* Header */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -64,10 +90,10 @@ export default async function PorudzbinePage({ searchParams }: { searchParams: P
             </div>
             <div className="mt-4 sm:mt-0 flex flex-col sm:flex-row gap-3">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                Ukupno: {porudzbine.length}
+                Ukupno: {(state.porudzbine.length > 0 ? state.porudzbine.length : initial.porudzbine.length)}
               </span>
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                Prihod: {formatCurrency(totalRevenue)}
+                Prihod: {formatCurrency(state.totalRevenue > 0 ? state.totalRevenue : initial.totalRevenue)}
               </span>
             </div>
           </div>
@@ -85,7 +111,7 @@ export default async function PorudzbinePage({ searchParams }: { searchParams: P
               </div>
               <div className="ml-4">
                 <p className="text-sm text-gray-600">Ukupno porudžbina</p>
-                <p className="text-2xl font-semibold text-gray-900">{porudzbine.length}</p>
+                <p className="text-2xl font-semibold text-gray-900">{state.porudzbine.length}</p>
               </div>
             </div>
           </div>
@@ -99,7 +125,7 @@ export default async function PorudzbinePage({ searchParams }: { searchParams: P
               </div>
               <div className="ml-4">
                 <p className="text-sm text-gray-600">Ukupan prihod</p>
-                <p className="text-2xl font-semibold text-gray-900">{formatCurrency(totalRevenue)}</p>
+                <p className="text-2xl font-semibold text-gray-900">{formatCurrency(state.totalRevenue)}</p>
               </div>
             </div>
           </div>
@@ -114,7 +140,8 @@ export default async function PorudzbinePage({ searchParams }: { searchParams: P
               <div className="ml-4">
                 <p className="text-sm text-gray-600">Prosečna vrednost</p>
                 <p className="text-2xl font-semibold text-gray-900">
-                  {porudzbine.length > 0 ? formatCurrency(totalRevenue / porudzbine.length) : formatCurrency(0)}
+                  {(state.porudzbine.length > 0 ? formatCurrency(state.totalRevenue / state.porudzbine.length)
+                    : (initial.porudzbine.length > 0 ? formatCurrency(initial.totalRevenue / initial.porudzbine.length) : formatCurrency(0)))}
                 </p>
               </div>
             </div>
@@ -135,7 +162,7 @@ export default async function PorudzbinePage({ searchParams }: { searchParams: P
               </TableRow>
             </TableHeader>
             <TableBody>
-              {porudzbine.map((porudzbina) => {
+              {(state.porudzbine.length > 0 ? state.porudzbine : initial.porudzbine).map((porudzbina: any) => {
                 const kupacIme = porudzbina.korisnik?.ime || porudzbina.korisnik?.podaciPreuzimanja?.ime || 'N/A';
                 const kupacPrezime = porudzbina.korisnik?.podaciPreuzimanja?.prezime || '';
 
@@ -169,10 +196,10 @@ export default async function PorudzbinePage({ searchParams }: { searchParams: P
                   </TableCell>
                   <TableCell className="px-6 py-4 text-sm text-gray-500">{formatDate(porudzbina.kreiran)}</TableCell>
                   <TableCell className="px-6 py-4 text-sm font-medium">
-                    <form action={handleDeleteAction}>
+                      <form action={deleteAction}>
                       <input type="hidden" name="id" value={porudzbina.id} />
-                      <Button type="submit" variant="destructive" >
-                        Obriši
+                        <Button type="submit" variant="destructive" disabled={isPending}>
+                          {isPending ? 'Brišem...' : 'Obriši'}
                       </Button>
                     </form>
                   </TableCell>
@@ -181,7 +208,7 @@ export default async function PorudzbinePage({ searchParams }: { searchParams: P
               })}
             </TableBody>
           </Table>
-          {porudzbine.length === 0 && (
+          {(state.porudzbine.length === 0 && initial.porudzbine.length === 0) && (
             <div className="text-center py-12">
               <div className="text-gray-500 text-lg">Nema porudžbina</div>
             </div>
