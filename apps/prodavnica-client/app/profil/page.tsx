@@ -2,8 +2,6 @@ import { getServerSession } from 'next-auth';
 import { getKorisnikById } from '@/lib/actions';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/authOptions';
-import { deleteKorisnik } from '@/lib/actions/korisnici';
-import { revalidatePath } from 'next/cache';
 import { Metadata } from 'next';
 import ProfilContent from './ProfilContent';
 
@@ -12,35 +10,10 @@ export const metadata: Metadata = {
   description: 'Dobrodošli u našu prodavnicu! Pregledajte našu široku ponudu proizvoda i pronađite savršene artikle za sebe.',
 };
 
-export default async function ProfilPage({ searchParams }: { searchParams?: { err?: string } | Promise<{ err?: string }> }) {
-  let params: { err?: string } = {};
-  if (searchParams) {
-    if (typeof (searchParams as Promise<{ err?: string }>).then === 'function') {
-      params = await (searchParams as Promise<{ err?: string }>);
-    } else {
-      params = searchParams as { err?: string };
-    }
-  }
-
+export default async function ProfilPage() {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     redirect('/prijava');
-  }
-
-  async function handleDeleteKorisnik() {
-    'use server';
-    if (!session?.user?.id) {
-      redirect('/prijava');
-    }
-    const userId = session.user.id;
-    const result = await deleteKorisnik(userId);
-    if (!result.success) {
-      const params = new URLSearchParams();
-      params.append('err', result.error || 'Greška pri brisanju korisnika');
-      redirect(`/profil?${params.toString()}`);
-    }
-    revalidatePath('/');
-    redirect('/odjava');
   }
 
   const result = await getKorisnikById(session.user.id);
@@ -63,11 +36,5 @@ export default async function ProfilPage({ searchParams }: { searchParams?: { er
     adresa: result.data.podaciPreuzimanja?.adresa ?? '',
   };
 
-  return (
-    <ProfilContent
-      korisnik={korisnik}
-      errorParam={params.err}
-      handleDeleteKorisnik={handleDeleteKorisnik}
-    />
-  );
+  return <ProfilContent korisnik={korisnik} handleDeleteKorisnik={async () => { }} />;
 }

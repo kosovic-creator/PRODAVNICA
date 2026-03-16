@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "Registracija",
 };
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+export default async function Page() {
   return (
     <RegistracijaFormComponent />
   );

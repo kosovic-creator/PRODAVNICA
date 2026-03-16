@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   description: 'Dobrodošli u našu prodavnicu! Pregledajte našu široku ponudu proizvoda i pronađite savršene artikle za sebe.',
 };
 
-export default async function ProizvodiPage({ searchParams }: { searchParams: Promise<{ page?: string; pageSize?: string; search?: string }> }) {
-  const params = await searchParams;
-  const page = parseInt(params.page || '1');
-  const pageSize = parseInt(params.pageSize || '10');
-  const search = params.search || '';
+export default async function ProizvodiPage() {
+  // Za SSR paginaciju i search, koristi query parametre ili default vrednosti
+  const page = 1;
+  const pageSize = 10;
+  const search = '';
 
   const result = await getProizvodi(page, pageSize, search);
 

@@ -69,25 +69,15 @@ const ClientProizvodiTable: React.FC<Props> = ({ proizvodi, total, totalPages, p
     if (res?.success) {
       setSuccess(res.message || "Proizvod je uspešno obrisan");
       setTimeout(() => {
-        window.location.href = "/proizvodi?success=Proizvod+je+uspešno+obrisan";
-      }, 1500);
+        setSuccess(null);
+      }, 2000);
     } else {
       setError(res?.error || "Greška pri brisanju proizvoda");
-    }
-  }
-
-  React.useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("success")) {
-      setSuccess(params.get("success")!);
       setTimeout(() => {
-        window.location.href = "/proizvodi";
+        setError(null);
       }, 3000);
     }
-    if (params.get("error")) {
-      setError(params.get("error")!);
-    }
-  }, []);
+  }
 
   return (
     <div className="w-full p-6 text-gray-900 dark:text-gray-900">

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import CloudinaryUploadField from './izmeni/[id]/CloudinaryUploadField';
 import SuccessMessage from '@/app/components/SuccessMessage';
@@ -90,6 +90,15 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
     },
     { success: false, errors: {}, varijante: proizvod?.varijante || [] }
   );
+
+  useEffect(() => {
+    if (state.success && isEditMode) {
+      const timeout = setTimeout(() => {
+        router.push('/proizvodi');
+      }, 1500);
+      return () => clearTimeout(timeout);
+    }
+  }, [state.success, isEditMode, router]);
 
   return (
     <div className="bg-white rounded-lg shadow border border-gray-200 p-8">

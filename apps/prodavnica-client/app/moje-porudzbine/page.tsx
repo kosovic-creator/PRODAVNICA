@@ -10,15 +10,23 @@ export const metadata: Metadata = {
   description: 'Dobrodošli u našu prodavnicu! Pregledajte našu široku ponudu proizvoda i pronađite savršene artikle za sebe.',
 };
 
-export default async function MojePorudzbinePage({ searchParams }: { searchParams: Promise<{ page?: string; pageSize?: string }> }) {
+interface SearchParams {
+  page?: string;
+  pageSize?: string;
+}
+
+type Props = {
+  searchParams?: SearchParams;
+};
+
+export default async function MojePorudzbinePage({ searchParams }: Props) {
+  const page = Number(searchParams?.page) || 1;
+  const pageSize = Number(searchParams?.pageSize) || 10;
+
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     redirect('/prijava');
   }
-
-  const params = await searchParams;
-  const page = parseInt(params.page || '1');
-  const pageSize = parseInt(params.pageSize || '10');
 
   const result = await getPorudzbineKorisnika(session.user.id, page, pageSize);
 
