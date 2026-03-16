@@ -126,7 +126,7 @@ export default function PrijavaForm({ savedEmail, onRememberMe }: PrijavaFormPro
                             )}
                             {/* Submit Button */}
                             <Button type="submit" disabled={pending} className="w-full font-medium" suppressHydrationWarning>
-                                {pending ? t('submitting') || 'Prijavi se' : t('submit') || 'Prijavi se'}
+                                {pending ? t('submitting')  : t('submit') }
                             </Button>
                             {/* Separator */}
                             <div className="relative my-4">

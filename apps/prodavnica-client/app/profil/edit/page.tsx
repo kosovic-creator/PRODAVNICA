@@ -7,7 +7,6 @@ import EditProfilForm from './EditProfilForm';
 import SuccessMessage from '@/app/components/SuccessMessage';
 import ClientLayout from '@/app/components/ClientLayout';
 import { getLanguageFromCookies, getLocaleMessages } from '@/i18n/i18n';
-import { handleEditProfilAction } from '@/lib/actions/profil';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -17,18 +16,10 @@ export const metadata: Metadata = {
 
 
 
-export default async function EditProfilPage({ searchParams }: { searchParams?: { [key: string]: string } | Promise<{ [key: string]: string }> }) {
-  let params: { [key: string]: string } = {};
-  if (searchParams) {
-    if (typeof (searchParams as Promise<unknown>).then === 'function') {
-      params = await (searchParams as Promise<{ [key: string]: string }>);
-    } else {
-      params = searchParams as { [key: string]: string };
-    }
-  }
+
+export default async function EditProfilPage() {
   const langFromCookies = await getLanguageFromCookies();
   const lang = langFromCookies || 'sr';
-  const successParam = params?.success as string | undefined;
   const tProfil = getLocaleMessages(lang, 'profil');
   const tKorisnici = getLocaleMessages(lang, 'korisnici');
   const t = (key: string) => (tKorisnici as Record<string, string>)[key] ?? (tProfil as Record<string, string>)[key] ?? key;
@@ -60,15 +51,6 @@ export default async function EditProfilPage({ searchParams }: { searchParams?: 
     podaciId: korisnik.podaciPreuzimanja?.id || '',
   };
 
-  const errorMap: Record<string, string> = {};
-  const valueMap: Record<string, string> = {};
-  if (typeof params === 'object' && params) {
-    Object.entries(params).forEach(([k, v]) => {
-      if (k.startsWith('err_')) errorMap[k.replace('err_', '')] = v as string;
-      if (k.startsWith('val_')) valueMap[k.replace('val_', '')] = v as string;
-    });
-  }
-
   const translations = { ...tProfil, ...tKorisnici };
 
   return (
@@ -79,24 +61,9 @@ export default async function EditProfilPage({ searchParams }: { searchParams?: 
             <FaUser className="text-gray-700" />
             {t('title')}
           </h1>
-          {errorMap.global && (
-            <div className="mb-4 text-red-600 text-center font-medium">{errorMap.global}</div>
-          )}
-          {successParam === 'true' && (
-            <SuccessMessage
-              message={t('profil_azuriran') || 'Profil uspješno ažuriran'}
-              redirectTo="/profil"
-              redirectDelay={3000}
-            />
-          )}
           <EditProfilForm
-            handleEditProfil={handleEditProfilAction}
             initialForm={initialForm}
-            errorMap={errorMap}
-            valueMap={valueMap}
             translations={translations}
-
-
           />
         </div>
       </div>
