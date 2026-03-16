@@ -4,7 +4,6 @@ import { authOptions } from '@/lib/authOptions';
 import { redirect } from 'next/navigation';
 import { FaUser } from 'react-icons/fa';
 import EditProfilForm from './EditProfilForm';
-import SuccessMessage from '@/app/components/SuccessMessage';
 import ClientLayout from '@/app/components/ClientLayout';
 import { getLanguageFromCookies, getLocaleMessages } from '@/i18n/i18n';
 import { Metadata } from 'next';
@@ -13,9 +12,6 @@ export const metadata: Metadata = {
   title: 'Izmena profila',
   description: 'Dobrodošli u našu prodavnicu! Pregledajte našu široku ponudu proizvoda i pronađite savršene artikle za sebe.',
 };
-
-
-
 
 export default async function EditProfilPage() {
   const langFromCookies = await getLanguageFromCookies();
