@@ -1,206 +1,62 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
+"use client";
+import SuccessMessage from '../../components/SuccessMessage';
+import React from 'react';
+import { useActionState } from 'react';
 import { FaUserPlus, FaEnvelope, FaLock, FaUser } from "react-icons/fa";
-import { RegistracijaMessage } from './RegistracijaMessage';
 import { Input } from "@prodavnica/ui";
-import { Button } from "@prodavnica/ui";
-import Link from 'next/link';
 import { registracijaSchema } from '@/zod';
-import { z } from 'zod';
 
-interface RegistracijaFormComponentProps {
-  errorParam?: string | string[];
-  successParam?: string | string[];
-}
-
-export function RegistracijaFormComponent({
-  errorParam,
-  successParam
-}: RegistracijaFormComponentProps) {
-  const [formData, setFormData] = useState({
-    email: '',
-    ime: '',
-    prezime: '',
-    lozinka: '',
-    potvrdaLozinke: '',
-  });
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [fieldTouched, setFieldTouched] = useState<Record<string, boolean>>({});
-
-  // Real-time validation
-  const validateField = (name: string, value: string) => {
-    const fieldErrors: Record<string, string> = { ...errors };
-
-    if (name === 'email') {
-      if (!value) {
-        fieldErrors.email = 'Email je obavezan';
-      } else if (!z.string().email().safeParse(value).success) {
-        fieldErrors.email = 'Neispravan email format';
-      } else {
-        delete fieldErrors.email;
+export function RegistracijaFormComponent() {
+  const [state, formAction, isPending] = useActionState(
+    async (prevState: { success: boolean; errors: Record<string, string> }, formData: FormData) => {
+      const data = {
+        email: formData.get('email') as string,
+        ime: formData.get('ime') as string,
+        prezime: formData.get('prezime') as string,
+        lozinka: formData.get('lozinka') as string,
+        potvrdaLozinke: formData.get('potvrdaLozinke') as string,
+      };
+      // Zod validacija na serveru
+      const result = registracijaSchema.safeParse(data);
+      const errors: Record<string, string> = {};
+      if (!result.success) {
+        for (const err of result.error.issues) {
+          errors[String(err.path[0])] = err.message;
+        }
       }
-    }
-
-    if (name === 'ime') {
-      if (!value) {
-        fieldErrors.ime = 'Ime je obavezno';
-      } else if (value.length < 2) {
-        fieldErrors.ime = 'Ime mora imati najmanje 2 karaktera';
-      } else {
-        delete fieldErrors.ime;
+      if (data.lozinka !== data.potvrdaLozinke) {
+        errors.potvrdaLozinke = 'Lozinke se ne poklapaju';
       }
-    }
-
-    if (name === 'prezime') {
-      if (!value) {
-        fieldErrors.prezime = 'Prezime je obavezno';
-      } else if (value.length < 2) {
-        fieldErrors.prezime = 'Prezime mora imati najmanje 2 karaktera';
-      } else {
-        delete fieldErrors.prezime;
+      if (Object.keys(errors).length > 0) {
+        return { success: false, errors };
       }
-    }
-
-    if (name === 'lozinka') {
-      if (!value) {
-        fieldErrors.lozinka = 'Lozinka je obavezna';
-      } else if (value.length < 6) {
-        fieldErrors.lozinka = 'Lozinka mora imati najmanje 6 karaktera';
-      } else {
-        delete fieldErrors.lozinka;
-      }
-      // Also validate confirmation if it's filled
-      if (formData.potvrdaLozinke && value !== formData.potvrdaLozinke) {
-        fieldErrors.potvrdaLozinke = 'Lozinke se ne poklapaju';
-      } else if (formData.potvrdaLozinke && value === formData.potvrdaLozinke) {
-        delete fieldErrors.potvrdaLozinke;
-      }
-    }
-
-    if (name === 'potvrdaLozinke') {
-      if (!value) {
-        fieldErrors.potvrdaLozinke = 'Potvrda lozinke je obavezna';
-      } else if (value !== formData.lozinka) {
-        fieldErrors.potvrdaLozinke = 'Lozinke se ne poklapaju';
-      } else {
-        delete fieldErrors.potvrdaLozinke;
-      }
-    }
-
-    setErrors(fieldErrors);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-
-    if (fieldTouched[name]) {
-      validateField(name, value);
-    }
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFieldTouched(prev => ({
-      ...prev,
-      [name]: true
-    }));
-    validateField(name, value);
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Mark all fields as touched
-    setFieldTouched({
-      email: true,
-      ime: true,
-      prezime: true,
-      lozinka: true,
-      potvrdaLozinke: true,
-    });
-
-    // Final validation
-    const result = registracijaSchema.safeParse(formData);
-
-    if (!result.success) {
-      const newErrors: Record<string, string> = {};
-      for (const err of result.error.issues) {
-        newErrors[String(err.path[0])] = err.message;
-      }
-
-      // Check password match
-      if (formData.lozinka !== formData.potvrdaLozinke) {
-        newErrors.potvrdaLozinke = 'Lozinke se ne poklapaju';
-      }
-
-      setErrors(newErrors);
-      return;
-    }
-
-    // Check password confirmation
-    if (formData.lozinka !== formData.potvrdaLozinke) {
-      setErrors(prev => ({
-        ...prev,
-        potvrdaLozinke: 'Lozinke se ne poklapaju'
-      }));
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
+      // Poziv server action
       const response = await fetch('/api/registracija', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: formData.email,
-          ime: formData.ime,
-          prezime: formData.prezime,
-          lozinka: formData.lozinka,
+          email: data.email,
+          ime: data.ime,
+          prezime: data.prezime,
+          lozinka: data.lozinka,
         }),
       });
-
-      const data = await response.json();
-
-      if (data.success) {
-        // Redirect after success
-        window.location.href = '/registracija?success=1';
-      } else if (data.error === 'Korisnik sa ovom email adresom već postoji') {
-        setErrors({ email: 'Email je već registrovan' });
+      const res = await response.json();
+      if (res.success) {
+        return { success: true, errors: {} };
+      } else if (res.error === 'Korisnik sa ovom email adresom već postoji' || res.error === 'email_exists') {
+        return { success: false, errors: { email: 'Email je već registrovan' } };
       } else {
-        setErrors({ form: data.error || 'Došlo je do greške pri registraciji' });
+        return { success: false, errors: { form: res.error || 'Došlo je do greške pri registraciji' } };
       }
-    } catch (error) {
-      console.error('Greška pri registraciji:', error);
-      setErrors({ form: 'Došlo je do greške pri registraciji' });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const errorMessage =
-    errorParam === 'email_exists'
-      ? 'Email je već registrovan.'
-      : errorParam === 'validation'
-        ? 'Neispravni podaci. Molimo proverite sva polja.'
-        : errorParam
-          ? 'Došlo je do greške pri registraciji.'
-          : null;
+    },
+    { success: false, errors: {} }
+  );
 
   const getInputClass = (fieldName: string) => {
-    const hasError = fieldTouched[fieldName] && errors[fieldName];
-    return `w-full px-3 py-2 border rounded-md input-focus transition-colors !input-focus!ring-0 ${
-      hasError ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-blue-400'
-    }`;
+    const errors = state.errors as Record<string, string>;
+    const hasError = errors[fieldName];
+    return `w-full px-3 py-2 border rounded-md input-focus transition-colors !input-focus!ring-0 ${hasError ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-blue-400'}`;
   };
 
   return (
@@ -211,154 +67,119 @@ export function RegistracijaFormComponent({
           Registracija
         </h1>
 
-        {successParam && <RegistracijaMessage type="success" message="Uspješna registracija!" />}
-        {errorMessage && <RegistracijaMessage type="error" message={errorMessage} />}
-        {errors.form && <RegistracijaMessage type="error" message={errors.form} />}
+        {state.success && <SuccessMessage message="Uspješna registracija!" type="success" />}
+        {state.errors.form && <SuccessMessage message={state.errors.form} type="error" />}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form action={formAction} className="space-y-4">
           {/* Email */}
           <div>
-            <div className={`flex items-center gap-3 border p-3 rounded-lg transition-colors ${
-              fieldTouched.email && errors.email ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-blue-400'
-            }`}>
+            <div className={`flex items-center gap-3 border p-3 rounded-lg transition-colors ${typeof state.errors === 'object' && 'email' in state.errors && state.errors.email ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-blue-400'}`}>
               <FaEnvelope className="text-lg shrink-0" />
               <Input
                 id="email"
                 name="email"
                 type="email"
-                value={formData.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
+                // required
                 className={getInputClass('email')}
                 placeholder='email'
-                disabled={isLoading}
+                aria-invalid={typeof state.errors === 'object' && 'email' in state.errors ? !!state.errors.email : false}
+                disabled={isPending}
               />
             </div>
-            {fieldTouched.email && errors.email && (
-              <p className="text-red-600 text-sm mt-1">{errors.email}</p>
+            {typeof state.errors === 'object' && 'email' in state.errors && state.errors.email && (
+              <p className="text-red-600 text-sm mt-1">{state.errors.email}</p>
             )}
           </div>
 
           {/* Ime */}
           <div>
-            <div className={`flex items-center gap-3 border p-3 rounded-lg transition-colors ${
-              fieldTouched.ime && errors.ime ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-blue-400'
-            }`}>
+            <div className={`flex items-center gap-3 border p-3 rounded-lg transition-colors ${typeof state.errors === 'object' && 'ime' in state.errors && state.errors.ime ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-blue-400'}`}>
               <FaUser className="text-lg shrink-0" />
               <Input
                 id="ime"
                 name="ime"
                 type="text"
-                value={formData.ime}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
+                // required
                 className={getInputClass('ime')}
                 placeholder='ime'
-                disabled={isLoading}
+                aria-invalid={typeof state.errors === 'object' && 'ime' in state.errors ? !!state.errors.ime : false}
+                disabled={isPending}
               />
             </div>
-            {fieldTouched.ime && errors.ime && (
-              <p className="text-red-600 text-sm mt-1">{errors.ime}</p>
+            {typeof state.errors === 'object' && 'ime' in state.errors && state.errors.ime && (
+              <p className="text-red-600 text-sm mt-1">{state.errors.ime}</p>
             )}
           </div>
 
           {/* Prezime */}
           <div>
-            <div className={`flex items-center gap-3 border p-3 rounded-lg transition-colors ${
-              fieldTouched.prezime && errors.prezime ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-blue-400'
-            }`}>
+            <div className={`flex items-center gap-3 border p-3 rounded-lg transition-colors ${typeof state.errors === 'object' && 'prezime' in state.errors && state.errors.prezime ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-blue-400'}`}>
               <FaUser className="text-lg shrink-0" />
               <Input
                 id="prezime"
                 name="prezime"
                 type="text"
-                value={formData.prezime}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
+                // required
                 className={getInputClass('prezime')}
                 placeholder='prezime'
-                disabled={isLoading}
+                aria-invalid={typeof state.errors === 'object' && 'prezime' in state.errors ? !!state.errors.prezime : false}
+                disabled={isPending}
               />
             </div>
-            {fieldTouched.prezime && errors.prezime && (
-              <p className="text-red-600 text-sm mt-1">{errors.prezime}</p>
+            {typeof state.errors === 'object' && 'prezime' in state.errors && state.errors.prezime && (
+              <p className="text-red-600 text-sm mt-1">{state.errors.prezime}</p>
             )}
           </div>
 
           {/* Lozinka */}
           <div>
-            <div className={`flex items-center gap-3 border p-3 rounded-lg transition-colors ${
-              fieldTouched.lozinka && errors.lozinka ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-blue-400'
-            }`}>
+            <div className={`flex items-center gap-3 border p-3 rounded-lg transition-colors ${typeof state.errors === 'object' && 'lozinka' in state.errors && state.errors.lozinka ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-blue-400'}`}>
               <FaLock className="text-lg shrink-0" />
               <Input
                 id="lozinka"
                 name="lozinka"
                 type="password"
-                value={formData.lozinka}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
+                // required
                 className={getInputClass('lozinka')}
                 placeholder='lozinka'
-                disabled={isLoading}
+                aria-invalid={typeof state.errors === 'object' && 'lozinka' in state.errors ? !!state.errors.lozinka : false}
+                disabled={isPending}
               />
             </div>
-            {fieldTouched.lozinka && errors.lozinka && (
-              <p className="text-red-600 text-sm mt-1">{errors.lozinka}</p>
+            {typeof state.errors === 'object' && 'lozinka' in state.errors && state.errors.lozinka && (
+              <p className="text-red-600 text-sm mt-1">{state.errors.lozinka}</p>
             )}
           </div>
 
           {/* Potvrda Lozinke */}
           <div>
-            <div className={`flex items-center gap-3 border p-3 rounded-lg transition-colors ${
-              fieldTouched.potvrdaLozinke && errors.potvrdaLozinke ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-blue-400'
-            }`}>
+            <div className={`flex items-center gap-3 border p-3 rounded-lg transition-colors ${typeof state.errors === 'object' && 'potvrdaLozinke' in state.errors && state.errors.potvrdaLozinke ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-blue-400'}`}>
               <FaLock className="text-lg shrink-0" />
               <Input
                 id="potvrdaLozinke"
                 name="potvrdaLozinke"
                 type="password"
-                value={formData.potvrdaLozinke}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
+                // required
                 className={getInputClass('potvrdaLozinke')}
                 placeholder='potvrdi lozinku'
-                disabled={isLoading}
+                aria-invalid={typeof state.errors === 'object' && 'potvrdaLozinke' in state.errors ? !!state.errors.potvrdaLozinke : false}
+                disabled={isPending}
               />
             </div>
-            {fieldTouched.potvrdaLozinke && errors.potvrdaLozinke && (
-              <p className="text-red-600 text-sm mt-1">{errors.potvrdaLozinke}</p>
+            {typeof state.errors === 'object' && 'potvrdaLozinke' in state.errors && state.errors.potvrdaLozinke && (
+              <p className="text-red-600 text-sm mt-1">{state.errors.potvrdaLozinke}</p>
             )}
           </div>
-
-          <div className="flex gap-3 pt-4">
-            <Link
-              href="/prijava"
-              className="flex-1 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
-            >
-              Otkaži
-            </Link>
-            <Button
+          <div>
+            <button
               type="submit"
-              className="flex-1"
-              disabled={isLoading || Object.keys(errors).length > 0}
+              className="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-md mt-4 disabled:opacity-50"
+              disabled={isPending}
             >
-              {isLoading ? 'Registrovanje...' : 'Registruj'}
-            </Button>
+              {isPending ? 'Registrujem...' : 'Registruj'}
+            </button>
           </div>
         </form>
-
-        <div className="mt-4 text-center text-sm text-gray-600">
-          Već imate nalog?{' '}
-          <Link href="/prijava" className="text-blue-600 hover:underline">
-            Prijava
-          </Link>
-        </div>
       </div>
     </div>
   );

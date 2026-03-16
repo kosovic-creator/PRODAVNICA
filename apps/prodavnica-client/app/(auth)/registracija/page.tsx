@@ -1,4 +1,4 @@
-import RegistracijaFormNew from './RegistracijaFormNew';
+import RegistracijaFormNew from './RegistracijaForm';
 import { getLocaleMessages, getLanguageFromCookies } from '@/i18n/i18n';
 import { Metadata } from 'next';
 

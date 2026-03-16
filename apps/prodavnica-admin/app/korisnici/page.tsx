@@ -1,6 +1,6 @@
 import { getKorisnici, getKorisniciAdmin } from '@/lib/actions/korisnici';
 import { Suspense } from 'react';
-import KorisniciSuccess from './KorisniciSuccess';
+import SuccessMessage from '../components/SuccessMessage';
 import KorisniciSkeleton from './KorisniciSkeleton';
 import ClientKorisniciTable from './ClientKorisniciTable';
 import Link from 'next/link';
@@ -32,7 +32,7 @@ export default async function AdminKorisniciPage({ searchParams }: { searchParam
 
   return (
     <div className="p-6">
-      <KorisniciSuccess message={successMsg} />
+      {successMsg && <SuccessMessage message={successMsg} type="success" />}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Upravljanje korisnicima</h1>
       </div>

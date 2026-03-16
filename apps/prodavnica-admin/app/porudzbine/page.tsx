@@ -1,7 +1,7 @@
 import { getPorudzbine, deletePorudzbinu } from '@/lib/actions/porudzbine';
 import PorudzbineSkeleton from './PorudzbineSkeleton';
 import { redirect } from 'next/navigation';
-import PorudzbineSuccess from './PorudzbineSuccess';
+import SuccessMessage from '../components/SuccessMessage';
 import { Button } from "@prodavnica/ui";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@prodavnica/ui";
 import { StatusSelect } from '../components/StatusSelect';
@@ -54,7 +54,7 @@ export default async function PorudzbinePage({ searchParams }: { searchParams: P
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Success message */}
-        <PorudzbineSuccess message={successMsg} />
+        {successMsg && <SuccessMessage message={successMsg} type="success" />}
         {/* Header */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
