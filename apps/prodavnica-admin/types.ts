@@ -38,7 +38,7 @@ export type Proizvod = {
   cena: number;
   slike?: string[];
   varijante?: ProizvodVarijanta[]; // Nove varijante sa veličinama i količinama
-  popust?: number;
+  popust?: number | null;
   kreiran: Date;
   azuriran: Date;
 }

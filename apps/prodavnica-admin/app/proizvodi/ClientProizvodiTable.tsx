@@ -12,7 +12,7 @@ type Proizvod = {
   naziv_sr: string;
   naziv_en: string;
   cena: number;
-  popust?: number;
+  popust?: number | null;
   pol?: string | null;
   pol_en?: string | null;
   uzrast?: string | null;
