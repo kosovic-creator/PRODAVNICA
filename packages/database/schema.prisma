@@ -137,8 +137,8 @@ model Proizvod {
   stavkeKorpe       StavkaKorpe[]
   stavkePorudzbine  StavkaPorudzbine[]
   omiljeni          Omiljeni[]
+  popust            Float? // Popust za sve jezike
 }
-
 model ProizvodVarijanta {
   id         String   @id @default(uuid())
   proizvodId String

@@ -8,7 +8,7 @@ import { useI18n } from '@/i18n/I18nProvider';
 export default function Baner() {
   const { t } = useI18n();
   const [bannerCurrent, setBannerCurrent] = useState(0);
-  const bannerImages = ['/slike-proizvoda/p2-1-converted-from-jpg-2.png', '/slike-proizvoda/p6-1-2.png', '/slike-proizvoda/kolaž.png'];
+  const bannerImages = ['/slike-proizvoda/p2-1-converted-from-jpg-2.png',  '/slike-proizvoda/kolaž.png'];
 
   // Lokalizovani banner tituli
   const bannerTitles = useMemo(() => {
@@ -49,6 +49,7 @@ export default function Baner() {
 
         {/* Right side - Product Image */}
         <div className="flex-1 flex items-center justify-end h-full relative">
+        <p className='absolute top-4 left-8 bg-red-600 text-white font-bold py-1 px-3 rounded'>Popust</p>
           <Image
             src={bannerImages[bannerCurrent]}
             alt="Product banner"
@@ -58,6 +59,7 @@ export default function Baner() {
             sizes="(max-width: 640px) 40vw, 50vw"
             priority
           />
+
         </div>
       </div>
 

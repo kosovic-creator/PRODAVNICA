@@ -110,6 +110,12 @@ export default function ProizvodiContent({
                         {ratingValue != null ? ratingValue.toFixed(1) : '–'} ({proizvod.ratingCount ?? 0})
                       </span>
                     </div>
+                    <ProductPrice value={Number(proizvod.cena)} />
+                    {proizvod.popust != null && (
+                      <div className="text-green-600 text-sm font-semibold mt-1">
+                        Popust: <ProductPrice value={Number(proizvod.popust)} />
+                      </div>
+                    )}
                     <div className="flex items-center justify-between text-sm">
                                 <span className="text-gray-500" suppressHydrationWarning>{tr('kategorija')}: {kategorija || tr('nema_kategorije')}</span>
                     </div>

@@ -26,12 +26,15 @@
     "start:admin": "npm start --workspace=apps/prodavnica-admin",
     "start:klient": "npm start --workspace=apps/prodavnica-client",
     "start:client": "npm start --workspace=apps/prodavnica-client",
-    "db:generate": "npm run db:generate --workspace=packages/database",
-    "db:push": "npm run db:push --workspace=packages/database",
-    "db:studio": "npm run db:studio --workspace=packages/database",
-    "prisma:migrate:dev": "npm run migrate:dev --workspace=packages/database",
-    "prisma:migrate:deploy": "npm run migrate:deploy --workspace=packages/database",
-    "prisma:studio": "npm run studio --workspace=packages/database"
+    "db:generate": "npx prisma generate --schema=packages/database/schema.prisma",
+    "db:push": "npx prisma db push --schema=packages/database/schema.prisma",
+    "db:studio": "npx prisma studio --schema=packages/database/schema.prisma",
+    "prisma:migrate:dev": "npx prisma migrate dev --schema=packages/database/schema.prisma",
+    "prisma:migrate:deploy": "npx prisma migrate deploy --schema=packages/database/schema.prisma",
+    "prisma:studio": "npx prisma studio --schema=packages/database/schema.prisma"
+  },
+  "prisma": {
+    "schema": "packages/database/schema.prisma"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

@@ -32,6 +32,7 @@ export type ProizvodData = {
   materijal?: string;
   materijal_en?: string;
   varijante: VarijantaData[]; // Nove varijante sa boja + velicina + kolicina
+  popust?: number;
 };
 
 export type UpdateProizvodData = ProizvodData & {
@@ -91,6 +92,7 @@ export async function getProizvodi(page: number = 1, pageSize: number = 10, sear
       boja_en: proizvod.boja_en,
       materijal_en: proizvod.materijal_en,
       varijante: proizvod.varijante,
+      popust: proizvod.popust,
     }));
 
     return {
@@ -141,11 +143,12 @@ export async function getProizvodById(id: string) {
 
 export async function createProizvod(data: ProizvodData) {
   try {
-    const { varijante, ...proizvodData } = data;
+    const { varijante, popust, ...proizvodData } = data;
 
     const proizvod = await prisma.proizvod.create({
       data: {
         ...proizvodData,
+        popust,
         varijante: {
           create: varijante.map(v => ({
             boja: v.boja,
@@ -179,12 +182,13 @@ export async function createProizvod(data: ProizvodData) {
 
 export async function updateProizvod(data: UpdateProizvodData) {
   try {
-    const { id, varijante, ...proizvodData } = data;
+    const { id, varijante, popust, ...proizvodData } = data;
 
     const proizvod = await prisma.proizvod.update({
       where: { id },
       data: {
         ...proizvodData,
+        popust,
         varijante: {
           deleteMany: {}, // Obriši stare varijante
           create: varijante.map(v => ({ // Kreiraj nove varijante

@@ -95,6 +95,11 @@ export default function ProizvodDetailClient({ proizvod }: ProizvodDetailClientP
               <h1 className="text-3xl font-bold text-gray-900 mb-4">{naziv}</h1>
               <div className="mb-6">
                 <ProductPrice value={Number(proizvod.cena)} />
+                {proizvod.popust != null && (
+                  <div className="text-green-600 text-lg font-semibold mt-2">
+                    Popust: <ProductPrice value={Number(proizvod.popust)} />
+                  </div>
+                )}
                 <div className="flex items-center gap-2 mt-2">
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (

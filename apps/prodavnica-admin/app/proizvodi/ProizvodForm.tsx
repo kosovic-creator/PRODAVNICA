@@ -65,6 +65,7 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
         materijal: (formData.get('materijal') as string) || undefined,
         materijal_en: (formData.get('materijal_en') as string) || undefined,
         cena: Number(formData.get('cena')),
+        popust: formData.get('popust') ? Number(formData.get('popust')) : undefined,
         slike: isEditMode
           ? (proizvod?.slike ?? [])
           : (formData.getAll('slike').filter(Boolean) as string[]),
@@ -279,6 +280,19 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
                 aria-invalid={!!state.errors.cena}
               />
               {state.errors.cena && <p className="mt-1 text-sm text-red-600">{state.errors.cena}</p>}
+            </div>
+            <div>
+              <Label className="block text-sm font-medium mb-1">Popust</Label>
+              <Input
+                type="number"
+                name="popust"
+                placeholder="Popust"
+                defaultValue={proizvod?.popust || ''}
+                aria-invalid={!!state.errors.popust}
+                step="0.01"
+                min="0"
+              />
+              {state.errors.popust && <p className="mt-1 text-sm text-red-600">{state.errors.popust}</p>}
             </div>
 
             <div>

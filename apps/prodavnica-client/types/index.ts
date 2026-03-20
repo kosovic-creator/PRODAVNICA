@@ -40,6 +40,7 @@ export type Proizvodi = {
   varijante?: varijante[];
   kreiran: Date;
   azuriran: Date;
+  popust?: number | null;
   rating?: string;
   numReviews?: number;
   avgRating?: number | null;

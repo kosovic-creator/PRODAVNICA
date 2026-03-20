@@ -2,7 +2,8 @@
 CREATE TABLE "Korisnik" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "lozinka" TEXT NOT NULL,
+    "lozinka" TEXT,
+    "ime" TEXT,
     "uloga" TEXT NOT NULL DEFAULT 'korisnik',
     "kreiran" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "azuriran" TIMESTAMP(3) NOT NULL,
@@ -47,6 +48,9 @@ CREATE TABLE "StavkaKorpe" (
     "korisnikId" TEXT NOT NULL,
     "proizvodId" TEXT NOT NULL,
     "kolicina" INTEGER NOT NULL DEFAULT 1,
+    "boja" TEXT,
+    "boja_en" TEXT,
+    "velicina" TEXT,
     "kreiran" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "azuriran" TIMESTAMP(3) NOT NULL,
 
@@ -76,6 +80,8 @@ CREATE TABLE "StavkaPorudzbine" (
     "cena" DOUBLE PRECISION NOT NULL,
     "opis" TEXT,
     "rating" INTEGER,
+    "boja" TEXT,
+    "velicina" TEXT,
     "kreiran" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "azuriran" TIMESTAMP(3) NOT NULL,
     "slika" TEXT,
@@ -96,21 +102,45 @@ CREATE TABLE "Omiljeni" (
 -- CreateTable
 CREATE TABLE "Proizvod" (
     "id" TEXT NOT NULL,
-    "naziv_sr" TEXT NOT NULL,
-    "naziv_en" TEXT NOT NULL,
-    "opis_sr" TEXT,
-    "opis_en" TEXT,
-    "karakteristike_sr" TEXT,
-    "karakteristike_en" TEXT,
-    "kategorija_sr" TEXT NOT NULL,
-    "kategorija_en" TEXT NOT NULL,
     "cena" DOUBLE PRECISION NOT NULL,
     "slike" TEXT[],
-    "kolicina" INTEGER NOT NULL DEFAULT 0,
+    "kreiran" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "azuriran" TIMESTAMP(3) NOT NULL,
+    "naziv_sr" TEXT NOT NULL,
+    "opis_sr" TEXT,
+    "karakteristike_sr" TEXT,
+    "kategorija_sr" TEXT NOT NULL,
+    "naziv_en" TEXT NOT NULL,
+    "opis_en" TEXT,
+    "karakteristike_en" TEXT,
+    "kategorija_en" TEXT NOT NULL,
+    "pol" TEXT,
+    "pol_en" TEXT,
+    "uzrast" TEXT,
+    "uzrast_en" TEXT,
+    "brend" TEXT,
+    "boja" TEXT[],
+    "boja_en" TEXT[],
+    "materijal" TEXT,
+    "materijal_en" TEXT,
+    "popust" DOUBLE PRECISION,
+
+    CONSTRAINT "Proizvod_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ProizvodVarijanta" (
+    "id" TEXT NOT NULL,
+    "proizvodId" TEXT NOT NULL,
+    "boja" TEXT NOT NULL,
+    "boja_en" TEXT NOT NULL DEFAULT '',
+    "velicina" TEXT NOT NULL,
+    "kolicina" INTEGER NOT NULL,
+    "prodavnica_br" INTEGER NOT NULL DEFAULT 1,
     "kreiran" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "azuriran" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Proizvod_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "ProizvodVarijanta_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -126,7 +156,7 @@ CREATE UNIQUE INDEX "PodaciPreuzimanja_korisnikId_key" ON "PodaciPreuzimanja"("k
 CREATE INDEX "StavkaKorpe_korisnikId_idx" ON "StavkaKorpe"("korisnikId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "StavkaKorpe_korisnikId_proizvodId_key" ON "StavkaKorpe"("korisnikId", "proizvodId");
+CREATE UNIQUE INDEX "StavkaKorpe_korisnikId_proizvodId_boja_velicina_key" ON "StavkaKorpe"("korisnikId", "proizvodId", "boja", "velicina");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Porudzbina_idPlacanja_key" ON "Porudzbina"("idPlacanja");
@@ -142,6 +172,12 @@ CREATE INDEX "Omiljeni_korisnikId_idx" ON "Omiljeni"("korisnikId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Omiljeni_korisnikId_proizvodId_key" ON "Omiljeni"("korisnikId", "proizvodId");
+
+-- CreateIndex
+CREATE INDEX "ProizvodVarijanta_proizvodId_idx" ON "ProizvodVarijanta"("proizvodId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ProizvodVarijanta_proizvodId_boja_velicina_prodavnica_br_key" ON "ProizvodVarijanta"("proizvodId", "boja", "velicina", "prodavnica_br");
 
 -- AddForeignKey
 ALTER TABLE "PodaciPreuzimanja" ADD CONSTRAINT "PodaciPreuzimanja_korisnikId_fkey" FOREIGN KEY ("korisnikId") REFERENCES "Korisnik"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -166,3 +202,6 @@ ALTER TABLE "Omiljeni" ADD CONSTRAINT "Omiljeni_korisnikId_fkey" FOREIGN KEY ("k
 
 -- AddForeignKey
 ALTER TABLE "Omiljeni" ADD CONSTRAINT "Omiljeni_proizvodId_fkey" FOREIGN KEY ("proizvodId") REFERENCES "Proizvod"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ProizvodVarijanta" ADD CONSTRAINT "ProizvodVarijanta_proizvodId_fkey" FOREIGN KEY ("proizvodId") REFERENCES "Proizvod"("id") ON DELETE CASCADE ON UPDATE CASCADE;
