@@ -45,7 +45,8 @@ export default async function IzmeniProizvodPage({ params }: { params: Promise<{
           boja: proizvod.boja ?? undefined,
           materijal: proizvod.materijal ?? undefined,
           materijal_en: proizvod.materijal_en ?? undefined,
-          varijante: proizvod.varijante
+          varijante: proizvod.varijante,
+          popust: proizvod.popust ?? undefined,
         }}
         serverAction={handleUpdate}
       />

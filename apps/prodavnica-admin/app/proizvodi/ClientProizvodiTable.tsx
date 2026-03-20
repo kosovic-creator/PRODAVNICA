@@ -12,6 +12,7 @@ type Proizvod = {
   naziv_sr: string;
   naziv_en: string;
   cena: number;
+  popust?: number;
   pol?: string | null;
   pol_en?: string | null;
   uzrast?: string | null;
@@ -120,6 +121,7 @@ const ClientProizvodiTable: React.FC<Props> = ({ proizvodi, total, totalPages, p
               <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Naziv </TableHead>
               {/* <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Naziv (EN)</TableHead> */}
               <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Cena</TableHead>
+              <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Popust</TableHead>
               <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Varijante</TableHead>
               <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Pol </TableHead>
               {/* <TableHead className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Pol (EN)</TableHead> */}
@@ -143,7 +145,8 @@ const ClientProizvodiTable: React.FC<Props> = ({ proizvodi, total, totalPages, p
                   <TableCell className="px-6 py-4 whitespace-nowrap font-medium">{proizvod.naziv_sr}</TableCell>
                   {/* <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.naziv_en}</TableCell> */}
                   <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.cena} €</TableCell>
-                  <TableCell className="px-6 py-4">
+                  <TableCell className="px-6 py-4 whitespace-nowrap">{proizvod.popust ? `${proizvod.popust} %` : '-'}</TableCell>
+                  <TableCell className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm max-w-xs">
                       {proizvod.varijante && proizvod.varijante.length > 0 ? (
                         <div className="space-y-1">

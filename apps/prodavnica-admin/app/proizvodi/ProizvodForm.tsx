@@ -347,16 +347,16 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
               {state.errors.materijal && <p className="mt-1 text-sm text-red-600">{state.errors.materijal}</p>}
             </div>
 
+
             <ProizvodVarijanteForm
-              varijante={state.varijante}
+              varijante={varijante}
               onChange={v => {
-                // Update varijante in local state only
                 setVarijante(v);
               }}
               errors={state.errors}
             />
             {/* Hidden input to serialize varijante for form submission */}
-            <input type="hidden" name="varijante" value={JSON.stringify(state.varijante)} />
+            <input type="hidden" name="varijante" value={JSON.stringify(varijante)} />
             {state.errors.varijante && (
               <p className="mt-2 text-sm text-red-600 bg-red-50 p-3 rounded border border-red-200">
                 {state.errors.varijante}
