@@ -1,0 +1,47 @@
+{
+  "name": "prodavnica",
+  "version": "1.0.0",
+  "description": "Prodavnica monorepo - admin dashboard i customer-facing aplikacija",
+  "private": true,
+  "packageManager": "npm@11.6.3",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "postinstall": "node -e \"const { spawnSync } = require('node:child_process'); spawnSync('npm run db:generate --workspace=packages/database', { stdio: 'inherit', shell: true }); process.exit(0);\"",
+    "db:migrate": "npm run db:migrate --workspace=packages/database",
+    "db:deploy": "npm run db:deploy --workspace=packages/database",
+    "db:reset": "npm run db:reset --workspace=packages/database",
+    "dev:client": "npm run dev --workspace=apps/prodavnica-client",
+    "dev:klient": "npm run dev --workspace=apps/prodavnica-client",
+    "dev:admin": "npm run dev --workspace=apps/prodavnica-admin",
+    "dev": "concurrently \"npm run dev --workspace=apps/prodavnica-client\" \"npm run dev --workspace=apps/prodavnica-admin\"",
+    "build:all": "npm run build --workspace=apps/prodavnica-client && npm run build --workspace=apps/prodavnica-admin",
+    "build:vercel": "node -e \"const { spawnSync } = require('node:child_process'); const run = (cmd) => spawnSync(cmd, { stdio: 'inherit', shell: true }); run('npm run db:generate --workspace=packages/database'); const url = ((process.env.VERCEL_PROJECT_PRODUCTION_URL || '') + (process.env.VERCEL_URL || '')).toLowerCase(); const workspace = url.includes('admin') ? 'apps/prodavnica-admin' : 'apps/prodavnica-client'; const res = run('npm run build --workspace=' + workspace); process.exit(res.status ?? 1);\"",
+    "build": "node -e \"const { spawnSync } = require('node:child_process'); const run = (cmd) => spawnSync(cmd, { stdio: 'inherit', shell: true }); if (process.env.VERCEL === '1') { const res = run('npm run build:vercel'); process.exit(res.status ?? 1); } run('npm run db:generate --workspace=packages/database'); const res = run('npm run build:all'); process.exit(res.status ?? 1);\"",
+    "build:admin": "npm run build --workspace=apps/prodavnica-admin",
+    "build:klient": "npm run build --workspace=apps/prodavnica-client",
+    "build:client": "npm run build --workspace=apps/prodavnica-client",
+    "start:admin": "npm start --workspace=apps/prodavnica-admin",
+    "start:klient": "npm start --workspace=apps/prodavnica-client",
+    "start:client": "npm start --workspace=apps/prodavnica-client",
+    "db:generate": "npx prisma generate --schema=packages/database/schema.prisma",
+    "db:push": "npx prisma db push --schema=packages/database/schema.prisma",
+    "db:studio": "npx prisma studio --schema=packages/database/schema.prisma",
+    "prisma:migrate:dev": "npx prisma migrate dev --schema=packages/database/schema.prisma",
+    "prisma:migrate:deploy": "npx prisma migrate deploy --schema=packages/database/schema.prisma",
+    "prisma:studio": "npx prisma studio --schema=packages/database/schema.prisma"
+  },
+  "prisma": {
+    "schema": "packages/database/schema.prisma"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "next-pwa": "^5.6.0",
+    "prisma": "^7.5.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.5.0"
+  }
+}

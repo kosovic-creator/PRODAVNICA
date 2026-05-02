@@ -1,0 +1,15 @@
+{
+  "products": "Products",
+  "orders": "Orders",
+  "users": "Users",
+  "cart": "Cart",
+  "login": "Login",
+  "logout": "Logout",
+  "register": "Register",
+  "add_to_cart": "Add to cart",
+  "edit": "Edit",
+  "delete": "Delete",
+  "my_shop": "My Shop",
+  "back_to_home": "Back to Home",
+  "pocetna": "HOME"
+}

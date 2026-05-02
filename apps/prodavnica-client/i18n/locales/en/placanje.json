@@ -1,0 +1,15 @@
+{
+"payment": "Payment",
+"pay_now": "Pay Now",
+"success_payment": "Payment Successful",
+"thank_you": "Thank you for your purchase!",
+"payment_not_ready": "Payment is not ready. Please try again.",
+"failed_create_payment": "Failed to create payment",
+"payment_error": "Payment error",
+"payment_success": "Payment successful",
+"payment_not_confirmed": "Payment not confirmed.",
+"processing_error": "Error processing payment",
+"card_payment": "Card payment",
+"processing": "Processing...",
+"pay_amount": "Pay"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@prodavnica/lib",
+  "version": "1.0.0",
+  "description": "Shared utilities, constants, and helpers for prodavnica-admin and prodavnica-client",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "echo \"shared-lib: no build step\""
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.4.0"
+  },
+  "peerDependencies": {
+    "react": "^19"
+  }
+}

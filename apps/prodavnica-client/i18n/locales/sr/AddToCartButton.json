@@ -1,0 +1,9 @@
+{
+"adding": "Dodavanje...",
+"addToCart": "Dodaj u korpu",
+"outOfStock": "Nema na stanju",
+"loginRequired": "Morate biti prijavljeni da biste dodali proizvod u korpu",
+"addError": "Greška prilikom dodavanja u korpu",
+"addSuccess": "Proizvod je uspešno dodat u korpu",
+"addErrorGeneric": "Došlo je do greške prilikom dodavanja proizvoda u korpu"
+}

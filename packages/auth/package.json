@@ -1,0 +1,13 @@
+{
+  "name": "@prodavnica/auth",
+  "version": "1.0.0",
+  "description": "Shared auth entrypoint package",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "echo \"shared-auth: no build step\""
+  },
+  "dependencies": {
+    "@prodavnica/lib": "*"
+  }
+}
