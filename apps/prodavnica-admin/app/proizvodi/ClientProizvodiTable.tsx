@@ -4,8 +4,8 @@ import { deleteProizvod } from "@/lib/actions/proizvodi";
 import Link from "next/link";
 import SuccessMessage from "@/app/components/SuccessMessage";
 import ConfirmModal from "@/app/components/ui/ConfirmModal";
-import { Button } from "@prodavnica/ui";
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/app/ui";
 
 type Proizvod = {
   id: string;
@@ -236,3 +236,4 @@ const ClientProizvodiTable: React.FC<Props> = ({ proizvodi, total, totalPages, p
 };
 
 export default ClientProizvodiTable;
+

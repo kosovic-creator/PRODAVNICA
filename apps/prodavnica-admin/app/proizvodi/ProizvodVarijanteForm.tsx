@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Input } from "@prodavnica/ui";
-import { Button } from "@prodavnica/ui";
-import { Label } from "@prodavnica/ui";
+import { Input } from "@/app/ui";
+import { Button } from "@/app/ui";
+import { Label } from "@/app/ui";
 import type { VarijantaData } from '@/lib/actions/proizvodi';
 
 interface ProizvodVarijanteFormProps {
@@ -273,3 +273,5 @@ export default function ProizvodVarijanteForm({
     </div>
   );
 }
+
+

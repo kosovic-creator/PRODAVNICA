@@ -14,6 +14,7 @@ const nextConfig = {
     root: path.resolve(__dirname, '../..'),
     resolveAlias: {
       '@': './',
+
     },
   },
   images: {
@@ -31,6 +32,7 @@ const nextConfig = {
   webpack: (config: Configuration): Configuration => {
     if (config.resolve && config.resolve.alias) {
       (config.resolve.alias as Record<string, string>)['@'] = path.resolve(__dirname);
+
     }
 
     // Add support for Prisma WASM modules
@@ -45,3 +47,5 @@ const nextConfig = {
 };
 
 export default withPWA(nextConfig);
+
+

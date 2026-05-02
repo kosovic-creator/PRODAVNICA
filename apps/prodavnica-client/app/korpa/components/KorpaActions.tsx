@@ -14,9 +14,9 @@ import { posaljiObavestenjePorudzbina } from '@/lib/actions/email';
 import { getProizvodById } from '@/lib/actions/proizvodi';
 import { useCart } from '../../components/KorpaContext';
 // import SuccessMessage from '@/app/components/SuccessMessage';
-import { Button } from "@prodavnica/ui";
-import { Card, CardContent } from "@prodavnica/ui";
-import { Separator } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
+import { Card, CardContent } from "@/app/ui";
+import { Separator } from "@/app/ui";
 import StripeCheckoutForm from '@/app/components/StripeCheckoutForm';
 import { useI18n } from '@/i18n/I18nProvider';
 

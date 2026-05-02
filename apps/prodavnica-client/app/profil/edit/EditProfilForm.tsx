@@ -4,10 +4,10 @@ import { useActionState } from 'react';
 import { handleEditProfilAction } from '@/lib/actions/profil';
 import SuccessMessage from '@/app/components/SuccessMessage';
 import { FaSave, FaTimes } from 'react-icons/fa';
-import { Button } from "@prodavnica/ui";
-import { Input } from "@prodavnica/ui";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@prodavnica/ui";
-import { Label } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
+import { Input } from "@/app/ui";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/app/ui";
+import { Label } from "@/app/ui";
 
 interface EditProfilFormProps {
   initialForm: {

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Card, CardContent } from "@prodavnica/ui";
+import { Card, CardContent } from "@/app/ui";
 import { FaStar } from 'react-icons/fa';
 import ProductPrice from './components/product-price';
 import { Proizvodi } from '@/types';

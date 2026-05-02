@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
-import { Button } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
 
 export default function ProductImagesSlider({ slike, naziv, t }: { slike: string[]; naziv: string; t: Record<string, string> }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);

@@ -1,5 +1,5 @@
 // Re-export constants from shared library
-export * from '@prodavnica/lib/lib/constants';
+export * from '../../../../packages/features/lib/constants';
 
 // Admin-specific constants can be added here
 export const signInDefaultValues = {

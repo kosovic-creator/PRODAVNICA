@@ -6,4 +6,4 @@ export {
   korisnikSchemaAdmin,
   registracijaSchema,
   prijavaSchema,
-} from '@prodavnica/validators'
+} from '../../packages/validation'

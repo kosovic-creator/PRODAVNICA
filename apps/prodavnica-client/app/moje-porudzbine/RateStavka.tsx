@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { FaStar } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { Button } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
 import { obrisiOcenuStavke, upsertOcenaStavke } from "@/lib/actions";
 import { useI18n } from '@/i18n/I18nProvider';
 

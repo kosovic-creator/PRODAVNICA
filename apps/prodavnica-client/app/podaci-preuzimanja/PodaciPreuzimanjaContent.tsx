@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useActionState } from "react";
-import { Button, Input } from "@prodavnica/ui";
+import { Button, Input } from "@/app/ui";
 import SuccessRedirect from "./SuccessRedirect";
 import { z } from "zod";
 import { createPodaciPreuzimanja, updatePodaciPreuzimanja, getPodaciPreuzimanja } from "@/lib/actions/podaci-preuzimanja";

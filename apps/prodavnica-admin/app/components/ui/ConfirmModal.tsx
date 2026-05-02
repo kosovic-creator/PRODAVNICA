@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { Button } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
 
 interface ConfirmModalProps {
     isOpen: boolean;
@@ -144,3 +144,5 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
 };
 
 export default ConfirmModal;
+
+

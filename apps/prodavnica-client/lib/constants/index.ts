@@ -1,5 +1,5 @@
 // Re-export constants from shared library
-export * from '@prodavnica/lib/lib/constants';
+export * from '../../../../packages/features/lib/constants';
 
 // Client-specific constants
 export const SERVER_URL =

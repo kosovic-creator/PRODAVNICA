@@ -6,7 +6,7 @@ import { useI18n } from '@/i18n/I18nProvider';
 import { usePathname, useRouter } from 'next/navigation';
 import { FaBoxOpen, FaUser, FaTimes, FaShoppingBag, FaChartBar, FaCog, FaPhone, FaInfoCircle, FaHistory, FaHeart, FaSignOutAlt } from 'react-icons/fa';
 import { useSession, signOut } from 'next-auth/react';
-import { Button } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
 
 
 interface SidebarProps {

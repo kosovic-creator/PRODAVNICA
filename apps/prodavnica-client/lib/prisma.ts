@@ -1,10 +1,10 @@
 // lib/prisma.ts
 import { PrismaClient } from '@prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
-import { normalizeDatabaseUrl } from '@prodavnica/lib'
+import { normalizeDatabaseUrl } from '../../../packages/features'
 
 const globalForPrisma = global as unknown as {
-    prisma: PrismaClient
+  prisma: PrismaClient
 }
 
 const adapter = new PrismaPg({

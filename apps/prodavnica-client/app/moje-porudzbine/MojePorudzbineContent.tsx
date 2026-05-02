@@ -1,13 +1,13 @@
 'use client';
 
 import { FaClipboardList, FaBox, FaCalendarAlt, FaEuroSign, FaImage, FaStar } from 'react-icons/fa';
-import { Badge } from "@prodavnica/ui";
-import { Card, CardHeader, CardContent } from "@prodavnica/ui";
+import { Badge } from "@/app/ui";
+import { Card, CardHeader, CardContent } from "@/app/ui";
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Porudzbina } from '@/types';
 import RateStavka from './RateStavka';
-import { Button } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
 import { useI18n } from '@/i18n/I18nProvider';
 
 interface MojePorudzbineContentProps {

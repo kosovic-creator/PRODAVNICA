@@ -6,7 +6,7 @@ export {
     korisnikSchemaStatic,
     registracijaSchema,
     prijavaSchema as prijavaSchemaStatic,
-} from '@prodavnica/validators';
+} from '../../../packages/validation';
 
 export type TranslateFn = (key: string) => string;
 

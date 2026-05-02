@@ -3,11 +3,11 @@
 import { useRef, useEffect, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { Button } from "@prodavnica/ui";
-import { Input } from "@prodavnica/ui";
-import { Label } from "@prodavnica/ui";
-import { Checkbox } from "@prodavnica/ui";
-import { Card, CardHeader, CardTitle, CardContent } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
+import { Input } from "@/app/ui";
+import { Label } from "@/app/ui";
+import { Checkbox } from "@/app/ui";
+import { Card, CardHeader, CardTitle, CardContent } from "@/app/ui";
 import { useActionState } from 'react';
 import { loginAction } from './loginAction';
 import { useI18n } from '@/i18n/I18nProvider';

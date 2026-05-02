@@ -2,8 +2,8 @@
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { FaUpload, FaTrash, FaImage } from 'react-icons/fa';
-import { Button } from "@prodavnica/ui";
-import { Input } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
+import { Input } from "@/app/ui";
 
 interface ImageUploadProps {
   currentImage?: string;
@@ -219,3 +219,5 @@ export default function ImageUpload({
     </div>
   );
 }
+
+

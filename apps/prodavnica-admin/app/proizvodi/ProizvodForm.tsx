@@ -6,14 +6,14 @@ import Image from 'next/image';
 import CloudinaryUploadField from './izmeni/[id]/CloudinaryUploadField';
 import SuccessMessage from '@/app/components/SuccessMessage';
 import ProizvodVarijanteForm from './ProizvodVarijanteForm';
-import { noviProizvodSchemaStatic } from '@/zod';
+import { noviProizvodSchemaStatic } from '@/schemas';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
 import { useActionState } from 'react';
-import { Input } from "@prodavnica/ui";
-import { Textarea } from "@prodavnica/ui";
-import { Label } from "@prodavnica/ui";
-import { Button } from "@prodavnica/ui";
+import { Input } from "@/app/ui";
+import { Textarea } from "@/app/ui";
+import { Label } from "@/app/ui";
+import { Button } from "@/app/ui";
 import type { Proizvod } from '@/types';
 import type { VarijantaData } from '@/lib/actions/proizvodi';
 
@@ -406,3 +406,6 @@ export default function ProizvodForm({ serverAction, proizvod }: ProizvodFormPro
     </div>
   );
 }
+
+
+

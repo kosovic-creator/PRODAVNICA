@@ -1,12 +1,12 @@
 'use client';
 import { signIn } from "next-auth/react";
-import { Button } from "@prodavnica/ui";
-import { Input } from "@prodavnica/ui";
-import { prijavaSchema } from "@/zod";
+import { Button } from "@/app/ui";
+import { Input } from "@/app/ui";
+import { prijavaSchema } from "@/schemas";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FaSignInAlt, FaEnvelope, FaLock, FaSpinner, FaChevronDown, FaUser } from "react-icons/fa";
-import { Checkbox } from "@prodavnica/ui";
+import { Checkbox } from "@/app/ui";
 
 interface RecentLogin {
   email: string;
@@ -270,3 +270,6 @@ export default function PrijavaForm() {
     </div>
   );
 }
+
+
+

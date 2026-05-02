@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
 import OmiljeniList from './OmiljeniList';
 import { useI18n } from '@/i18n/I18nProvider';
-import { Button } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
 
 interface OmiljeniContentProps {
   omiljeni: any[];

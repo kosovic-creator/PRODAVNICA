@@ -5,9 +5,9 @@ import { FaSave, FaTimes, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
 import { createKorisnik } from '@/lib/actions/korisnici';
 import toast from 'react-hot-toast';
-import { Input } from "@prodavnica/ui";
-import { Button } from "@prodavnica/ui";
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@prodavnica/ui";
+import { Input } from "@/app/ui";
+import { Button } from "@/app/ui";
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/app/ui";
 
 export default function DodajKorisnikaPage() {
   const router = useRouter();
@@ -271,3 +271,4 @@ export default function DodajKorisnikaPage() {
     </div>
   );
 }
+

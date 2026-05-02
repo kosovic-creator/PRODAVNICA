@@ -1,5 +1,5 @@
 "use client";
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@prodavnica/ui";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/app/ui";
 
 export default function ProizvodiSkeleton() {
   return (

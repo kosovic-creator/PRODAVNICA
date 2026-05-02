@@ -3,8 +3,8 @@ import SuccessMessage from '../../components/SuccessMessage';
 import React from 'react';
 import { useActionState } from 'react';
 import { FaUserPlus, FaEnvelope, FaLock, FaUser } from "react-icons/fa";
-import { Input } from "@prodavnica/ui";
-import { registracijaSchema } from '@/zod';
+import { Input } from "@/app/ui";
+import { registracijaSchema } from '@/schemas';
 
 export function RegistracijaFormComponent() {
   const [state, formAction, isPending] = useActionState(
@@ -184,3 +184,6 @@ export function RegistracijaFormComponent() {
     </div>
   );
 }
+
+
+

@@ -2,8 +2,8 @@
 import React from 'react';
 import { deleteKorisnik, deleteKorisnikAdmin } from '@/lib/actions/korisnici';
 import ConfirmModal from '@/app/components/ui/ConfirmModal';
-import { Button } from "@prodavnica/ui";
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/app/ui";
 
 interface Korisnik {
   id: string;
@@ -171,3 +171,5 @@ const ClientKorisniciTable: React.FC<Props> = ({ korisnici, total, page, totalPa
 };
 
 export default ClientKorisniciTable;
+
+

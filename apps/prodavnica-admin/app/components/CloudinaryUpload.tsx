@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
-import { Input } from "@prodavnica/ui";
-import { Button } from "@prodavnica/ui";
+import { Input } from "@/app/ui";
+import { Button } from "@/app/ui";
 
 interface Props {
   onUpload?: (url: string) => void;
@@ -55,3 +55,5 @@ export default function CloudinaryUpload({ onUpload }: Props) {
     </div>
   );
 }
+
+

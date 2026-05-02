@@ -8,8 +8,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FaShoppingCart, FaSignInAlt, FaSignOutAlt, FaBars, FaUserCircle } from "react-icons/fa";
 import { signOut } from "next-auth/react";
-import { Button } from "@prodavnica/ui";
-import { Input } from "@prodavnica/ui"
+import { Button } from "@/app/ui";
+import { Input } from "@/app/ui"
 
 export interface NavbarProps {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;

@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { Button } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
 import ClientLayout from "../components/ClientLayout";
 import { useI18n } from '@/i18n/I18nProvider';
 

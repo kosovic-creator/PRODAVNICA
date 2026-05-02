@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
 import { useI18n } from '@/i18n/I18nProvider';
 
 export default function NotFoundClient() {

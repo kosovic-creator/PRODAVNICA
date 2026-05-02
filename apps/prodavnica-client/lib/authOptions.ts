@@ -1,4 +1,4 @@
-import { createAuthOptions } from "@prodavnica/lib";
+import { createAuthOptions } from "../../../packages/features";
 import prisma from "@/lib/prisma";
 
 const googleClientId = process.env.GOOGLE_CLIENT_ID;

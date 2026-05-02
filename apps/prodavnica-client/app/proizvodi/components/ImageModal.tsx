@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { Button } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
 
 type ImageModalProps = {
   src: string;

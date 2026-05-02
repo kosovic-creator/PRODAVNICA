@@ -6,8 +6,8 @@ import { z } from 'zod';
 import { getPorudzbine, deletePorudzbinu } from '@/lib/actions/porudzbine';
 import PorudzbineSkeleton from './PorudzbineSkeleton';
 import SuccessMessage from '../components/SuccessMessage';
-import { Button } from "@prodavnica/ui";
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/app/ui";
 import { StatusSelect } from '../components/StatusSelect';
 
 
@@ -219,3 +219,4 @@ export default function PorudzbinePage() {
     </div>
   );
 }
+

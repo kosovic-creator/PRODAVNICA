@@ -1,4 +1,4 @@
-import { createAuthOptions } from "@prodavnica/lib";
+import { createAuthOptions } from "../../../packages/features";
 import prisma from "@/lib/prisma";
 
 export const authOptions = createAuthOptions({

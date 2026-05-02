@@ -6,7 +6,7 @@ import { FaUserShield, FaUsers, FaBox, FaShoppingCart, FaSignOutAlt, FaHome, FaB
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { Button } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -152,3 +152,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

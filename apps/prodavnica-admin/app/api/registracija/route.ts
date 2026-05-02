@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { registrujKorisnika } from '@/lib/actions';
-import { registracijaSchema } from '@/zod';
+import { registracijaSchema } from '@/schemas';
 
 export async function POST(request: Request) {
   try {
@@ -38,4 +38,5 @@ export async function POST(request: Request) {
     }, { status: 500 });
   }
 }
+
 

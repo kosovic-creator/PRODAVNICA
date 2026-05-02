@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@prodavnica/ui";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/ui";
 import { azurirajStatusPorudzbine } from '@/lib/actions/porudzbine';
 import { toast } from 'sonner';
 
@@ -53,3 +53,4 @@ export function StatusSelect({ porudzbinaId, trenutniStatus }: StatusSelectProps
     </Select>
   );
 }
+

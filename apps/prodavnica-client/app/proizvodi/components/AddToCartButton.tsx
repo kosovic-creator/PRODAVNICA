@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import { Proizvodi } from '../../../types';
 import { dodajUKorpu } from './../../../lib/actions/korpa';
 import { useCart } from '../../components/KorpaContext';
-import { Button } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
 import { useI18n } from '@/i18n/I18nProvider';
 import SuccessMessage from '@/app/components/SuccessMessage';
 

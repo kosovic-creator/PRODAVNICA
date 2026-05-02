@@ -3,10 +3,10 @@
 import { useActionState } from 'react';
 import { handleRegistracijaAction } from './handleRegistracijaAction';
 import SuccessMessage from '@/app/components/SuccessMessage';
-import { Button } from "@prodavnica/ui";
-import { Input } from "@prodavnica/ui";
-import { Card, CardHeader, CardTitle, CardContent } from "@prodavnica/ui";
-import { Label } from "@prodavnica/ui";
+import { Button } from "@/app/ui";
+import { Input } from "@/app/ui";
+import { Card, CardHeader, CardTitle, CardContent } from "@/app/ui";
+import { Label } from "@/app/ui";
 
 interface RegistracijaFormProps {
   translations: Record<string, string>;
